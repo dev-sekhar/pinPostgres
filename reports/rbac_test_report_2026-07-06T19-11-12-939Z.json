@@ -1,0 +1,57 @@
+{
+  "suite": "RBAC Automation Tests",
+  "timestamp": "2026-07-06T19:11:13.689Z",
+  "total": 8,
+  "passed": 8,
+  "failed": 0,
+  "results": [
+    {
+      "test": "Register Tenant",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T19:11:13.300Z"
+    },
+    {
+      "test": "Admin Login",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T19:11:13.410Z"
+    },
+    {
+      "test": "Create User",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T19:11:13.517Z"
+    },
+    {
+      "test": "User Login",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T19:11:13.633Z"
+    },
+    {
+      "test": "Access Products Without Permission",
+      "status": "PASS",
+      "details": "Correctly denied access with 403",
+      "time": "2026-07-06T19:11:13.639Z"
+    },
+    {
+      "test": "Create Custom Role",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T19:11:13.660Z"
+    },
+    {
+      "test": "Assign Role To User",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T19:11:13.678Z"
+    },
+    {
+      "test": "Access Products With Permission",
+      "status": "PASS",
+      "details": "Correctly allowed access with 200",
+      "time": "2026-07-06T19:11:13.689Z"
+    }
+  ]
+}

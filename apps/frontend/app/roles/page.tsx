@@ -7,36 +7,37 @@ import { Button } from '../../components/ui/Button';
 import { fetchApi } from '../../lib/api';
 import { HasPermission } from '../../components/HasPermission';
 
-interface AttributeDefinition {
+interface Role {
   id: string;
-  code: string;
   name: string;
-  type: string;
-  isRequired: boolean;
+  description: string;
+  roleType: string;
+  isActive: boolean;
+  rolePermissions: any[];
 }
 
-export default function AttributesListPage() {
+export default function RolesListPage() {
   const router = useRouter();
-  const [attributes, setAttributes] = useState<AttributeDefinition[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const loadAttributes = async () => {
+    const loadRoles = async () => {
       try {
-        const data = await fetchApi('/api/attributes');
-        setAttributes(data);
+        const data = await fetchApi('/api/roles');
+        setRoles(data);
       } catch (err: any) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-    loadAttributes();
+    loadRoles();
   }, []);
 
   if (loading) {
-    return <div className="center-screen text-gradient">Loading attributes...</div>;
+    return <div className="center-screen text-gradient">Loading roles...</div>;
   }
 
   return (
@@ -46,10 +47,10 @@ export default function AttributesListPage() {
           <Button variant="outline" size="sm" onClick={() => router.push('/')} style={{ marginBottom: '1rem' }}>
             &larr; Back to Dashboard
           </Button>
-          <h1 className="text-gradient">Attributes Configuration</h1>
+          <h1 className="text-gradient">Roles & Permissions</h1>
         </div>
-        <HasPermission permission="attribute.create">
-          <Button onClick={() => router.push('/attributes/new')}>Create Attribute</Button>
+        <HasPermission permission="tenant.manage">
+          <Button onClick={() => router.push('/roles/new')}>Create Role</Button>
         </HasPermission>
       </header>
       
@@ -59,45 +60,33 @@ export default function AttributesListPage() {
         </div>
       )}
 
-      {!error && attributes.length === 0 && (
-        <Card>
-          <CardBody style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-            <h3 style={{ marginBottom: '1rem' }}>No attributes defined</h3>
-            <p style={{ color: 'var(--text-secondary)' }}>Create custom fields to describe your products.</p>
-          </CardBody>
-        </Card>
-      )}
-
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-        {attributes.map((attr) => (
-          <Card key={attr.id}>
+        {roles.map((role) => (
+          <Card key={role.id}>
             <CardHeader style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
-                <h3 style={{ fontSize: '1.125rem', marginBottom: '0.25rem' }}>{attr.name}</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Code: {attr.code}</p>
+                <h3 style={{ fontSize: '1.125rem', marginBottom: '0.25rem' }}>{role.name}</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>{role.description}</p>
               </div>
               <span style={{ 
                 fontSize: '0.75rem', 
                 padding: '0.25rem 0.5rem', 
                 borderRadius: '1rem', 
-                background: 'rgba(99, 102, 241, 0.2)',
-                color: 'var(--accent-primary)',
+                background: role.roleType === 'SYSTEM' ? 'rgba(236, 72, 153, 0.2)' : 'rgba(99, 102, 241, 0.2)',
+                color: role.roleType === 'SYSTEM' ? 'var(--accent-secondary)' : 'var(--accent-primary)',
                 fontWeight: 600
               }}>
-                {attr.type}
+                {role.roleType}
               </span>
             </CardHeader>
             <CardBody>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <span style={{ 
-                  fontSize: '0.875rem', 
-                  color: attr.isRequired ? 'var(--error-color)' : 'var(--text-secondary)' 
-                }}>
-                  {attr.isRequired ? 'Required Field' : 'Optional Field'}
-                </span>
+              <div style={{ marginBottom: '1.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                {role.rolePermissions.length} Permissions Assigned
               </div>
-              <HasPermission permission="attribute.update">
-                <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push(`/attributes/${attr.id}/edit`)}>Edit</Button>
+              <HasPermission permission="tenant.manage">
+                <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push(`/roles/${role.id}`)}>
+                  {role.roleType === 'SYSTEM' ? 'View Details' : 'Edit Role'}
+                </Button>
               </HasPermission>
             </CardBody>
           </Card>

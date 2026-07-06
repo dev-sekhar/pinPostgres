@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { fetchApi } from '../../lib/api';
+import { HasPermission } from '../../components/HasPermission';
 
 interface Product {
   id: string;
@@ -47,7 +48,9 @@ export default function ProductsListPage() {
           </Button>
           <h1 className="text-gradient">Products</h1>
         </div>
-        <Button onClick={() => router.push('/products/new')}>Create Product</Button>
+        <HasPermission permission="product.create">
+          <Button onClick={() => router.push('/products/new')}>Create Product</Button>
+        </HasPermission>
       </header>
       
       {error && (

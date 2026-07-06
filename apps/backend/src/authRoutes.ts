@@ -36,13 +36,61 @@ router.post("/register-tenant", async (req, res) => {
             // Set RLS config for the new tenant to allow User creation
             await tx.$executeRaw`SELECT set_config('app.current_tenant', ${tenant.id}, true)`;
 
+            // Fetch all global permissions
+            const allPermissions = await tx.permission.findMany();
+            
+            // Create Administrator Role (SYSTEM)
+            const adminRole = await tx.role.create({
+                data: {
+                    tenantId: tenant.id,
+                    name: 'Administrator',
+                    description: 'Full access to all modules',
+                    roleType: 'SYSTEM'
+                }
+            });
+
+            // Create Viewer Role (SYSTEM)
+            const viewerRole = await tx.role.create({
+                data: {
+                    tenantId: tenant.id,
+                    name: 'Viewer',
+                    description: 'Read-only access to all modules',
+                    roleType: 'SYSTEM'
+                }
+            });
+
+            // Map all permissions to Administrator
+            await tx.rolePermission.createMany({
+                data: allPermissions.map(p => ({
+                    roleId: adminRole.id,
+                    permissionId: p.id
+                }))
+            });
+
+            // Map read permissions to Viewer
+            const readPermissions = allPermissions.filter(p => p.code.endsWith('.read'));
+            await tx.rolePermission.createMany({
+                data: readPermissions.map(p => ({
+                    roleId: viewerRole.id,
+                    permissionId: p.id
+                }))
+            });
+
             const user = await tx.user.create({
                 data: {
                     email: adminEmail,
                     name: adminName,
                     password: hashedPassword,
-                    role: "ADMIN",
+                    role: "ADMIN", // Legacy field, kept for backward compatibility for now
                     tenantId: tenant.id
+                }
+            });
+
+            // Assign Administrator role to the new user
+            await tx.userRole.create({
+                data: {
+                    userId: user.id,
+                    roleId: adminRole.id
                 }
             });
 
@@ -120,6 +168,22 @@ router.post("/login", async (req, res) => {
     } catch (error) {
         console.error("Error during login:", error);
         res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+import { requireAuth, AuthRequest } from "./authMiddleware.js";
+import { permissionService } from "./services/permissionService.js";
+
+router.get("/me/permissions", requireAuth as any, async (req: AuthRequest, res) => {
+    try {
+        if (!req.user || !req.user.userId) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        const permissions = await permissionService.getUserPermissions(req.user.userId);
+        res.json({ permissions });
+    } catch (error) {
+        console.error("Error fetching permissions:", error);
+        res.status(500).json({ error: "Failed to fetch user permissions" });
     }
 });
 

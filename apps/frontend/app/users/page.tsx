@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { fetchApi } from '../../lib/api';
+import { HasPermission } from '../../components/HasPermission';
 
 interface User {
   id: string;
@@ -46,7 +47,9 @@ export default function UsersListPage() {
           </Button>
           <h1 className="text-gradient">Team Members</h1>
         </div>
-        <Button onClick={() => router.push('/users/new')}>Invite User</Button>
+        <HasPermission permission="user.create">
+          <Button onClick={() => router.push('/users/new')}>Invite User</Button>
+        </HasPermission>
       </header>
       
       {error && (
@@ -67,26 +70,36 @@ export default function UsersListPage() {
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-        {users.map((user) => (
+        {users.map((user: any) => (
           <Card key={user.id}>
             <CardHeader style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
                 <h3 style={{ fontSize: '1.125rem', marginBottom: '0.25rem' }}>{user.name}</h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>{user.email}</p>
               </div>
-              <span style={{ 
-                fontSize: '0.75rem', 
-                padding: '0.25rem 0.5rem', 
-                borderRadius: '1rem', 
-                background: user.role === 'ADMIN' ? 'rgba(236, 72, 153, 0.2)' : 'rgba(99, 102, 241, 0.2)',
-                color: user.role === 'ADMIN' ? 'var(--accent-secondary)' : 'var(--accent-primary)',
-                fontWeight: 600
-              }}>
-                {user.role}
-              </span>
             </CardHeader>
             <CardBody>
-              <Button variant="secondary" style={{ width: '100%' }}>Manage Access</Button>
+              <div style={{ marginBottom: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {user.userRoles && user.userRoles.length > 0 ? (
+                  user.userRoles.map((ur: any) => (
+                    <span key={ur.role.id} style={{ 
+                      fontSize: '0.75rem', 
+                      padding: '0.25rem 0.5rem', 
+                      borderRadius: '1rem', 
+                      background: ur.role.roleType === 'SYSTEM' ? 'rgba(236, 72, 153, 0.2)' : 'rgba(99, 102, 241, 0.2)',
+                      color: ur.role.roleType === 'SYSTEM' ? 'var(--accent-secondary)' : 'var(--accent-primary)',
+                      fontWeight: 600
+                    }}>
+                      {ur.role.name}
+                    </span>
+                  ))
+                ) : (
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>No roles assigned</span>
+                )}
+              </div>
+              <HasPermission permission="user.update">
+                <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push(`/users/${user.id}/edit`)}>Manage Access</Button>
+              </HasPermission>
             </CardBody>
           </Card>
         ))}

@@ -2,16 +2,10 @@ import { Router, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import { prisma, withTenantTransaction } from "./prismaClient.js";
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
+import { requirePermission } from "./rbacMiddleware.js";
 
 const router = Router();
 router.use(requireAuth as any);
-
-const requireAdmin = (req: AuthRequest, res: Response, next: NextFunction) => {
-    if (req.user?.role !== "ADMIN") {
-        return res.status(403).json({ error: "Forbidden: Admins only" });
-    }
-    next();
-};
 
 // Omit password from user object
 const excludePassword = (user: any) => {
@@ -21,12 +15,17 @@ const excludePassword = (user: any) => {
 };
 
 // GET /api/users
-router.get("/", async (req: AuthRequest, res) => {
+router.get("/", requirePermission("user.read") as any, async (req: AuthRequest, res) => {
     try {
         const users = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.user.findMany({
                 where: { deletedAt: null },
-                orderBy: { createdAt: "desc" }
+                orderBy: { createdAt: "desc" },
+                include: {
+                    userRoles: {
+                        include: { role: true }
+                    }
+                }
             });
         });
         res.json(users.map(excludePassword));
@@ -36,11 +35,16 @@ router.get("/", async (req: AuthRequest, res) => {
 });
 
 // GET /api/users/:id
-router.get("/:id", async (req: AuthRequest, res) => {
+router.get("/:id", requirePermission("user.read") as any, async (req: AuthRequest, res) => {
     try {
         const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.user.findUnique({
-                where: { id: req.params.id, deletedAt: null }
+                where: { id: req.params.id, deletedAt: null },
+                include: {
+                    userRoles: {
+                        include: { role: true }
+                    }
+                }
             });
         });
         if (!user) return res.status(404).json({ error: "User not found" });
@@ -50,24 +54,30 @@ router.get("/:id", async (req: AuthRequest, res) => {
     }
 });
 
-// POST /api/users (Create a new user - Admins only)
-router.post("/", requireAdmin as any, async (req: AuthRequest, res) => {
-    const { email, name, password, role } = req.body;
+// POST /api/users (Create a new user)
+router.post("/", requirePermission("user.create") as any, async (req: AuthRequest, res) => {
+    const { email, name, password, roleIds } = req.body;
     if (!email || !password) {
         return res.status(400).json({ error: "Missing required fields (email, password)" });
     }
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.user.create({
+            const newUser = await tx.user.create({
                 data: {
                     email,
                     name,
                     password: hashedPassword,
-                    role: role || "USER",
+                    role: "USER", // Legacy
                     tenantId: req.user!.tenantId
                 }
             });
+            if (roleIds && Array.isArray(roleIds)) {
+                await tx.userRole.createMany({
+                    data: roleIds.map(rId => ({ userId: newUser.id, roleId: rId }))
+                });
+            }
+            return newUser;
         });
         res.status(201).json(excludePassword(user));
     } catch (error: any) {
@@ -78,23 +88,32 @@ router.post("/", requireAdmin as any, async (req: AuthRequest, res) => {
     }
 });
 
-// PUT /api/users/:id (Admins only)
-router.put("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
-    const { email, name, password, role } = req.body;
+// PUT /api/users/:id 
+router.put("/:id", requirePermission("user.update") as any, async (req: AuthRequest, res) => {
+    const { email, name, password, roleIds } = req.body;
     if (!email) {
         return res.status(400).json({ error: "Missing required fields" });
     }
     try {
-        const data: any = { email, name, role };
+        const data: any = { email, name };
         if (password) {
             data.password = await bcrypt.hash(password, 10);
         }
 
         const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.user.update({
+            const updatedUser = await tx.user.update({
                 where: { id: req.params.id, deletedAt: null },
                 data
             });
+
+            if (roleIds && Array.isArray(roleIds)) {
+                // Prevent removing Master Admin role from self? Not implemented here yet.
+                await tx.userRole.deleteMany({ where: { userId: req.params.id } });
+                await tx.userRole.createMany({
+                    data: roleIds.map(rId => ({ userId: req.params.id, roleId: rId }))
+                });
+            }
+            return updatedUser;
         });
         res.json(excludePassword(user));
     } catch (error) {
@@ -102,8 +121,8 @@ router.put("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
     }
 });
 
-// PATCH /api/users/:id (Admins only)
-router.patch("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
+// PATCH /api/users/:id
+router.patch("/:id", requirePermission("user.update") as any, async (req: AuthRequest, res) => {
     try {
         const data = { ...req.body };
         if (data.password) {
@@ -122,17 +141,43 @@ router.patch("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
     }
 });
 
-// DELETE /api/users/:id (Soft Delete - Admins only)
-router.delete("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
+// DELETE /api/users/:id (Soft Delete)
+router.delete("/:id", requirePermission("user.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.user.update({
+            const userToDelete = await tx.user.findUnique({
                 where: { id: req.params.id, deletedAt: null },
+                include: {
+                    userRoles: {
+                        include: {
+                            role: true
+                        }
+                    }
+                }
+            });
+
+            if (!userToDelete) {
+                throw new Error("NOT_FOUND");
+            }
+
+            const isMasterAdmin = userToDelete.userRoles.some((ur: any) => ur.role.name === 'Administrator');
+            if (isMasterAdmin) {
+                throw new Error("CANNOT_DELETE_MASTER_ADMIN");
+            }
+
+            return tx.user.update({
+                where: { id: req.params.id },
                 data: { deletedAt: new Date() }
             });
         });
         res.json({ message: "User deleted successfully" });
-    } catch (error) {
+    } catch (error: any) {
+        if (error.message === "NOT_FOUND") {
+            return res.status(404).json({ error: "User not found" });
+        }
+        if (error.message === "CANNOT_DELETE_MASTER_ADMIN") {
+            return res.status(403).json({ error: "Cannot delete a master tenant admin" });
+        }
         res.status(500).json({ error: "Failed to delete user" });
     }
 });

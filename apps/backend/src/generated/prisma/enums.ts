@@ -48,3 +48,11 @@ export const AuditSource = {
 } as const
 
 export type AuditSource = (typeof AuditSource)[keyof typeof AuditSource]
+
+
+export const RoleType = {
+  SYSTEM: 'SYSTEM',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type RoleType = (typeof RoleType)[keyof typeof RoleType]

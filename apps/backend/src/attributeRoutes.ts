@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { prisma, withTenantTransaction } from "./prismaClient.js";
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
+import { requirePermission } from "./rbacMiddleware.js";
 
 const router = Router();
 router.use(requireAuth as any);
 
 // GET /api/attributes
-router.get("/", async (req: AuthRequest, res) => {
+router.get("/", requirePermission("attribute.read") as any, async (req: AuthRequest, res) => {
     try {
         const attributes = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.findMany({
@@ -21,7 +22,7 @@ router.get("/", async (req: AuthRequest, res) => {
 });
 
 // GET /api/attributes/:id
-router.get("/:id", async (req: AuthRequest, res) => {
+router.get("/:id", requirePermission("attribute.read") as any, async (req: AuthRequest, res) => {
     try {
         const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.findUnique({
@@ -36,7 +37,7 @@ router.get("/:id", async (req: AuthRequest, res) => {
 });
 
 // POST /api/attributes
-router.post("/", async (req: AuthRequest, res) => {
+router.post("/", requirePermission("attribute.create") as any, async (req: AuthRequest, res) => {
     const { code, name, type, isRequired, options } = req.body;
     if (!code || !name || !type) {
         return res.status(400).json({ error: "Missing required fields (code, name, type)" });
@@ -63,7 +64,7 @@ router.post("/", async (req: AuthRequest, res) => {
 });
 
 // PUT /api/attributes/:id
-router.put("/:id", async (req: AuthRequest, res) => {
+router.put("/:id", requirePermission("attribute.update") as any, async (req: AuthRequest, res) => {
     const { code, name, type, isRequired, options } = req.body;
     if (!code || !name || !type) {
         return res.status(400).json({ error: "Missing required fields (code, name, type)" });
@@ -100,7 +101,7 @@ router.put("/:id", async (req: AuthRequest, res) => {
 });
 
 // PATCH /api/attributes/:id
-router.patch("/:id", async (req: AuthRequest, res) => {
+router.patch("/:id", requirePermission("attribute.update") as any, async (req: AuthRequest, res) => {
     try {
         const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.update({
@@ -115,7 +116,7 @@ router.patch("/:id", async (req: AuthRequest, res) => {
 });
 
 // DELETE /api/attributes/:id (Soft Delete)
-router.delete("/:id", async (req: AuthRequest, res) => {
+router.delete("/:id", requirePermission("attribute.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.update({

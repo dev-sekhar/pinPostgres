@@ -8,6 +8,8 @@ import productRoutes from "./productRoutes.js";
 import attributeRoutes from "./attributeRoutes.js";
 import mediaRoutes from "./mediaRoutes.js";
 import userRoutes from "./userRoutes.js";
+import auditRoutes from "./auditRoutes.js";
+import roleRoutes from "./roleRoutes.js";
 
 import { auditMiddleware } from "./auditMiddleware.js";
 
@@ -28,7 +30,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/attributes", attributeRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/api/audit", auditRoutes);
+app.use("/api/roles", roleRoutes);
 app.listen(port, () => {
     console.log(`Backend listening on http://localhost:${port}`);
 });

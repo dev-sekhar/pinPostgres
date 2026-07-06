@@ -2,12 +2,14 @@ import { Router } from "express";
 import { prisma, withTenantTransaction } from "./prismaClient.js";
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
 import { auditService } from "./services/auditService.js";
+import { requirePermission } from "./rbacMiddleware.js";
 
 const router = Router();
 
 router.use(requireAuth as any);
+
 // GET /api/products
-router.get("/", async (req: AuthRequest, res) => {
+router.get("/", requirePermission("product.read") as any, async (req: AuthRequest, res) => {
     try {
         const products = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.product.findMany({
@@ -24,7 +26,7 @@ router.get("/", async (req: AuthRequest, res) => {
 });
 
 // GET /api/products/:id
-router.get("/:id", async (req: AuthRequest, res) => {
+router.get("/:id", requirePermission("product.read") as any, async (req: AuthRequest, res) => {
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.product.findUnique({
@@ -40,7 +42,7 @@ router.get("/:id", async (req: AuthRequest, res) => {
 });
 
 // POST /api/products
-router.post("/", async (req: AuthRequest, res) => {
+router.post("/", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
     const { sku, name, description, price, parentId, attributes } = req.body;
     if (!sku || !name || price === undefined) {
         return res.status(400).json({ error: "Missing required fields (sku, name, price)" });
@@ -72,7 +74,7 @@ router.post("/", async (req: AuthRequest, res) => {
 });
 
 // PUT /api/products/:id
-router.put("/:id", async (req: AuthRequest, res) => {
+router.put("/:id", requirePermission("product.update") as any, async (req: AuthRequest, res) => {
     const { sku, name, description, price, attributes } = req.body;
     if (!sku || !name || price === undefined) {
         return res.status(400).json({ error: "Missing required fields" });
@@ -91,7 +93,7 @@ router.put("/:id", async (req: AuthRequest, res) => {
 });
 
 // PATCH /api/products/:id
-router.patch("/:id", async (req: AuthRequest, res) => {
+router.patch("/:id", requirePermission("product.update") as any, async (req: AuthRequest, res) => {
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.product.update({
@@ -106,7 +108,7 @@ router.patch("/:id", async (req: AuthRequest, res) => {
 });
 
 // DELETE /api/products/:id (Soft Delete)
-router.delete("/:id", async (req: AuthRequest, res) => {
+router.delete("/:id", requirePermission("product.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.product.update({
