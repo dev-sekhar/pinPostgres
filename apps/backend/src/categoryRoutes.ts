@@ -8,7 +8,7 @@ const router = Router();
 router.use(requireAuth as any);
 
 // GET /api/categories
-router.get("/", requirePermission("category.read") as any, async (req: AuthRequest, res) => {
+router.get("/", async (req: AuthRequest, res) => {
     try {
         const categories = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.category.findMany({
@@ -23,7 +23,7 @@ router.get("/", requirePermission("category.read") as any, async (req: AuthReque
 });
 
 // GET /api/categories/:id
-router.get("/:id", requirePermission("category.read") as any, async (req: AuthRequest, res) => {
+router.get("/:id", async (req: AuthRequest, res) => {
     try {
         const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.category.findUnique({

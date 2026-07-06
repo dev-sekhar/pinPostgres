@@ -8,7 +8,7 @@ const router = Router();
 router.use(requireAuth as any);
 
 // GET /api/domains
-router.get("/", requirePermission("domain.read") as any, async (req: AuthRequest, res) => {
+router.get("/", async (req: AuthRequest, res) => {
     try {
         const domains = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.domain.findMany({
@@ -23,7 +23,7 @@ router.get("/", requirePermission("domain.read") as any, async (req: AuthRequest
 });
 
 // GET /api/domains/:id
-router.get("/:id", requirePermission("domain.read") as any, async (req: AuthRequest, res) => {
+router.get("/:id", async (req: AuthRequest, res) => {
     try {
         const domain = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.domain.findUnique({

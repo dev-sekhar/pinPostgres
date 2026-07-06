@@ -7,7 +7,7 @@ const router = Router();
 router.use(requireAuth as any);
 
 // GET /api/attributes
-router.get("/", requirePermission("attribute.read") as any, async (req: AuthRequest, res) => {
+router.get("/", async (req: AuthRequest, res) => {
     try {
         const attributes = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.findMany({
@@ -22,7 +22,7 @@ router.get("/", requirePermission("attribute.read") as any, async (req: AuthRequ
 });
 
 // GET /api/attributes/:id
-router.get("/:id", requirePermission("attribute.read") as any, async (req: AuthRequest, res) => {
+router.get("/:id", async (req: AuthRequest, res) => {
     try {
         const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.findUnique({

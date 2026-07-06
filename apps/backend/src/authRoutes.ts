@@ -187,4 +187,31 @@ router.get("/me/permissions", requireAuth as any, async (req: AuthRequest, res) 
     }
 });
 
+router.get("/me", requireAuth as any, async (req: AuthRequest, res) => {
+    try {
+        if (!req.user || !req.user.userId) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        
+        const userWithTenant = await withTenantTransaction(req.user.tenantId, async (tx) => {
+            return tx.user.findUnique({
+                where: { id: req.user!.userId },
+                include: {
+                    tenant: true
+                }
+            });
+        });
+        
+        if (!userWithTenant) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        
+        const { password, ...userWithoutPassword } = userWithTenant;
+        res.json({ user: userWithoutPassword, tenant: userWithTenant.tenant });
+    } catch (error) {
+        console.error("Error fetching current user:", error);
+        res.status(500).json({ error: "Failed to fetch current user" });
+    }
+});
+
 export default router;

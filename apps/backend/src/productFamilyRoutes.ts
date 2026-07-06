@@ -8,7 +8,7 @@ const router = Router();
 router.use(requireAuth as any);
 
 // GET /api/product-families
-router.get("/", requirePermission("productFamily.read") as any, async (req: AuthRequest, res) => {
+router.get("/", async (req: AuthRequest, res) => {
     try {
         const productFamilies = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.productFamily.findMany({
@@ -23,7 +23,7 @@ router.get("/", requirePermission("productFamily.read") as any, async (req: Auth
 });
 
 // GET /api/product-families/:id
-router.get("/:id", requirePermission("productFamily.read") as any, async (req: AuthRequest, res) => {
+router.get("/:id", async (req: AuthRequest, res) => {
     try {
         const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.productFamily.findUnique({
