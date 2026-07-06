@@ -38,9 +38,9 @@ router.get("/:id", requirePermission("attribute.read") as any, async (req: AuthR
 
 // POST /api/attributes
 router.post("/", requirePermission("attribute.create") as any, async (req: AuthRequest, res) => {
-    const { code, name, type, isRequired, options } = req.body;
-    if (!code || !name || !type) {
-        return res.status(400).json({ error: "Missing required fields (code, name, type)" });
+    const { code, name, type, isRequired, options, productFamilyId } = req.body;
+    if (!code || !name || !type || !productFamilyId) {
+        return res.status(400).json({ error: "Missing required fields (code, name, type, productFamilyId)" });
     }
     if (!/^[a-z0-9_]+$/.test(code)) {
         return res.status(400).json({ error: "Code must be lowercase alphanumeric and underscores only" });
@@ -52,7 +52,7 @@ router.post("/", requirePermission("attribute.create") as any, async (req: AuthR
         const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.create({
                 data: {
-                    code, name, type, isRequired, options,
+                    code, name, type, isRequired, options, productFamilyId,
                     tenantId: req.user!.tenantId
                 }
             });
@@ -65,9 +65,9 @@ router.post("/", requirePermission("attribute.create") as any, async (req: AuthR
 
 // PUT /api/attributes/:id
 router.put("/:id", requirePermission("attribute.update") as any, async (req: AuthRequest, res) => {
-    const { code, name, type, isRequired, options } = req.body;
-    if (!code || !name || !type) {
-        return res.status(400).json({ error: "Missing required fields (code, name, type)" });
+    const { code, name, type, isRequired, options, productFamilyId } = req.body;
+    if (!code || !name || !type || !productFamilyId) {
+        return res.status(400).json({ error: "Missing required fields (code, name, type, productFamilyId)" });
     }
     if (!/^[a-z0-9_]+$/.test(code)) {
         return res.status(400).json({ error: "Code must be lowercase alphanumeric and underscores only" });
@@ -89,7 +89,7 @@ router.put("/:id", requirePermission("attribute.update") as any, async (req: Aut
 
             return tx.attributeDefinition.update({
                 where: { id: req.params.id, deletedAt: null },
-                data: { code, name, type, isRequired, options }
+                data: { code, name, type, isRequired, options, productFamilyId }
             });
         });
         res.json(attribute);

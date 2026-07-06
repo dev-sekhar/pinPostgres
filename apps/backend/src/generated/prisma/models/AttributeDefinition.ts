@@ -30,6 +30,7 @@ export type AttributeDefinitionMinAggregateOutputType = {
   name: string | null
   type: $Enums.AttributeType | null
   isRequired: boolean | null
+  productFamilyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -42,6 +43,7 @@ export type AttributeDefinitionMaxAggregateOutputType = {
   name: string | null
   type: $Enums.AttributeType | null
   isRequired: boolean | null
+  productFamilyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -55,6 +57,7 @@ export type AttributeDefinitionCountAggregateOutputType = {
   type: number
   isRequired: number
   options: number
+  productFamilyId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -69,6 +72,7 @@ export type AttributeDefinitionMinAggregateInputType = {
   name?: true
   type?: true
   isRequired?: true
+  productFamilyId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -81,6 +85,7 @@ export type AttributeDefinitionMaxAggregateInputType = {
   name?: true
   type?: true
   isRequired?: true
+  productFamilyId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -94,6 +99,7 @@ export type AttributeDefinitionCountAggregateInputType = {
   type?: true
   isRequired?: true
   options?: true
+  productFamilyId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -180,6 +186,7 @@ export type AttributeDefinitionGroupByOutputType = {
   type: $Enums.AttributeType
   isRequired: boolean
   options: runtime.JsonValue | null
+  productFamilyId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -214,10 +221,12 @@ export type AttributeDefinitionWhereInput = {
   type?: Prisma.EnumAttributeTypeFilter<"AttributeDefinition"> | $Enums.AttributeType
   isRequired?: Prisma.BoolFilter<"AttributeDefinition"> | boolean
   options?: Prisma.JsonNullableFilter<"AttributeDefinition">
+  productFamilyId?: Prisma.StringFilter<"AttributeDefinition"> | string
   createdAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AttributeDefinition"> | Date | string | null
   tenantId?: Prisma.StringFilter<"AttributeDefinition"> | string
+  productFamily?: Prisma.XOR<Prisma.ProductFamilyScalarRelationFilter, Prisma.ProductFamilyWhereInput>
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
@@ -228,16 +237,18 @@ export type AttributeDefinitionOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   isRequired?: Prisma.SortOrder
   options?: Prisma.SortOrderInput | Prisma.SortOrder
+  productFamilyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  productFamily?: Prisma.ProductFamilyOrderByWithRelationInput
   tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type AttributeDefinitionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  tenantId_code?: Prisma.AttributeDefinitionTenantIdCodeCompoundUniqueInput
+  productFamilyId_code?: Prisma.AttributeDefinitionProductFamilyIdCodeCompoundUniqueInput
   AND?: Prisma.AttributeDefinitionWhereInput | Prisma.AttributeDefinitionWhereInput[]
   OR?: Prisma.AttributeDefinitionWhereInput[]
   NOT?: Prisma.AttributeDefinitionWhereInput | Prisma.AttributeDefinitionWhereInput[]
@@ -246,12 +257,14 @@ export type AttributeDefinitionWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumAttributeTypeFilter<"AttributeDefinition"> | $Enums.AttributeType
   isRequired?: Prisma.BoolFilter<"AttributeDefinition"> | boolean
   options?: Prisma.JsonNullableFilter<"AttributeDefinition">
+  productFamilyId?: Prisma.StringFilter<"AttributeDefinition"> | string
   createdAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AttributeDefinition"> | Date | string | null
   tenantId?: Prisma.StringFilter<"AttributeDefinition"> | string
+  productFamily?: Prisma.XOR<Prisma.ProductFamilyScalarRelationFilter, Prisma.ProductFamilyWhereInput>
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "id" | "tenantId_code">
+}, "id" | "productFamilyId_code">
 
 export type AttributeDefinitionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -260,6 +273,7 @@ export type AttributeDefinitionOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   isRequired?: Prisma.SortOrder
   options?: Prisma.SortOrderInput | Prisma.SortOrder
+  productFamilyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -279,6 +293,7 @@ export type AttributeDefinitionScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumAttributeTypeWithAggregatesFilter<"AttributeDefinition"> | $Enums.AttributeType
   isRequired?: Prisma.BoolWithAggregatesFilter<"AttributeDefinition"> | boolean
   options?: Prisma.JsonNullableWithAggregatesFilter<"AttributeDefinition">
+  productFamilyId?: Prisma.StringWithAggregatesFilter<"AttributeDefinition"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AttributeDefinition"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AttributeDefinition"> | Date | string | null
@@ -295,6 +310,7 @@ export type AttributeDefinitionCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  productFamily: Prisma.ProductFamilyCreateNestedOneWithoutAttributeDefinitionsInput
   tenant: Prisma.TenantCreateNestedOneWithoutAttributeDefinitionsInput
 }
 
@@ -305,6 +321,7 @@ export type AttributeDefinitionUncheckedCreateInput = {
   type: $Enums.AttributeType
   isRequired?: boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -321,6 +338,7 @@ export type AttributeDefinitionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
 }
 
@@ -331,6 +349,7 @@ export type AttributeDefinitionUncheckedUpdateInput = {
   type?: Prisma.EnumAttributeTypeFieldUpdateOperationsInput | $Enums.AttributeType
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -344,6 +363,7 @@ export type AttributeDefinitionCreateManyInput = {
   type: $Enums.AttributeType
   isRequired?: boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -369,6 +389,7 @@ export type AttributeDefinitionUncheckedUpdateManyInput = {
   type?: Prisma.EnumAttributeTypeFieldUpdateOperationsInput | $Enums.AttributeType
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -385,8 +406,8 @@ export type AttributeDefinitionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type AttributeDefinitionTenantIdCodeCompoundUniqueInput = {
-  tenantId: string
+export type AttributeDefinitionProductFamilyIdCodeCompoundUniqueInput = {
+  productFamilyId: string
   code: string
 }
 
@@ -397,6 +418,7 @@ export type AttributeDefinitionCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   isRequired?: Prisma.SortOrder
   options?: Prisma.SortOrder
+  productFamilyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -409,6 +431,7 @@ export type AttributeDefinitionMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isRequired?: Prisma.SortOrder
+  productFamilyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -421,6 +444,7 @@ export type AttributeDefinitionMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isRequired?: Prisma.SortOrder
+  productFamilyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -469,6 +493,48 @@ export type AttributeDefinitionUncheckedUpdateManyWithoutTenantNestedInput = {
   deleteMany?: Prisma.AttributeDefinitionScalarWhereInput | Prisma.AttributeDefinitionScalarWhereInput[]
 }
 
+export type AttributeDefinitionCreateNestedManyWithoutProductFamilyInput = {
+  create?: Prisma.XOR<Prisma.AttributeDefinitionCreateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput> | Prisma.AttributeDefinitionCreateWithoutProductFamilyInput[] | Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput[]
+  connectOrCreate?: Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput | Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput[]
+  createMany?: Prisma.AttributeDefinitionCreateManyProductFamilyInputEnvelope
+  connect?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+}
+
+export type AttributeDefinitionUncheckedCreateNestedManyWithoutProductFamilyInput = {
+  create?: Prisma.XOR<Prisma.AttributeDefinitionCreateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput> | Prisma.AttributeDefinitionCreateWithoutProductFamilyInput[] | Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput[]
+  connectOrCreate?: Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput | Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput[]
+  createMany?: Prisma.AttributeDefinitionCreateManyProductFamilyInputEnvelope
+  connect?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+}
+
+export type AttributeDefinitionUpdateManyWithoutProductFamilyNestedInput = {
+  create?: Prisma.XOR<Prisma.AttributeDefinitionCreateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput> | Prisma.AttributeDefinitionCreateWithoutProductFamilyInput[] | Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput[]
+  connectOrCreate?: Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput | Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput[]
+  upsert?: Prisma.AttributeDefinitionUpsertWithWhereUniqueWithoutProductFamilyInput | Prisma.AttributeDefinitionUpsertWithWhereUniqueWithoutProductFamilyInput[]
+  createMany?: Prisma.AttributeDefinitionCreateManyProductFamilyInputEnvelope
+  set?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  disconnect?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  delete?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  connect?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  update?: Prisma.AttributeDefinitionUpdateWithWhereUniqueWithoutProductFamilyInput | Prisma.AttributeDefinitionUpdateWithWhereUniqueWithoutProductFamilyInput[]
+  updateMany?: Prisma.AttributeDefinitionUpdateManyWithWhereWithoutProductFamilyInput | Prisma.AttributeDefinitionUpdateManyWithWhereWithoutProductFamilyInput[]
+  deleteMany?: Prisma.AttributeDefinitionScalarWhereInput | Prisma.AttributeDefinitionScalarWhereInput[]
+}
+
+export type AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyNestedInput = {
+  create?: Prisma.XOR<Prisma.AttributeDefinitionCreateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput> | Prisma.AttributeDefinitionCreateWithoutProductFamilyInput[] | Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput[]
+  connectOrCreate?: Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput | Prisma.AttributeDefinitionCreateOrConnectWithoutProductFamilyInput[]
+  upsert?: Prisma.AttributeDefinitionUpsertWithWhereUniqueWithoutProductFamilyInput | Prisma.AttributeDefinitionUpsertWithWhereUniqueWithoutProductFamilyInput[]
+  createMany?: Prisma.AttributeDefinitionCreateManyProductFamilyInputEnvelope
+  set?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  disconnect?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  delete?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  connect?: Prisma.AttributeDefinitionWhereUniqueInput | Prisma.AttributeDefinitionWhereUniqueInput[]
+  update?: Prisma.AttributeDefinitionUpdateWithWhereUniqueWithoutProductFamilyInput | Prisma.AttributeDefinitionUpdateWithWhereUniqueWithoutProductFamilyInput[]
+  updateMany?: Prisma.AttributeDefinitionUpdateManyWithWhereWithoutProductFamilyInput | Prisma.AttributeDefinitionUpdateManyWithWhereWithoutProductFamilyInput[]
+  deleteMany?: Prisma.AttributeDefinitionScalarWhereInput | Prisma.AttributeDefinitionScalarWhereInput[]
+}
+
 export type EnumAttributeTypeFieldUpdateOperationsInput = {
   set?: $Enums.AttributeType
 }
@@ -487,6 +553,7 @@ export type AttributeDefinitionCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  productFamily: Prisma.ProductFamilyCreateNestedOneWithoutAttributeDefinitionsInput
 }
 
 export type AttributeDefinitionUncheckedCreateWithoutTenantInput = {
@@ -496,6 +563,7 @@ export type AttributeDefinitionUncheckedCreateWithoutTenantInput = {
   type: $Enums.AttributeType
   isRequired?: boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -537,10 +605,63 @@ export type AttributeDefinitionScalarWhereInput = {
   type?: Prisma.EnumAttributeTypeFilter<"AttributeDefinition"> | $Enums.AttributeType
   isRequired?: Prisma.BoolFilter<"AttributeDefinition"> | boolean
   options?: Prisma.JsonNullableFilter<"AttributeDefinition">
+  productFamilyId?: Prisma.StringFilter<"AttributeDefinition"> | string
   createdAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AttributeDefinition"> | Date | string | null
   tenantId?: Prisma.StringFilter<"AttributeDefinition"> | string
+}
+
+export type AttributeDefinitionCreateWithoutProductFamilyInput = {
+  id?: string
+  code: string
+  name: string
+  type: $Enums.AttributeType
+  isRequired?: boolean
+  options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutAttributeDefinitionsInput
+}
+
+export type AttributeDefinitionUncheckedCreateWithoutProductFamilyInput = {
+  id?: string
+  code: string
+  name: string
+  type: $Enums.AttributeType
+  isRequired?: boolean
+  options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+}
+
+export type AttributeDefinitionCreateOrConnectWithoutProductFamilyInput = {
+  where: Prisma.AttributeDefinitionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AttributeDefinitionCreateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput>
+}
+
+export type AttributeDefinitionCreateManyProductFamilyInputEnvelope = {
+  data: Prisma.AttributeDefinitionCreateManyProductFamilyInput | Prisma.AttributeDefinitionCreateManyProductFamilyInput[]
+  skipDuplicates?: boolean
+}
+
+export type AttributeDefinitionUpsertWithWhereUniqueWithoutProductFamilyInput = {
+  where: Prisma.AttributeDefinitionWhereUniqueInput
+  update: Prisma.XOR<Prisma.AttributeDefinitionUpdateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedUpdateWithoutProductFamilyInput>
+  create: Prisma.XOR<Prisma.AttributeDefinitionCreateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedCreateWithoutProductFamilyInput>
+}
+
+export type AttributeDefinitionUpdateWithWhereUniqueWithoutProductFamilyInput = {
+  where: Prisma.AttributeDefinitionWhereUniqueInput
+  data: Prisma.XOR<Prisma.AttributeDefinitionUpdateWithoutProductFamilyInput, Prisma.AttributeDefinitionUncheckedUpdateWithoutProductFamilyInput>
+}
+
+export type AttributeDefinitionUpdateManyWithWhereWithoutProductFamilyInput = {
+  where: Prisma.AttributeDefinitionScalarWhereInput
+  data: Prisma.XOR<Prisma.AttributeDefinitionUpdateManyMutationInput, Prisma.AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyInput>
 }
 
 export type AttributeDefinitionCreateManyTenantInput = {
@@ -550,6 +671,7 @@ export type AttributeDefinitionCreateManyTenantInput = {
   type: $Enums.AttributeType
   isRequired?: boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -565,6 +687,7 @@ export type AttributeDefinitionUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
 }
 
 export type AttributeDefinitionUncheckedUpdateWithoutTenantInput = {
@@ -574,6 +697,7 @@ export type AttributeDefinitionUncheckedUpdateWithoutTenantInput = {
   type?: Prisma.EnumAttributeTypeFieldUpdateOperationsInput | $Enums.AttributeType
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -586,9 +710,62 @@ export type AttributeDefinitionUncheckedUpdateManyWithoutTenantInput = {
   type?: Prisma.EnumAttributeTypeFieldUpdateOperationsInput | $Enums.AttributeType
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type AttributeDefinitionCreateManyProductFamilyInput = {
+  id?: string
+  code: string
+  name: string
+  type: $Enums.AttributeType
+  isRequired?: boolean
+  options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+}
+
+export type AttributeDefinitionUpdateWithoutProductFamilyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAttributeTypeFieldUpdateOperationsInput | $Enums.AttributeType
+  isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
+}
+
+export type AttributeDefinitionUncheckedUpdateWithoutProductFamilyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAttributeTypeFieldUpdateOperationsInput | $Enums.AttributeType
+  isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAttributeTypeFieldUpdateOperationsInput | $Enums.AttributeType
+  isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -600,10 +777,12 @@ export type AttributeDefinitionSelect<ExtArgs extends runtime.Types.Extensions.I
   type?: boolean
   isRequired?: boolean
   options?: boolean
+  productFamilyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
+  productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attributeDefinition"]>
 
@@ -614,10 +793,12 @@ export type AttributeDefinitionSelectCreateManyAndReturn<ExtArgs extends runtime
   type?: boolean
   isRequired?: boolean
   options?: boolean
+  productFamilyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
+  productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attributeDefinition"]>
 
@@ -628,10 +809,12 @@ export type AttributeDefinitionSelectUpdateManyAndReturn<ExtArgs extends runtime
   type?: boolean
   isRequired?: boolean
   options?: boolean
+  productFamilyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
+  productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attributeDefinition"]>
 
@@ -642,26 +825,31 @@ export type AttributeDefinitionSelectScalar = {
   type?: boolean
   isRequired?: boolean
   options?: boolean
+  productFamilyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
 }
 
-export type AttributeDefinitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "type" | "isRequired" | "options" | "createdAt" | "updatedAt" | "deletedAt" | "tenantId", ExtArgs["result"]["attributeDefinition"]>
+export type AttributeDefinitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "type" | "isRequired" | "options" | "productFamilyId" | "createdAt" | "updatedAt" | "deletedAt" | "tenantId", ExtArgs["result"]["attributeDefinition"]>
 export type AttributeDefinitionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type AttributeDefinitionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type AttributeDefinitionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 
 export type $AttributeDefinitionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AttributeDefinition"
   objects: {
+    productFamily: Prisma.$ProductFamilyPayload<ExtArgs>
     tenant: Prisma.$TenantPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -671,6 +859,7 @@ export type $AttributeDefinitionPayload<ExtArgs extends runtime.Types.Extensions
     type: $Enums.AttributeType
     isRequired: boolean
     options: runtime.JsonValue | null
+    productFamilyId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1069,6 +1258,7 @@ readonly fields: AttributeDefinitionFieldRefs;
  */
 export interface Prisma__AttributeDefinitionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  productFamily<T extends Prisma.ProductFamilyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductFamilyDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductFamilyClient<runtime.Types.Result.GetResult<Prisma.$ProductFamilyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1105,6 +1295,7 @@ export interface AttributeDefinitionFieldRefs {
   readonly type: Prisma.FieldRef<"AttributeDefinition", 'AttributeType'>
   readonly isRequired: Prisma.FieldRef<"AttributeDefinition", 'Boolean'>
   readonly options: Prisma.FieldRef<"AttributeDefinition", 'Json'>
+  readonly productFamilyId: Prisma.FieldRef<"AttributeDefinition", 'String'>
   readonly createdAt: Prisma.FieldRef<"AttributeDefinition", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AttributeDefinition", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"AttributeDefinition", 'DateTime'>

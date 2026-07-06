@@ -10,6 +10,9 @@ import mediaRoutes from "./mediaRoutes.js";
 import userRoutes from "./userRoutes.js";
 import auditRoutes from "./auditRoutes.js";
 import roleRoutes from "./roleRoutes.js";
+import domainRoutes from "./domainRoutes.js";
+import categoryRoutes from "./categoryRoutes.js";
+import productFamilyRoutes from "./productFamilyRoutes.js";
 
 import { auditMiddleware } from "./auditMiddleware.js";
 
@@ -32,6 +35,9 @@ app.use("/api/media", mediaRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/audit", auditRoutes);
 app.use("/api/roles", roleRoutes);
+app.use("/api/domains", domainRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/product-families", productFamilyRoutes);
 app.listen(port, () => {
     console.log(`Backend listening on http://localhost:${port}`);
 });

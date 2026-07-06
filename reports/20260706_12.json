@@ -1,0 +1,15 @@
+{
+  "suite": "Product Classification Hierarchy Tests",
+  "timestamp": "2026-07-06T20:25:11.532Z",
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "results": [
+    {
+      "test": "Test Execution Error",
+      "status": "FAIL",
+      "details": "fetch failed",
+      "time": "2026-07-06T20:25:11.523Z"
+    }
+  ]
+}

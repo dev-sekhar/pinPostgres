@@ -6,14 +6,21 @@ let fetchPromise: Promise<string[]> | null = null;
 let cachedToken: string | null = null;
 
 export function usePermissions() {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    
+    // Check if token changed before initializing state
+    if (token !== cachedToken) {
+        clearPermissionsCache();
+    }
+
     const [permissions, setPermissions] = useState<string[]>(cachedPermissions || []);
     const [loading, setLoading] = useState<boolean>(cachedPermissions === null);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const currentToken = localStorage.getItem('token');
         
         // Invalidate cache if token changed
-        if (cachedToken !== token) {
+        if (cachedToken !== currentToken) {
             clearPermissionsCache();
         }
         
@@ -24,12 +31,11 @@ export function usePermissions() {
         }
 
         if (!fetchPromise) {
-            const token = localStorage.getItem('token');
-            if (token) {
+            if (currentToken) {
                 fetchPromise = fetchApi('/api/auth/me/permissions')
                     .then(data => {
                         cachedPermissions = data.permissions || [];
-                        cachedToken = token;
+                        cachedToken = currentToken;
                         return cachedPermissions as string[];
                     })
                     .catch(err => {

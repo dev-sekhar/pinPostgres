@@ -17,15 +17,20 @@ interface AttributeDefinition {
 
 export default function AttributesListPage() {
   const router = useRouter();
-  const [attributes, setAttributes] = useState<AttributeDefinition[]>([]);
+  const [attributes, setAttributes] = useState<any[]>([]);
+  const [families, setFamilies] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const loadAttributes = async () => {
       try {
-        const data = await fetchApi('/api/attributes');
-        setAttributes(data);
+        const [attrData, famData] = await Promise.all([
+          fetchApi('/api/attributes'),
+          fetchApi('/api/product-families')
+        ]);
+        setAttributes(attrData);
+        setFamilies(famData);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -75,6 +80,11 @@ export default function AttributesListPage() {
               <div>
                 <h3 style={{ fontSize: '1.125rem', marginBottom: '0.25rem' }}>{attr.name}</h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Code: {attr.code}</p>
+                {attr.productFamilyId && (
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.25rem' }}>
+                    Family: <strong>{families.find(f => f.id === attr.productFamilyId)?.name || 'Unknown'}</strong>
+                  </p>
+                )}
               </div>
               <span style={{ 
                 fontSize: '0.75rem', 

@@ -14,6 +14,7 @@ interface AttributeDefinition {
   type: string;
   isRequired: boolean;
   options?: any;
+  productFamilyId: string;
 }
 
 interface AttributeAssignment {
@@ -36,6 +37,15 @@ export default function EditProductPage() {
   const [attributeDefs, setAttributeDefs] = useState<AttributeDefinition[]>([]);
   const [assignments, setAssignments] = useState<AttributeAssignment[]>([]);
   
+  // Classification state
+  const [domains, setDomains] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [families, setFamilies] = useState<any[]>([]);
+  const [selectedDomainId, setSelectedDomainId] = useState('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  const [selectedFamilyId, setSelectedFamilyId] = useState('');
+  const [parentId, setParentId] = useState<string | null>(null);
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -46,18 +56,40 @@ export default function EditProductPage() {
     
     const loadData = async () => {
       try {
-        const [productData, attrsData] = await Promise.all([
+        const [productData, attrsData, dData, cData, fData] = await Promise.all([
           fetchApi(`/api/products/${id}`),
-          fetchApi('/api/attributes')
+          fetchApi('/api/attributes'),
+          fetchApi('/api/domains'),
+          fetchApi('/api/categories'),
+          fetchApi('/api/product-families')
         ]);
         
         setAttributeDefs(attrsData);
+        setDomains(dData);
+        setCategories(cData);
+        setFamilies(fData);
+
         setFormData({
           sku: productData.sku,
           name: productData.name,
           description: productData.description || '',
           price: productData.price
         });
+        
+        setParentId(productData.parentId || null);
+
+        const prodFamId = productData.productFamilyId || '';
+        setSelectedFamilyId(prodFamId);
+        if (prodFamId) {
+          const fam = fData.find((f: any) => f.id === prodFamId);
+          if (fam) {
+            setSelectedCategoryId(fam.categoryId);
+            const cat = cData.find((c: any) => c.id === fam.categoryId);
+            if (cat) {
+              setSelectedDomainId(cat.domainId);
+            }
+          }
+        }
         
         // Populate existing assignments from JSON
         const existingAssignments: AttributeAssignment[] = [];
@@ -70,9 +102,10 @@ export default function EditProductPage() {
           });
         }
         
-        // Ensure REQUIRED attributes have a row even if missing
-        attrsData.forEach((attr: AttributeDefinition) => {
-          if (attr.isRequired && !existingAssignments.find(a => a.attributeCode === attr.code)) {
+        // Ensure ALL attributes have a row even if missing (only for current family)
+        const familyAttributes = attrsData.filter((a: any) => a.productFamilyId === prodFamId);
+        familyAttributes.forEach((attr: AttributeDefinition) => {
+          if (!existingAssignments.find(a => a.attributeCode === attr.code)) {
             existingAssignments.push({
               attributeCode: attr.code,
               value: attr.type === 'BOOLEAN' ? false : ''
@@ -99,7 +132,7 @@ export default function EditProductPage() {
     newAssignments[index][field] = val;
     
     if (field === 'attributeCode') {
-      const def = attributeDefs.find(a => a.code === val);
+      const def = attributeDefs.find(a => a.code === val && a.productFamilyId === selectedFamilyId);
       newAssignments[index].value = def?.type === 'BOOLEAN' ? false : '';
     }
     
@@ -121,8 +154,14 @@ export default function EditProductPage() {
     setSaving(true);
     setError('');
 
+    if (!selectedFamilyId) {
+      setError("Please select a Product Family.");
+      setSaving(false);
+      return;
+    }
+
     // Ensure all required attributes are present
-    const requiredDefs = attributeDefs.filter(a => a.isRequired);
+    const requiredDefs = attributeDefs.filter((a: any) => a.isRequired && a.productFamilyId === selectedFamilyId);
     for (const def of requiredDefs) {
       const assignment = assignments.find(a => a.attributeCode === def.code);
       if (!assignment || assignment.value === '' || assignment.value === undefined) {
@@ -145,6 +184,7 @@ export default function EditProductPage() {
         body: JSON.stringify({
           ...formData,
           price: Number(formData.price),
+          productFamilyId: selectedFamilyId,
           attributes: attributesObj
         }),
       });
@@ -157,8 +197,9 @@ export default function EditProductPage() {
   };
 
   const getAvailableOptions = (currentIndex: number) => {
+    const familyAttributes = attributeDefs.filter((a: any) => a.productFamilyId === selectedFamilyId);
     const assignedCodes = assignments.map((a, i) => i !== currentIndex ? a.attributeCode : null).filter(Boolean);
-    return attributeDefs.filter(def => !assignedCodes.includes(def.code));
+    return familyAttributes.filter(def => !assignedCodes.includes(def.code));
   };
 
   if (loading) return <div className="center-screen text-gradient">Loading product...</div>;
@@ -205,6 +246,46 @@ export default function EditProductPage() {
                 required
               />
               
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Domain</label>
+                  <select 
+                    value={selectedDomainId} 
+                    onChange={e => { setSelectedDomainId(e.target.value); setSelectedCategoryId(''); setSelectedFamilyId(''); }}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none', opacity: parentId ? 0.7 : 1 }}
+                    disabled={!!parentId}
+                  >
+                    <option value="">-- Select Domain --</option>
+                    {domains.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Category</label>
+                  <select 
+                    value={selectedCategoryId} 
+                    onChange={e => { setSelectedCategoryId(e.target.value); setSelectedFamilyId(''); }}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none', opacity: parentId ? 0.7 : 1 }}
+                    disabled={!selectedDomainId || !!parentId}
+                  >
+                    <option value="">-- Select Category --</option>
+                    {categories.filter(c => c.domainId === selectedDomainId).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Product Family *</label>
+                  <select 
+                    value={selectedFamilyId} 
+                    onChange={e => setSelectedFamilyId(e.target.value)}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none', opacity: parentId ? 0.7 : 1 }}
+                    disabled={!selectedCategoryId || !!parentId}
+                    required
+                  >
+                    <option value="">-- Select Family --</option>
+                    {families.filter(f => f.categoryId === selectedCategoryId).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                  </select>
+                </div>
+              </div>
+              
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', marginBottom: '1rem' }}>
                 <label htmlFor="description" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
                   Description
@@ -247,7 +328,7 @@ export default function EditProductPage() {
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       {assignments.map((assignment, index) => {
-                        const def = attributeDefs.find(a => a.code === assignment.attributeCode);
+                        const def = attributeDefs.find((a: any) => a.code === assignment.attributeCode && a.productFamilyId === selectedFamilyId);
                         const isRequired = def?.isRequired;
                         
                         return (
@@ -340,15 +421,16 @@ export default function EditProductPage() {
                               )}
                             </div>
 
-                            <Button 
-                              type="button" 
-                              variant="outline" 
-                              onClick={() => removeAssignmentRow(index)}
-                              disabled={isRequired}
-                              style={{ padding: '0 1rem', height: '42px' }}
-                            >
-                              X
-                            </Button>
+                            {!isRequired && (
+                              <Button 
+                                type="button" 
+                                variant="outline" 
+                                onClick={() => removeAssignmentRow(index)}
+                                style={{ padding: '0 1rem', height: '42px' }}
+                              >
+                                X
+                              </Button>
+                            )}
                           </div>
                         );
                       })}

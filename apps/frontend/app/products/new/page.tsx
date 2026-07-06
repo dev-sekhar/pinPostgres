@@ -14,6 +14,7 @@ interface AttributeDefinition {
   type: string;
   isRequired: boolean;
   options?: any;
+  productFamilyId: string;
 }
 
 interface AttributeAssignment {
@@ -38,33 +39,77 @@ function ProductForm() {
   // Current assignments for this product
   const [assignments, setAssignments] = useState<AttributeAssignment[]>([]);
   
+  // Classification state
+  const [domains, setDomains] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [families, setFamilies] = useState<any[]>([]);
+  const [selectedDomainId, setSelectedDomainId] = useState('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  const [selectedFamilyId, setSelectedFamilyId] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Fetch attribute definitions on mount
+  // Fetch classification and attributes on mount
   useEffect(() => {
-    const loadAttributes = async () => {
+    const loadInitialData = async () => {
       try {
-        const data = await fetchApi('/api/attributes');
-        setAttributeDefs(data);
+        const promises: Promise<any>[] = [
+          fetchApi('/api/domains'),
+          fetchApi('/api/categories'),
+          fetchApi('/api/product-families'),
+          fetchApi('/api/attributes')
+        ];
         
-        // Auto-add rows for REQUIRED attributes
-        const initialAssignments: AttributeAssignment[] = [];
-        data.forEach((attr: AttributeDefinition) => {
-          if (attr.isRequired) {
-            initialAssignments.push({
-              attributeCode: attr.code,
-              value: attr.type === 'BOOLEAN' ? false : ''
-            });
+        if (parentId) {
+          promises.push(fetchApi(`/api/products/${parentId}`));
+        }
+        
+        const results = await Promise.all(promises);
+        const [dData, cData, fData, attrData, parentData] = results;
+        
+        setDomains(dData);
+        setCategories(cData);
+        setFamilies(fData);
+        setAttributeDefs(attrData);
+        
+        if (parentData && parentData.productFamilyId) {
+          const prodFamId = parentData.productFamilyId;
+          setSelectedFamilyId(prodFamId);
+          const fam = fData.find((f: any) => f.id === prodFamId);
+          if (fam) {
+            setSelectedCategoryId(fam.categoryId);
+            const cat = cData.find((c: any) => c.id === fam.categoryId);
+            if (cat) {
+              setSelectedDomainId(cat.domainId);
+            }
           }
-        });
-        setAssignments(initialAssignments);
+        }
       } catch (err: any) {
-        console.error("Failed to load attributes", err);
+        console.error("Failed to load initial data", err);
       }
     };
-    loadAttributes();
-  }, []);
+    loadInitialData();
+  }, [parentId]);
+
+  // Update attributes when family changes
+  useEffect(() => {
+    if (!selectedFamilyId) {
+      setAssignments([]);
+      return;
+    }
+    const familyAttributes = attributeDefs.filter((a: any) => a.productFamilyId === selectedFamilyId);
+    
+    // Auto-add rows for ALL attributes
+    const initialAssignments: AttributeAssignment[] = [];
+    familyAttributes.forEach((attr: AttributeDefinition) => {
+      initialAssignments.push({
+        attributeCode: attr.code,
+        value: attr.type === 'BOOLEAN' ? false : ''
+      });
+    });
+    setAssignments(initialAssignments);
+  }, [selectedFamilyId, attributeDefs]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
@@ -76,7 +121,7 @@ function ProductForm() {
     
     // If the user changed the attribute, reset the value based on the new attribute's type
     if (field === 'attributeCode') {
-      const def = attributeDefs.find(a => a.code === val);
+      const def = attributeDefs.find(a => a.code === val && a.productFamilyId === selectedFamilyId);
       newAssignments[index].value = def?.type === 'BOOLEAN' ? false : '';
     }
     
@@ -98,8 +143,14 @@ function ProductForm() {
     setLoading(true);
     setError('');
 
+    if (!selectedFamilyId) {
+      setError("Please select a Product Family.");
+      setLoading(false);
+      return;
+    }
+
     // Ensure all required attributes are present
-    const requiredDefs = attributeDefs.filter(a => a.isRequired);
+    const requiredDefs = attributeDefs.filter((a: any) => a.isRequired && a.productFamilyId === selectedFamilyId);
     for (const def of requiredDefs) {
       const assignment = assignments.find(a => a.attributeCode === def.code);
       if (!assignment || assignment.value === '' || assignment.value === undefined) {
@@ -124,6 +175,7 @@ function ProductForm() {
           ...formData,
           price: Number(formData.price),
           parentId: parentId || undefined,
+          productFamilyId: selectedFamilyId,
           attributes: attributesObj // Pass dynamically assigned attributes
         }),
       });
@@ -142,8 +194,9 @@ function ProductForm() {
 
   // Helper to get unassigned attributes for the dropdown
   const getAvailableOptions = (currentIndex: number) => {
+    const familyAttributes = attributeDefs.filter((a: any) => a.productFamilyId === selectedFamilyId);
     const assignedCodes = assignments.map((a, i) => i !== currentIndex ? a.attributeCode : null).filter(Boolean);
-    return attributeDefs.filter(def => !assignedCodes.includes(def.code));
+    return familyAttributes.filter(def => !assignedCodes.includes(def.code));
   };
 
   return (
@@ -194,6 +247,46 @@ function ProductForm() {
                 required
               />
               
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Domain</label>
+                  <select 
+                    value={selectedDomainId} 
+                    onChange={e => { setSelectedDomainId(e.target.value); setSelectedCategoryId(''); setSelectedFamilyId(''); }}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none', opacity: parentId ? 0.7 : 1 }}
+                    disabled={!!parentId}
+                  >
+                    <option value="">-- Select Domain --</option>
+                    {domains.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Category</label>
+                  <select 
+                    value={selectedCategoryId} 
+                    onChange={e => { setSelectedCategoryId(e.target.value); setSelectedFamilyId(''); }}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none', opacity: parentId ? 0.7 : 1 }}
+                    disabled={!selectedDomainId || !!parentId}
+                  >
+                    <option value="">-- Select Category --</option>
+                    {categories.filter(c => c.domainId === selectedDomainId).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Product Family *</label>
+                  <select 
+                    value={selectedFamilyId} 
+                    onChange={e => setSelectedFamilyId(e.target.value)}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none', opacity: parentId ? 0.7 : 1 }}
+                    disabled={!selectedCategoryId || !!parentId}
+                    required
+                  >
+                    <option value="">-- Select Family --</option>
+                    {families.filter(f => f.categoryId === selectedCategoryId).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                  </select>
+                </div>
+              </div>
+              
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', marginBottom: '1rem' }}>
                 <label htmlFor="description" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
                   Description
@@ -224,7 +317,7 @@ function ProductForm() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                     <div>
                       <h3 style={{ fontSize: '1.125rem' }}>Attribute Assignments</h3>
-                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Link custom schema attributes to this product.</p>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Fill out the custom attributes for this product.</p>
                     </div>
                     {getAvailableOptions(-1).length > 0 && (
                       <Button type="button" size="sm" onClick={addAssignmentRow}>+ Assign Attribute</Button>
@@ -238,7 +331,7 @@ function ProductForm() {
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       {assignments.map((assignment, index) => {
-                        const def = attributeDefs.find(a => a.code === assignment.attributeCode);
+                        const def = attributeDefs.find((a: any) => a.code === assignment.attributeCode && a.productFamilyId === selectedFamilyId);
                         const isRequired = def?.isRequired;
                         
                         return (
@@ -333,16 +426,17 @@ function ProductForm() {
                               )}
                             </div>
 
-                            {/* Remove Button */}
-                            <Button 
-                              type="button" 
-                              variant="outline" 
-                              onClick={() => removeAssignmentRow(index)}
-                              disabled={isRequired} // Cannot remove required attributes
-                              style={{ padding: '0 1rem', height: '42px' }}
-                            >
-                              X
-                            </Button>
+                            {/* Remove Button (Only for Optional Attributes) */}
+                            {!isRequired && (
+                              <Button 
+                                type="button" 
+                                variant="outline" 
+                                onClick={() => removeAssignmentRow(index)}
+                                style={{ padding: '0 1rem', height: '42px' }}
+                              >
+                                X
+                              </Button>
+                            )}
                           </div>
                         );
                       })}

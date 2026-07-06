@@ -22,6 +22,14 @@ export default function EditAttributePage() {
   // For options (we'll join/split by comma for simplicity in this UI)
   const [optionsString, setOptionsString] = useState('');
   
+  // Classification state
+  const [domains, setDomains] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [families, setFamilies] = useState<any[]>([]);
+  const [selectedDomainId, setSelectedDomainId] = useState('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  const [selectedFamilyId, setSelectedFamilyId] = useState('');
+  
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -31,7 +39,16 @@ export default function EditAttributePage() {
     
     const loadData = async () => {
       try {
-        const data = await fetchApi(`/api/attributes/${id}`);
+        const [data, dData, cData, fData] = await Promise.all([
+          fetchApi(`/api/attributes/${id}`),
+          fetchApi('/api/domains'),
+          fetchApi('/api/categories'),
+          fetchApi('/api/product-families')
+        ]);
+        setDomains(dData);
+        setCategories(cData);
+        setFamilies(fData);
+
         setFormData({
           code: data.code,
           name: data.name,
@@ -40,6 +57,19 @@ export default function EditAttributePage() {
         });
         if (data.options && Array.isArray(data.options)) {
           setOptionsString(data.options.join(', '));
+        }
+
+        const prodFamId = data.productFamilyId || '';
+        setSelectedFamilyId(prodFamId);
+        if (prodFamId) {
+          const fam = fData.find((f: any) => f.id === prodFamId);
+          if (fam) {
+            setSelectedCategoryId(fam.categoryId);
+            const cat = cData.find((c: any) => c.id === fam.categoryId);
+            if (cat) {
+              setSelectedDomainId(cat.domainId);
+            }
+          }
         }
       } catch (err: any) {
         setError(err.message);
@@ -59,6 +89,12 @@ export default function EditAttributePage() {
     e.preventDefault();
     setSaving(true);
     setError('');
+
+    if (!selectedFamilyId) {
+      setError("Please select a Product Family for this attribute.");
+      setSaving(false);
+      return;
+    }
     
     let optionsArray: string[] | undefined = undefined;
     if (formData.type === 'SELECT' || formData.type === 'MULTI_SELECT') {
@@ -75,7 +111,8 @@ export default function EditAttributePage() {
         method: 'PUT',
         body: JSON.stringify({
           ...formData,
-          options: optionsArray
+          options: optionsArray,
+          productFamilyId: selectedFamilyId
         }),
       });
       router.push('/attributes');
@@ -105,6 +142,45 @@ export default function EditAttributePage() {
           </CardHeader>
           <CardBody>
             <form onSubmit={handleSubmit}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--border-color)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Domain</label>
+                  <select 
+                    value={selectedDomainId} 
+                    onChange={e => { setSelectedDomainId(e.target.value); setSelectedCategoryId(''); setSelectedFamilyId(''); }}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none' }}
+                  >
+                    <option value="">-- Select Domain --</option>
+                    {domains.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Category</label>
+                  <select 
+                    value={selectedCategoryId} 
+                    onChange={e => { setSelectedCategoryId(e.target.value); setSelectedFamilyId(''); }}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none' }}
+                    disabled={!selectedDomainId}
+                  >
+                    <option value="">-- Select Category --</option>
+                    {categories.filter(c => c.domainId === selectedDomainId).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                  <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Product Family *</label>
+                  <select 
+                    value={selectedFamilyId} 
+                    onChange={e => setSelectedFamilyId(e.target.value)}
+                    style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none' }}
+                    disabled={!selectedCategoryId}
+                    required
+                  >
+                    <option value="">-- Select Family --</option>
+                    {families.filter(f => f.categoryId === selectedCategoryId).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                  </select>
+                </div>
+              </div>
+
               <Input
                 id="name"
                 label="Display Name"
@@ -119,7 +195,7 @@ export default function EditAttributePage() {
                 onChange={handleChange}
                 required
               />
-              
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', marginBottom: '1.5rem' }}>
                 <label htmlFor="type" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
                   Data Type

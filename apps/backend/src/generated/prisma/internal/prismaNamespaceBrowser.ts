@@ -52,6 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Tenant: 'Tenant',
+  Domain: 'Domain',
+  Category: 'Category',
+  ProductFamily: 'ProductFamily',
   User: 'User',
   Product: 'Product',
   AttributeDefinition: 'AttributeDefinition',
@@ -90,6 +93,48 @@ export const TenantScalarFieldEnum = {
 export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
 
 
+export const DomainScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type DomainScalarFieldEnum = (typeof DomainScalarFieldEnum)[keyof typeof DomainScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  domainId: 'domainId',
+  parentId: 'parentId',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const ProductFamilyScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  categoryId: 'categoryId',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ProductFamilyScalarFieldEnum = (typeof ProductFamilyScalarFieldEnum)[keyof typeof ProductFamilyScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -112,6 +157,7 @@ export const ProductScalarFieldEnum = {
   description: 'description',
   price: 'price',
   attributes: 'attributes',
+  productFamilyId: 'productFamilyId',
   parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -129,6 +175,7 @@ export const AttributeDefinitionScalarFieldEnum = {
   type: 'type',
   isRequired: 'isRequired',
   options: 'options',
+  productFamilyId: 'productFamilyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',

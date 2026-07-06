@@ -43,14 +43,14 @@ router.get("/:id", requirePermission("product.read") as any, async (req: AuthReq
 
 // POST /api/products
 router.post("/", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
-    const { sku, name, description, price, parentId, attributes } = req.body;
-    if (!sku || !name || price === undefined) {
-        return res.status(400).json({ error: "Missing required fields (sku, name, price)" });
+    const { sku, name, description, price, parentId, attributes, productFamilyId } = req.body;
+    if (!sku || !name || price === undefined || !productFamilyId) {
+        return res.status(400).json({ error: "Missing required fields (sku, name, price, productFamilyId)" });
     }
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const newProduct = await tx.product.create({
-                data: { sku, name, description, price, parentId, attributes, tenantId: req.user!.tenantId }
+                data: { sku, name, description, price, parentId, attributes, productFamilyId, tenantId: req.user!.tenantId }
             });
             
             await auditService.logEvent(tx, {
@@ -75,15 +75,15 @@ router.post("/", requirePermission("product.create") as any, async (req: AuthReq
 
 // PUT /api/products/:id
 router.put("/:id", requirePermission("product.update") as any, async (req: AuthRequest, res) => {
-    const { sku, name, description, price, attributes } = req.body;
-    if (!sku || !name || price === undefined) {
+    const { sku, name, description, price, attributes, productFamilyId } = req.body;
+    if (!sku || !name || price === undefined || !productFamilyId) {
         return res.status(400).json({ error: "Missing required fields" });
     }
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.product.update({
                 where: { id: req.params.id, deletedAt: null },
-                data: { sku, name, description, price, attributes }
+                data: { sku, name, description, price, attributes, productFamilyId }
             });
         });
         res.json(product);

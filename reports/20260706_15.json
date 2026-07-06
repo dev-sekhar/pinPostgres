@@ -1,0 +1,51 @@
+{
+  "suite": "Product Classification Hierarchy Tests",
+  "timestamp": "2026-07-06T20:29:24.255Z",
+  "total": 7,
+  "passed": 7,
+  "failed": 0,
+  "results": [
+    {
+      "test": "Register Tenant",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:29:23.757Z"
+    },
+    {
+      "test": "Admin Login",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:29:24.008Z"
+    },
+    {
+      "test": "Create Domain",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:29:24.109Z"
+    },
+    {
+      "test": "Create Category",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:29:24.152Z"
+    },
+    {
+      "test": "Create Subcategory",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:29:24.183Z"
+    },
+    {
+      "test": "Create Product Family",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:29:24.222Z"
+    },
+    {
+      "test": "Fetch Product Families",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:29:24.253Z"
+    }
+  ]
+}

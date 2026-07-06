@@ -49,10 +49,75 @@ model Tenant {
     deletedAt DateTime?
 
     users                User[]
+    domains              Domain[]
+    categories           Category[]
+    productFamilies      ProductFamily[]
     products             Product[]
     attributeDefinitions AttributeDefinition[]
     auditLogs            AuditLog[]
     roles                Role[]
+}
+
+model Domain {
+    id          String   @id @default(uuid())
+    tenantId    String
+    name        String
+    description String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    categories  Category[]
+
+    @@unique([tenantId, name])
+    @@index([tenantId])
+}
+
+model Category {
+    id          String   @id @default(uuid())
+    tenantId    String
+    domainId    String
+    parentId    String?  // For nested categories
+    name        String
+    description String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    domain      Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
+    
+    parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+    children    Category[] @relation("CategoryHierarchy")
+
+    productFamilies ProductFamily[]
+
+    @@unique([domainId, parentId, name])
+    @@index([tenantId])
+    @@index([domainId])
+    @@index([parentId])
+}
+
+model ProductFamily {
+    id          String   @id @default(uuid())
+    tenantId    String
+    categoryId  String
+    name        String
+    description String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+    products             Product[]
+    attributeDefinitions AttributeDefinition[]
+
+    @@unique([categoryId, name])
+    @@index([tenantId])
+    @@index([categoryId])
 }
 
 model User {
@@ -74,12 +139,15 @@ model User {
 }
 
 model Product {
-    id          String   @id @default(uuid())
-    sku         String
-    name        String
-    description String?
-    price       Decimal  @db.Decimal(10, 2)
-    attributes  Json     @default("{}") // Stores code-value pairs matching AttributeDefinition
+    id              String   @id @default(uuid())
+    sku             String
+    name            String
+    description     String?
+    price           Decimal  @db.Decimal(10, 2)
+    attributes      Json     @default("{}") // Stores code-value pairs matching AttributeDefinition
+
+    productFamilyId String
+    productFamily   ProductFamily @relation(fields: [productFamilyId], references: [id], onDelete: Cascade)
 
     // Hierarchy Support (For Variant handling)
     parentId    String?
@@ -97,6 +165,7 @@ model Product {
 
     @@unique([tenantId, sku])
     @@index([tenantId])
+    @@index([productFamilyId])
     @@index([parentId])
 }
 
@@ -108,6 +177,9 @@ model AttributeDefinition {
     isRequired Boolean       @default(false)
     options    Json?         // Stores predefined string array for SELECT types e.g. ["Red", "Blue"]
 
+    productFamilyId String
+    productFamily   ProductFamily @relation(fields: [productFamilyId], references: [id], onDelete: Cascade)
+
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     deletedAt DateTime?
@@ -115,8 +187,9 @@ model AttributeDefinition {
     tenantId String
     tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
-    @@unique([tenantId, code])
+    @@unique([productFamilyId, code])
     @@index([tenantId])
+    @@index([productFamilyId])
 }
 
 model ProductMedia {

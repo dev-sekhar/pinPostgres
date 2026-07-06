@@ -1,0 +1,27 @@
+{
+  "suite": "Product Classification Hierarchy Tests",
+  "timestamp": "2026-07-06T20:27:44.577Z",
+  "total": 3,
+  "passed": 2,
+  "failed": 1,
+  "results": [
+    {
+      "test": "Register Tenant",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:27:44.199Z"
+    },
+    {
+      "test": "Admin Login",
+      "status": "PASS",
+      "details": "",
+      "time": "2026-07-06T20:27:44.453Z"
+    },
+    {
+      "test": "Test Execution Error",
+      "status": "FAIL",
+      "details": "Failed to create domain: {\"error\":\"Failed to create domain\"}",
+      "time": "2026-07-06T20:27:44.576Z"
+    }
+  ]
+}

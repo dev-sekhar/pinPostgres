@@ -38,7 +38,7 @@ export default function DashboardPage() {
         <Button variant="outline" size="sm" onClick={handleLogout}>Log Out</Button>
       </header>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, 320px)', gap: '2rem' }}>
         <HasPermission permission="product.read">
           <Card>
             <CardHeader>
@@ -71,6 +71,18 @@ export default function DashboardPage() {
             <CardBody>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Define custom product attributes for your tenant.</p>
               <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/attributes')}>Configure</Button>
+            </CardBody>
+          </Card>
+        </HasPermission>
+
+        <HasPermission permission="domain.read">
+          <Card>
+            <CardHeader>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>Classification</h3>
+            </CardHeader>
+            <CardBody>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Manage domains, categories, and product families.</p>
+              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/classification')}>Manage Hierarchy</Button>
             </CardBody>
           </Card>
         </HasPermission>
