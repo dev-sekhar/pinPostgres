@@ -48,6 +48,12 @@ router.post("/", async (req: AuthRequest, res) => {
     if (!code || !name || !type) {
         return res.status(400).json({ error: "Missing required fields (code, name, type)" });
     }
+    if (!/^[a-z0-9_]+$/.test(code)) {
+        return res.status(400).json({ error: "Code must be lowercase alphanumeric and underscores only" });
+    }
+    if ((type === 'SELECT' || type === 'MULTI_SELECT') && (!options || !Array.isArray(options) || options.length === 0)) {
+        return res.status(400).json({ error: "Options array is required for SELECT types" });
+    }
     try {
         const [_, attribute] = await withTenant(req.user!.tenantId,
             prisma.attributeDefinition.create({
@@ -67,10 +73,32 @@ router.post("/", async (req: AuthRequest, res) => {
 router.put("/:id", async (req: AuthRequest, res) => {
     const { code, name, type, isRequired, options } = req.body;
     if (!code || !name || !type) {
-        return res.status(400).json({ error: "Missing required fields" });
+        return res.status(400).json({ error: "Missing required fields (code, name, type)" });
+    }
+    if (!/^[a-z0-9_]+$/.test(code)) {
+        return res.status(400).json({ error: "Code must be lowercase alphanumeric and underscores only" });
+    }
+    if ((type === 'SELECT' || type === 'MULTI_SELECT') && (!options || !Array.isArray(options) || options.length === 0)) {
+        return res.status(400).json({ error: "Options array is required for SELECT types" });
     }
     try {
-        const [_, attribute] = await withTenant(req.user!.tenantId,
+        // Fetch existing attribute to check its code
+        const [_, existing] = await withTenant(req.user!.tenantId,
+            prisma.attributeDefinition.findUnique({
+                where: { id: req.params.id, deletedAt: null }
+            })
+        );
+        if (!existing) return res.status(404).json({ error: "Attribute not found" });
+
+        // Check if any product uses this attribute
+        const [__, productsInUse] = await withTenant(req.user!.tenantId,
+            prisma.$queryRawUnsafe(`SELECT id FROM "Product" WHERE "deletedAt" IS NULL AND "attributes"->>'${existing.code}' IS NOT NULL LIMIT 1`)
+        );
+        if (Array.isArray(productsInUse) && productsInUse.length > 0) {
+            return res.status(400).json({ error: "Cannot edit attribute because it is already used by products or variants" });
+        }
+
+        const [___, attribute] = await withTenant(req.user!.tenantId,
             prisma.attributeDefinition.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: { code, name, type, isRequired, options }

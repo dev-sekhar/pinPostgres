@@ -18,7 +18,7 @@ router.get("/", async (req: AuthRequest, res) => {
     try {
         const [_, products] = await withTenant(req.user!.tenantId, 
             prisma.product.findMany({
-                where: { deletedAt: null },
+                where: { deletedAt: null, parentId: null },
                 take: 50,
                 orderBy: { createdAt: "desc" },
             })
@@ -35,7 +35,8 @@ router.get("/:id", async (req: AuthRequest, res) => {
     try {
         const [_, product] = await withTenant(req.user!.tenantId,
             prisma.product.findUnique({
-                where: { id: req.params.id, deletedAt: null }
+                where: { id: req.params.id, deletedAt: null },
+                include: { variants: { where: { deletedAt: null } } }
             })
         );
         if (!product) return res.status(404).json({ error: "Product not found" });
@@ -47,14 +48,14 @@ router.get("/:id", async (req: AuthRequest, res) => {
 
 // POST /api/products
 router.post("/", async (req: AuthRequest, res) => {
-    const { sku, name, description, price } = req.body;
+    const { sku, name, description, price, parentId, attributes } = req.body;
     if (!sku || !name || price === undefined) {
         return res.status(400).json({ error: "Missing required fields (sku, name, price)" });
     }
     try {
         const [_, product] = await withTenant(req.user!.tenantId,
             prisma.product.create({
-                data: { sku, name, description, price, tenantId: req.user!.tenantId }
+                data: { sku, name, description, price, parentId, attributes, tenantId: req.user!.tenantId }
             })
         );
         res.status(201).json(product);
@@ -66,7 +67,7 @@ router.post("/", async (req: AuthRequest, res) => {
 
 // PUT /api/products/:id
 router.put("/:id", async (req: AuthRequest, res) => {
-    const { sku, name, description, price } = req.body;
+    const { sku, name, description, price, attributes } = req.body;
     if (!sku || !name || price === undefined) {
         return res.status(400).json({ error: "Missing required fields" });
     }
@@ -74,7 +75,7 @@ router.put("/:id", async (req: AuthRequest, res) => {
         const [_, product] = await withTenant(req.user!.tenantId,
             prisma.product.update({
                 where: { id: req.params.id, deletedAt: null },
-                data: { sku, name, description, price }
+                data: { sku, name, description, price, attributes }
             })
         );
         res.json(product);
