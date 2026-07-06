@@ -1,28 +1,21 @@
 import { Router } from "express";
-import { prisma } from "./prismaClient.js";
+import { prisma, withTenantTransaction } from "./prismaClient.js";
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
+import { auditService } from "./services/auditService.js";
 
 const router = Router();
 
 router.use(requireAuth as any);
-
-const withTenant = async (tenantId: string, operation: any) => {
-    return prisma.$transaction([
-        prisma.$executeRaw`SELECT set_config('app.current_tenant', ${tenantId}, true)`,
-        operation
-    ]);
-};
-
 // GET /api/products
 router.get("/", async (req: AuthRequest, res) => {
     try {
-        const [_, products] = await withTenant(req.user!.tenantId, 
-            prisma.product.findMany({
+        const products = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.product.findMany({
                 where: { deletedAt: null, parentId: null },
                 take: 50,
                 orderBy: { createdAt: "desc" },
-            })
-        );
+            });
+        });
         res.json(products);
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -33,12 +26,12 @@ router.get("/", async (req: AuthRequest, res) => {
 // GET /api/products/:id
 router.get("/:id", async (req: AuthRequest, res) => {
     try {
-        const [_, product] = await withTenant(req.user!.tenantId,
-            prisma.product.findUnique({
+        const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.product.findUnique({
                 where: { id: req.params.id, deletedAt: null },
                 include: { variants: { where: { deletedAt: null } } }
-            })
-        );
+            });
+        });
         if (!product) return res.status(404).json({ error: "Product not found" });
         res.json(product);
     } catch (error) {
@@ -53,11 +46,24 @@ router.post("/", async (req: AuthRequest, res) => {
         return res.status(400).json({ error: "Missing required fields (sku, name, price)" });
     }
     try {
-        const [_, product] = await withTenant(req.user!.tenantId,
-            prisma.product.create({
+        const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            const newProduct = await tx.product.create({
                 data: { sku, name, description, price, parentId, attributes, tenantId: req.user!.tenantId }
-            })
-        );
+            });
+            
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Product',
+                entityId: newProduct.id,
+                operation: 'CREATE',
+                afterState: newProduct,
+                auditMeta: (req as any).auditMeta
+            });
+            
+            return newProduct;
+        });
+
         res.status(201).json(product);
     } catch (error) {
         console.error("Error creating product:", error);
@@ -72,12 +78,12 @@ router.put("/:id", async (req: AuthRequest, res) => {
         return res.status(400).json({ error: "Missing required fields" });
     }
     try {
-        const [_, product] = await withTenant(req.user!.tenantId,
-            prisma.product.update({
+        const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.product.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: { sku, name, description, price, attributes }
-            })
-        );
+            });
+        });
         res.json(product);
     } catch (error) {
         res.status(500).json({ error: "Failed to update product" });
@@ -87,12 +93,12 @@ router.put("/:id", async (req: AuthRequest, res) => {
 // PATCH /api/products/:id
 router.patch("/:id", async (req: AuthRequest, res) => {
     try {
-        const [_, product] = await withTenant(req.user!.tenantId,
-            prisma.product.update({
+        const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.product.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: req.body
-            })
-        );
+            });
+        });
         res.json(product);
     } catch (error) {
         res.status(500).json({ error: "Failed to update product" });
@@ -102,12 +108,12 @@ router.patch("/:id", async (req: AuthRequest, res) => {
 // DELETE /api/products/:id (Soft Delete)
 router.delete("/:id", async (req: AuthRequest, res) => {
     try {
-        const [_, product] = await withTenant(req.user!.tenantId,
-            prisma.product.update({
+        await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.product.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: { deletedAt: new Date() }
-            })
-        );
+            });
+        });
         res.json({ message: "Product deleted successfully" });
     } catch (error) {
         res.status(500).json({ error: "Failed to delete product" });

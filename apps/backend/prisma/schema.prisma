@@ -17,6 +17,30 @@ enum AttributeType {
     MULTI_SELECT
 }
 
+enum AuditOperation {
+CREATE
+UPDATE
+DELETE
+RESTORE
+LOGIN
+LOGOUT
+IMPORT
+EXPORT
+PUBLISH
+UNPUBLISH
+APPROVE
+REJECT
+SYSTEM
+}
+
+enum AuditSource {
+WEB
+API
+IMPORT
+AI
+SYSTEM
+}
+
 model Tenant {
     id        String   @id @default(uuid())
     name      String
@@ -27,6 +51,7 @@ model Tenant {
     users                User[]
     products             Product[]
     attributeDefinitions AttributeDefinition[]
+    auditLogs            AuditLog[]
 }
 
 model User {
@@ -41,6 +66,7 @@ model User {
 
     tenantId String
     tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    auditLogs AuditLog[]
 
     @@index([tenantId])
 }
@@ -108,4 +134,29 @@ model ProductMedia {
 
     @@index([productId])
     @@index([tenantId])
+}
+
+model AuditLog {
+    id            String   @id @default(uuid())
+    tenantId      String
+    userId        String?
+    entityType    String
+    entityId      String
+    operation     AuditOperation
+    beforeState   Json?
+    afterState    Json?
+    changedFields Json?
+    source        AuditSource?
+    requestId     String?
+    ipAddress     String?
+    userAgent     String?
+    remarks       String?
+    createdAt     DateTime @default(now())
+
+    tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+    @@index([tenantId])
+    @@index([entityType, entityId])
+    @@index([userId])
 }

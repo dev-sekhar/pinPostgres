@@ -9,11 +9,14 @@ import attributeRoutes from "./attributeRoutes.js";
 import mediaRoutes from "./mediaRoutes.js";
 import userRoutes from "./userRoutes.js";
 
+import { auditMiddleware } from "./auditMiddleware.js";
+
 const app = express();
 const port = Number(process.env.PORT ?? 4000);
 
 app.use(cors());
 app.use(express.json());
+app.use(auditMiddleware);
 
 // Basic health check
 app.get("/health", (req, res) => {

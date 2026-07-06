@@ -1,6 +1,6 @@
 import { Router, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
-import { prisma } from "./prismaClient.js";
+import { prisma, withTenantTransaction } from "./prismaClient.js";
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
 
 const router = Router();
@@ -13,13 +13,6 @@ const requireAdmin = (req: AuthRequest, res: Response, next: NextFunction) => {
     next();
 };
 
-const withTenant = async (tenantId: string, operation: any) => {
-    return prisma.$transaction([
-        prisma.$executeRaw`SELECT set_config('app.current_tenant', ${tenantId}, true)`,
-        operation
-    ]);
-};
-
 // Omit password from user object
 const excludePassword = (user: any) => {
     if (!user) return user;
@@ -30,12 +23,12 @@ const excludePassword = (user: any) => {
 // GET /api/users
 router.get("/", async (req: AuthRequest, res) => {
     try {
-        const [_, users] = await withTenant(req.user!.tenantId,
-            prisma.user.findMany({
+        const users = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.user.findMany({
                 where: { deletedAt: null },
                 orderBy: { createdAt: "desc" }
-            })
-        );
+            });
+        });
         res.json(users.map(excludePassword));
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch users" });
@@ -45,11 +38,11 @@ router.get("/", async (req: AuthRequest, res) => {
 // GET /api/users/:id
 router.get("/:id", async (req: AuthRequest, res) => {
     try {
-        const [_, user] = await withTenant(req.user!.tenantId,
-            prisma.user.findUnique({
+        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.user.findUnique({
                 where: { id: req.params.id, deletedAt: null }
-            })
-        );
+            });
+        });
         if (!user) return res.status(404).json({ error: "User not found" });
         res.json(excludePassword(user));
     } catch (error) {
@@ -65,8 +58,8 @@ router.post("/", requireAdmin as any, async (req: AuthRequest, res) => {
     }
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const [_, user] = await withTenant(req.user!.tenantId,
-            prisma.user.create({
+        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.user.create({
                 data: {
                     email,
                     name,
@@ -74,8 +67,8 @@ router.post("/", requireAdmin as any, async (req: AuthRequest, res) => {
                     role: role || "USER",
                     tenantId: req.user!.tenantId
                 }
-            })
-        );
+            });
+        });
         res.status(201).json(excludePassword(user));
     } catch (error: any) {
         if (error.code === 'P2002') {
@@ -97,12 +90,12 @@ router.put("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
             data.password = await bcrypt.hash(password, 10);
         }
 
-        const [_, user] = await withTenant(req.user!.tenantId,
-            prisma.user.update({
+        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.user.update({
                 where: { id: req.params.id, deletedAt: null },
                 data
-            })
-        );
+            });
+        });
         res.json(excludePassword(user));
     } catch (error) {
         res.status(500).json({ error: "Failed to update user" });
@@ -117,12 +110,12 @@ router.patch("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
             data.password = await bcrypt.hash(data.password, 10);
         }
 
-        const [_, user] = await withTenant(req.user!.tenantId,
-            prisma.user.update({
+        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.user.update({
                 where: { id: req.params.id, deletedAt: null },
                 data
-            })
-        );
+            });
+        });
         res.json(excludePassword(user));
     } catch (error) {
         res.status(500).json({ error: "Failed to update user" });
@@ -132,12 +125,12 @@ router.patch("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
 // DELETE /api/users/:id (Soft Delete - Admins only)
 router.delete("/:id", requireAdmin as any, async (req: AuthRequest, res) => {
     try {
-        const [_, user] = await withTenant(req.user!.tenantId,
-            prisma.user.update({
+        await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return tx.user.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: { deletedAt: new Date() }
-            })
-        );
+            });
+        });
         res.json({ message: "User deleted successfully" });
     } catch (error) {
         res.status(500).json({ error: "Failed to delete user" });

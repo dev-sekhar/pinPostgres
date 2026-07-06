@@ -16,3 +16,13 @@ const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 
 export const prisma = new PrismaClient({ adapter });
+
+export async function withTenantTransaction<T>(
+    tenantId: string,
+    callback: (tx: any) => Promise<T>
+): Promise<T> {
+    return prisma.$transaction(async (tx) => {
+        await tx.$executeRaw`SELECT set_config('app.current_tenant', ${tenantId}, true)`;
+        return callback(tx);
+    });
+}

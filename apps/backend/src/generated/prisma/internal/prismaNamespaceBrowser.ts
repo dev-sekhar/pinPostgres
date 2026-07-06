@@ -55,7 +55,8 @@ export const ModelName = {
   User: 'User',
   Product: 'Product',
   AttributeDefinition: 'AttributeDefinition',
-  ProductMedia: 'ProductMedia'
+  ProductMedia: 'ProductMedia',
+  AuditLog: 'AuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -146,6 +147,27 @@ export const ProductMediaScalarFieldEnum = {
 } as const
 
 export type ProductMediaScalarFieldEnum = (typeof ProductMediaScalarFieldEnum)[keyof typeof ProductMediaScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  operation: 'operation',
+  beforeState: 'beforeState',
+  afterState: 'afterState',
+  changedFields: 'changedFields',
+  source: 'source',
+  requestId: 'requestId',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  remarks: 'remarks',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
 export const SortOrder = {

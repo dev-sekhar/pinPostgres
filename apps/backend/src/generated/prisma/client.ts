@@ -66,3 +66,8 @@ export type AttributeDefinition = Prisma.AttributeDefinitionModel
  * 
  */
 export type ProductMedia = Prisma.ProductMediaModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel

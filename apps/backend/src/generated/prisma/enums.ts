@@ -18,3 +18,33 @@ export const AttributeType = {
 } as const
 
 export type AttributeType = (typeof AttributeType)[keyof typeof AttributeType]
+
+
+export const AuditOperation = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+  RESTORE: 'RESTORE',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT',
+  IMPORT: 'IMPORT',
+  EXPORT: 'EXPORT',
+  PUBLISH: 'PUBLISH',
+  UNPUBLISH: 'UNPUBLISH',
+  APPROVE: 'APPROVE',
+  REJECT: 'REJECT',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type AuditOperation = (typeof AuditOperation)[keyof typeof AuditOperation]
+
+
+export const AuditSource = {
+  WEB: 'WEB',
+  API: 'API',
+  IMPORT: 'IMPORT',
+  AI: 'AI',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type AuditSource = (typeof AuditSource)[keyof typeof AuditSource]
