@@ -1,0 +1,98 @@
+{
+  "timestamp": "2026-07-05T18:51:15.882Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": 200,
+      "success": true,
+      "data": {
+        "ok": true
+      }
+    },
+    {
+      "name": "Register Tenant",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "e907f7a5-d7a4-4c64-9659-484dde3c3e71",
+          "name": "Automated Test Corp 1783277475957",
+          "createdAt": "2026-07-05T18:51:16.853Z",
+          "updatedAt": "2026-07-05T18:51:16.853Z"
+        },
+        "user": {
+          "id": "47ee4553-94e3-41a8-b609-9fbbcde9220f",
+          "email": "auto1783277475957@test.com",
+          "name": "Test Auto",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T18:51:16.860Z",
+          "updatedAt": "2026-07-05T18:51:16.860Z",
+          "tenantId": "e907f7a5-d7a4-4c64-9659-484dde3c3e71"
+        }
+      }
+    },
+    {
+      "name": "Login Admin",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0N2VlNDU1My05NGUzLTQxYTgtYjYwOS05ZmJiY2RlOTIyMGYiLCJ0ZW5hbnRJZCI6ImU5MDdmN2E1LWQ3YTQtNGM2NC05NjU5LTQ4NGRkZTNjM2U3MSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzI3NzQ3NiwiZXhwIjoxNzgzMzYzODc2fQ.-Pl9VpXNJiodzqLPXUb6Bsg1w1jbYWIepSBEB1QUrEY",
+        "user": {
+          "id": "47ee4553-94e3-41a8-b609-9fbbcde9220f",
+          "email": "auto1783277475957@test.com",
+          "name": "Test Auto",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T18:51:16.860Z",
+          "updatedAt": "2026-07-05T18:51:16.860Z",
+          "tenantId": "e907f7a5-d7a4-4c64-9659-484dde3c3e71"
+        }
+      }
+    },
+    {
+      "name": "Create Product",
+      "endpoint": "POST http://localhost:3001/api/products",
+      "status": 201,
+      "success": true,
+      "data": {
+        "id": "c8165c0f-20dc-46a0-b235-0c6b9c2d84b7",
+        "sku": "DEV-LAPTOP-1783277475957",
+        "name": "M4 Pro Max Developer Laptop",
+        "description": "64GB RAM, 2TB SSD, Space Black",
+        "price": "2499.99",
+        "attributes": {},
+        "createdAt": "2026-07-05T18:51:16.982Z",
+        "updatedAt": "2026-07-05T18:51:16.982Z",
+        "tenantId": "e907f7a5-d7a4-4c64-9659-484dde3c3e71"
+      }
+    },
+    {
+      "name": "Get Products",
+      "endpoint": "GET http://localhost:3001/api/products",
+      "status": 200,
+      "success": true,
+      "data": [
+        {
+          "id": "c8165c0f-20dc-46a0-b235-0c6b9c2d84b7",
+          "sku": "DEV-LAPTOP-1783277475957",
+          "name": "M4 Pro Max Developer Laptop",
+          "description": "64GB RAM, 2TB SSD, Space Black",
+          "price": "2499.99",
+          "attributes": {},
+          "createdAt": "2026-07-05T18:51:16.982Z",
+          "updatedAt": "2026-07-05T18:51:16.982Z",
+          "tenantId": "e907f7a5-d7a4-4c64-9659-484dde3c3e71"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  }
+}

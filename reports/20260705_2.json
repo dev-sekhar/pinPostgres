@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-07-05T18:46:59.111Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": 200,
+      "success": true,
+      "data": {
+        "ok": true
+      }
+    },
+    {
+      "name": "Register Tenant",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "94220bce-5b2e-4d52-a7a2-fcebf4e8b804",
+          "name": "Automated Test Corp 1783277219199",
+          "createdAt": "2026-07-05T18:46:59.538Z",
+          "updatedAt": "2026-07-05T18:46:59.538Z"
+        },
+        "user": {
+          "id": "c80eee09-fcfa-48d1-8ef3-db01a0c77454",
+          "email": "auto1783277219199@test.com",
+          "name": "Test Auto",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T18:46:59.546Z",
+          "updatedAt": "2026-07-05T18:46:59.546Z",
+          "tenantId": "94220bce-5b2e-4d52-a7a2-fcebf4e8b804"
+        }
+      }
+    },
+    {
+      "name": "Login Admin",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjODBlZWUwOS1mY2ZhLTQ4ZDEtOGVmMy1kYjAxYTBjNzc0NTQiLCJ0ZW5hbnRJZCI6Ijk0MjIwYmNlLTViMmUtNGQ1Mi1hN2EyLWZjZWJmNGU4YjgwNCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzI3NzIxOSwiZXhwIjoxNzgzMzYzNjE5fQ.U5-p-XAyPPTaN4wcmcjfwVKmwDwoenADKDOmesvAX8Q",
+        "user": {
+          "id": "c80eee09-fcfa-48d1-8ef3-db01a0c77454",
+          "email": "auto1783277219199@test.com",
+          "name": "Test Auto",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T18:46:59.546Z",
+          "updatedAt": "2026-07-05T18:46:59.546Z",
+          "tenantId": "94220bce-5b2e-4d52-a7a2-fcebf4e8b804"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0
+  }
+}

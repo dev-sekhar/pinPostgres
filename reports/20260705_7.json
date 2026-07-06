@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-07-05T19:18:55.788Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": 200,
+      "success": true,
+      "data": {
+        "ok": true
+      }
+    },
+    {
+      "name": "Register Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 500,
+      "success": false,
+      "data": {
+        "error": "Internal server error"
+      }
+    },
+    {
+      "name": "Login Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Invalid credentials"
+      }
+    },
+    {
+      "name": "Create Product for Tenant A",
+      "endpoint": "POST http://localhost:3001/api/products",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Unauthorized"
+      }
+    },
+    {
+      "name": "Register Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 500,
+      "success": false,
+      "data": {
+        "error": "Internal server error"
+      }
+    },
+    {
+      "name": "Login Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Invalid credentials"
+      }
+    },
+    {
+      "name": "Get Products for Tenant B (Isolation Check)",
+      "endpoint": "GET http://localhost:3001/api/products",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Unauthorized"
+      }
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "passed": 1,
+    "failed": 6
+  }
+}

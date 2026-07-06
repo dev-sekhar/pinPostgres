@@ -1,0 +1,111 @@
+datasource db {
+    provider = "postgresql"
+}
+
+generator client {
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
+}
+
+
+
+enum AttributeType {
+    TEXT
+    NUMBER
+    BOOLEAN
+    SELECT
+    MULTI_SELECT
+}
+
+model Tenant {
+    id        String   @id @default(uuid())
+    name      String
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+
+    users                User[]
+    products             Product[]
+    attributeDefinitions AttributeDefinition[]
+}
+
+model User {
+    id        String   @id @default(uuid())
+    email     String   @unique
+    name      String?
+    password  String
+    role      String   @default("USER")
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+
+    tenantId String
+    tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+    @@index([tenantId])
+}
+
+model Product {
+    id          String   @id @default(uuid())
+    sku         String
+    name        String
+    description String?
+    price       Decimal  @db.Decimal(10, 2)
+    attributes  Json     @default("{}") // Stores code-value pairs matching AttributeDefinition
+
+    // Hierarchy Support (For Variant handling)
+    parentId    String?
+    parent      Product?  @relation("ProductVariants", fields: [parentId], references: [id], onDelete: Cascade)
+    variants    Product[] @relation("ProductVariants")
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+
+    tenantId String
+    tenant   Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+    media     ProductMedia[]
+
+    @@unique([tenantId, sku])
+    @@index([tenantId])
+    @@index([parentId])
+}
+
+model AttributeDefinition {
+    id         String        @id @default(uuid())
+    code       String        // e.g., "color", "tshirt_size"
+    name       String        // e.g., "Color", "T-Shirt Size"
+    type       AttributeType // Enforced systemic input type
+    isRequired Boolean       @default(false)
+    options    Json?         // Stores predefined string array for SELECT types e.g. ["Red", "Blue"]
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+
+    tenantId String
+    tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+    @@unique([tenantId, code])
+    @@index([tenantId])
+}
+
+model ProductMedia {
+    id        String   @id @default(uuid())
+    url       String
+    altText   String?
+    sortOrder Int      @default(0)
+    
+    productId String
+    product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    
+    tenantId  String   // Essential for direct database RLS rules on asset data
+    
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+
+    @@index([productId])
+    @@index([tenantId])
+}

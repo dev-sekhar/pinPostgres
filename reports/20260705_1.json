@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-07-05T18:28:00.272Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": 200,
+      "success": true,
+      "data": {
+        "ok": true
+      }
+    },
+    {
+      "name": "Register Tenant",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "7aab8a5a-6a3e-491b-9200-12860cf67435",
+          "name": "Automated Test Corp 1783276080391",
+          "createdAt": "2026-07-05T18:28:00.564Z",
+          "updatedAt": "2026-07-05T18:28:00.564Z"
+        },
+        "user": {
+          "id": "d6467ee8-8972-45f7-9575-25526862080f",
+          "email": "auto1783276080391@test.com",
+          "name": "Test Auto",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T18:28:00.567Z",
+          "updatedAt": "2026-07-05T18:28:00.567Z",
+          "tenantId": "7aab8a5a-6a3e-491b-9200-12860cf67435"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0
+  }
+}

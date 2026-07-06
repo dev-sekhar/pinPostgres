@@ -1,0 +1,185 @@
+{
+  "timestamp": "2026-07-05T19:15:27.298Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": 200,
+      "success": true,
+      "data": {
+        "ok": true
+      }
+    },
+    {
+      "name": "Register Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "9f0e29ba-a0f9-4538-9cf0-063b652beaa5",
+          "name": "Tenant A Corp 1783278927414",
+          "createdAt": "2026-07-05T19:15:28.024Z",
+          "updatedAt": "2026-07-05T19:15:28.024Z"
+        },
+        "user": {
+          "id": "f2e27df0-f04b-43b1-92cd-45f2dcf1e7e0",
+          "email": "alice1783278927414@test.com",
+          "name": "Alice Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T19:15:28.040Z",
+          "updatedAt": "2026-07-05T19:15:28.040Z",
+          "tenantId": "9f0e29ba-a0f9-4538-9cf0-063b652beaa5"
+        }
+      }
+    },
+    {
+      "name": "Login Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMmUyN2RmMC1mMDRiLTQzYjEtOTJjZC00NWYyZGNmMWU3ZTAiLCJ0ZW5hbnRJZCI6IjlmMGUyOWJhLWEwZjktNDUzOC05Y2YwLTA2M2I2NTJiZWFhNSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzI3ODkyOCwiZXhwIjoxNzgzMzY1MzI4fQ.9MIABKKS0TkW_Pg06kLE0wGsx0V5OhZrxOh2myFsglo",
+        "user": {
+          "id": "f2e27df0-f04b-43b1-92cd-45f2dcf1e7e0",
+          "email": "alice1783278927414@test.com",
+          "name": "Alice Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T19:15:28.040Z",
+          "updatedAt": "2026-07-05T19:15:28.040Z",
+          "tenantId": "9f0e29ba-a0f9-4538-9cf0-063b652beaa5"
+        }
+      }
+    },
+    {
+      "name": "Create Product for Tenant A",
+      "endpoint": "POST http://localhost:3001/api/products",
+      "status": 201,
+      "success": true,
+      "data": {
+        "id": "de2ba892-b7c4-4cfd-af3a-49fe448f6075",
+        "sku": "LAPTOP-A-1783278927414",
+        "name": "Alice's Laptop",
+        "description": "Belongs to Tenant A",
+        "price": "1000",
+        "attributes": {},
+        "createdAt": "2026-07-05T19:15:28.339Z",
+        "updatedAt": "2026-07-05T19:15:28.339Z",
+        "tenantId": "9f0e29ba-a0f9-4538-9cf0-063b652beaa5"
+      }
+    },
+    {
+      "name": "Register Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "337652d7-1374-4fa0-ad70-55b45dc244d6",
+          "name": "Tenant B Corp 1783278927414",
+          "createdAt": "2026-07-05T19:15:28.561Z",
+          "updatedAt": "2026-07-05T19:15:28.561Z"
+        },
+        "user": {
+          "id": "ec3a50c6-2fbc-42f8-bc90-62c2a5857aed",
+          "email": "bob1783278927414@test.com",
+          "name": "Bob Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T19:15:28.566Z",
+          "updatedAt": "2026-07-05T19:15:28.566Z",
+          "tenantId": "337652d7-1374-4fa0-ad70-55b45dc244d6"
+        }
+      }
+    },
+    {
+      "name": "Login Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYzNhNTBjNi0yZmJjLTQyZjgtYmM5MC02MmMyYTU4NTdhZWQiLCJ0ZW5hbnRJZCI6IjMzNzY1MmQ3LTEzNzQtNGZhMC1hZDcwLTU1YjQ1ZGMyNDRkNiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzI3ODkyOCwiZXhwIjoxNzgzMzY1MzI4fQ.b3rdXe4FGwk51opN0qR_ppNgu8HHNZaI-8TxZRqhLv4",
+        "user": {
+          "id": "ec3a50c6-2fbc-42f8-bc90-62c2a5857aed",
+          "email": "bob1783278927414@test.com",
+          "name": "Bob Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-05T19:15:28.566Z",
+          "updatedAt": "2026-07-05T19:15:28.566Z",
+          "tenantId": "337652d7-1374-4fa0-ad70-55b45dc244d6"
+        }
+      }
+    },
+    {
+      "name": "Get Products for Tenant B (Isolation Check)",
+      "endpoint": "GET http://localhost:3001/api/products",
+      "status": 200,
+      "success": true,
+      "data": [
+        {
+          "id": "de2ba892-b7c4-4cfd-af3a-49fe448f6075",
+          "sku": "LAPTOP-A-1783278927414",
+          "name": "Alice's Laptop",
+          "description": "Belongs to Tenant A",
+          "price": "1000",
+          "attributes": {},
+          "createdAt": "2026-07-05T19:15:28.339Z",
+          "updatedAt": "2026-07-05T19:15:28.339Z",
+          "tenantId": "9f0e29ba-a0f9-4538-9cf0-063b652beaa5"
+        },
+        {
+          "id": "b95bdc82-f7f0-4253-a5f6-3309e93d33ff",
+          "sku": "LAPTOP-A-1783278783408",
+          "name": "Alice's Laptop",
+          "description": "Belongs to Tenant A",
+          "price": "1000",
+          "attributes": {},
+          "createdAt": "2026-07-05T19:13:04.040Z",
+          "updatedAt": "2026-07-05T19:13:04.040Z",
+          "tenantId": "09021f37-21b9-4731-b623-a63dc36f52eb"
+        },
+        {
+          "id": "90606967-db78-449f-9559-d80b3bfd4782",
+          "sku": "LAPTOP-A-1783278708345",
+          "name": "Alice's Laptop",
+          "description": "Belongs to Tenant A",
+          "price": "1000",
+          "attributes": {},
+          "createdAt": "2026-07-05T19:11:48.782Z",
+          "updatedAt": "2026-07-05T19:11:48.782Z",
+          "tenantId": "67558cb0-7b64-4617-8d98-4a2b285d3992"
+        },
+        {
+          "id": "1072fc12-f231-4907-826d-87e93d166af6",
+          "sku": "DEV-LAPTOP-01",
+          "name": "M4 Pro Max Developer Laptop",
+          "description": "64GB RAM, 2TB SSD, Space Black",
+          "price": "2499.99",
+          "attributes": {},
+          "createdAt": "2026-07-05T18:51:28.343Z",
+          "updatedAt": "2026-07-05T18:51:28.343Z",
+          "tenantId": "e6d72822-5da2-49e6-960a-df04e5f39c16"
+        },
+        {
+          "id": "c8165c0f-20dc-46a0-b235-0c6b9c2d84b7",
+          "sku": "DEV-LAPTOP-1783277475957",
+          "name": "M4 Pro Max Developer Laptop",
+          "description": "64GB RAM, 2TB SSD, Space Black",
+          "price": "2499.99",
+          "attributes": {},
+          "createdAt": "2026-07-05T18:51:16.982Z",
+          "updatedAt": "2026-07-05T18:51:16.982Z",
+          "tenantId": "e907f7a5-d7a4-4c64-9659-484dde3c3e71"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "passed": 6,
+    "failed": 1
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "timestamp": "2026-07-06T03:37:25.670Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    },
+    {
+      "name": "Register Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    },
+    {
+      "name": "Login Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    },
+    {
+      "name": "Create Attribute for Tenant A (POST)",
+      "endpoint": "POST http://localhost:3001/api/attributes",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    },
+    {
+      "name": "Create Product for Tenant A (POST)",
+      "endpoint": "POST http://localhost:3001/api/products",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    },
+    {
+      "name": "Register Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    },
+    {
+      "name": "Login Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    },
+    {
+      "name": "Get Products for Tenant B (Isolation Check)",
+      "endpoint": "GET http://localhost:3001/api/products",
+      "status": null,
+      "success": false,
+      "error": "fetch failed"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 0,
+    "failed": 8
+  }
+}

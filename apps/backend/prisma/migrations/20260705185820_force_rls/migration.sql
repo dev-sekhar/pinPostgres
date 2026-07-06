@@ -1,0 +1,5 @@
+-- 1. Force Row-Level Security on all tenant-scoped tables
+ALTER TABLE "User" FORCE ROW LEVEL SECURITY;
+ALTER TABLE "Product" FORCE ROW LEVEL SECURITY;
+ALTER TABLE "AttributeDefinition" FORCE ROW LEVEL SECURITY;
+ALTER TABLE "ProductMedia" FORCE ROW LEVEL SECURITY;

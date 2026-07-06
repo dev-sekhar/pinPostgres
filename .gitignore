@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+/node_modules
+*/node_modules
+apps/*/node_modules
+.pnp
+.pnp.js
+
+# Next.js Build Output
+.next/
+out/
+
+# Backend Build Output
+dist/
+build/
+apps/backend/dist/
+
+# Prisma Artifacts
+# (Do not ignore schema.prisma, but ignore the sqlite db file if using local dev storage)
+*.db
+*.db-journal
+
+# Environment Variables & Local Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+.env.*
+
+# IDE / Editor Files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic / Coverage Reports
+coverage/
+.nyc_output/
+
+# Temporary / Cache Directories
+.turbo/
+.cache/

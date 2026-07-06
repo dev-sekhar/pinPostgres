@@ -1,0 +1,276 @@
+{
+  "timestamp": "2026-07-06T03:48:38.415Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "ok",
+        "timestamp": "2026-07-06T03:48:38.562Z"
+      }
+    },
+    {
+      "name": "Register Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "32168da8-5f3b-481b-8919-e03c23d3997f",
+          "name": "Tenant A Corp 1783309718592",
+          "createdAt": "2026-07-06T03:48:39.307Z",
+          "updatedAt": "2026-07-06T03:48:39.307Z",
+          "deletedAt": null
+        },
+        "user": {
+          "id": "30c607c9-1e15-4ada-8158-8d393989200d",
+          "email": "alice1783309718592@test.com",
+          "name": "Alice Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-06T03:48:39.325Z",
+          "updatedAt": "2026-07-06T03:48:39.325Z",
+          "deletedAt": null,
+          "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f"
+        }
+      }
+    },
+    {
+      "name": "Login Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzMGM2MDdjOS0xZTE1LTRhZGEtODE1OC04ZDM5Mzk4OTIwMGQiLCJ0ZW5hbnRJZCI6IjMyMTY4ZGE4LTVmM2ItNDgxYi04OTE5LWUwM2MyM2QzOTk3ZiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzMwOTcxOSwiZXhwIjoxNzgzMzk2MTE5fQ.D0GQ1V2bGB3yI9EZQQuc1_jYWSNEWzcJJKwBG4bzk8o",
+        "user": {
+          "id": "30c607c9-1e15-4ada-8158-8d393989200d",
+          "email": "alice1783309718592@test.com",
+          "name": "Alice Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-06T03:48:39.325Z",
+          "updatedAt": "2026-07-06T03:48:39.325Z",
+          "deletedAt": null,
+          "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f"
+        }
+      }
+    },
+    {
+      "name": "Create Attribute for Tenant A (POST)",
+      "endpoint": "POST http://localhost:3001/api/attributes",
+      "status": 201,
+      "success": true,
+      "data": {
+        "id": "d7ffa2b6-133b-4ae3-933a-f48cada5483d",
+        "code": "color_1783309718592",
+        "name": "Color",
+        "type": "SELECT",
+        "isRequired": false,
+        "options": [
+          "Red",
+          "Blue"
+        ],
+        "createdAt": "2026-07-06T03:48:39.617Z",
+        "updatedAt": "2026-07-06T03:48:39.617Z",
+        "deletedAt": null,
+        "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f"
+      }
+    },
+    {
+      "name": "Update Attribute (PUT)",
+      "endpoint": "PUT http://localhost:3001/api/attributes/d7ffa2b6-133b-4ae3-933a-f48cada5483d",
+      "status": 200,
+      "success": true,
+      "data": {
+        "id": "d7ffa2b6-133b-4ae3-933a-f48cada5483d",
+        "code": "color_1783309718592",
+        "name": "Primary Color",
+        "type": "SELECT",
+        "isRequired": false,
+        "options": [
+          "Red",
+          "Blue",
+          "Green"
+        ],
+        "createdAt": "2026-07-06T03:48:39.617Z",
+        "updatedAt": "2026-07-06T03:48:39.656Z",
+        "deletedAt": null,
+        "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f"
+      }
+    },
+    {
+      "name": "Get Attributes (GET)",
+      "endpoint": "GET http://localhost:3001/api/attributes",
+      "status": 200,
+      "success": true,
+      "data": [
+        {
+          "id": "d7ffa2b6-133b-4ae3-933a-f48cada5483d",
+          "code": "color_1783309718592",
+          "name": "Primary Color",
+          "type": "SELECT",
+          "isRequired": false,
+          "options": [
+            "Red",
+            "Blue",
+            "Green"
+          ],
+          "createdAt": "2026-07-06T03:48:39.617Z",
+          "updatedAt": "2026-07-06T03:48:39.656Z",
+          "deletedAt": null,
+          "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f"
+        }
+      ]
+    },
+    {
+      "name": "Create Product for Tenant A (POST)",
+      "endpoint": "POST http://localhost:3001/api/products",
+      "status": 201,
+      "success": true,
+      "data": {
+        "id": "1f2f86ca-1010-4b34-8cec-ca25dcea4763",
+        "sku": "LAPTOP-A-1783309718592",
+        "name": "Alice's Laptop",
+        "description": "Belongs to Tenant A",
+        "price": "1000",
+        "attributes": {},
+        "parentId": null,
+        "createdAt": "2026-07-06T03:48:39.707Z",
+        "updatedAt": "2026-07-06T03:48:39.707Z",
+        "deletedAt": null,
+        "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f"
+      }
+    },
+    {
+      "name": "Create Media (POST)",
+      "endpoint": "POST http://localhost:3001/api/media",
+      "status": 201,
+      "success": true,
+      "data": {
+        "id": "c8e11ea6-ecee-42df-9e37-a457914068b4",
+        "url": "https://example.com/laptop.png",
+        "altText": "Front view",
+        "sortOrder": 0,
+        "productId": "1f2f86ca-1010-4b34-8cec-ca25dcea4763",
+        "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f",
+        "createdAt": "2026-07-06T03:48:39.731Z",
+        "updatedAt": "2026-07-06T03:48:39.731Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "name": "Patch Media (PATCH)",
+      "endpoint": "PATCH http://localhost:3001/api/media/c8e11ea6-ecee-42df-9e37-a457914068b4",
+      "status": 200,
+      "success": true,
+      "data": {
+        "id": "c8e11ea6-ecee-42df-9e37-a457914068b4",
+        "url": "https://example.com/laptop.png",
+        "altText": "Front view",
+        "sortOrder": 1,
+        "productId": "1f2f86ca-1010-4b34-8cec-ca25dcea4763",
+        "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f",
+        "createdAt": "2026-07-06T03:48:39.731Z",
+        "updatedAt": "2026-07-06T03:48:39.758Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "name": "Get Media for Product (GET)",
+      "endpoint": "GET http://localhost:3001/api/media/product/1f2f86ca-1010-4b34-8cec-ca25dcea4763",
+      "status": 200,
+      "success": true,
+      "data": [
+        {
+          "id": "c8e11ea6-ecee-42df-9e37-a457914068b4",
+          "url": "https://example.com/laptop.png",
+          "altText": "Front view",
+          "sortOrder": 1,
+          "productId": "1f2f86ca-1010-4b34-8cec-ca25dcea4763",
+          "tenantId": "32168da8-5f3b-481b-8919-e03c23d3997f",
+          "createdAt": "2026-07-06T03:48:39.731Z",
+          "updatedAt": "2026-07-06T03:48:39.758Z",
+          "deletedAt": null
+        }
+      ]
+    },
+    {
+      "name": "Delete Media (DELETE)",
+      "endpoint": "DELETE http://localhost:3001/api/media/c8e11ea6-ecee-42df-9e37-a457914068b4",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Media deleted successfully"
+      }
+    },
+    {
+      "name": "Delete Product (DELETE)",
+      "endpoint": "DELETE http://localhost:3001/api/products/1f2f86ca-1010-4b34-8cec-ca25dcea4763",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Product deleted successfully"
+      }
+    },
+    {
+      "name": "Register Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "afb0767e-689f-4428-82a3-ec2a02cef4e6",
+          "name": "Tenant B Corp 1783309718592",
+          "createdAt": "2026-07-06T03:48:40.059Z",
+          "updatedAt": "2026-07-06T03:48:40.059Z",
+          "deletedAt": null
+        },
+        "user": {
+          "id": "6804d4f1-3fc1-41bc-bf3e-acf8b502c00d",
+          "email": "bob1783309718592@test.com",
+          "name": "Bob Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-06T03:48:40.063Z",
+          "updatedAt": "2026-07-06T03:48:40.063Z",
+          "deletedAt": null,
+          "tenantId": "afb0767e-689f-4428-82a3-ec2a02cef4e6"
+        }
+      }
+    },
+    {
+      "name": "Login Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 200,
+      "success": true,
+      "data": {
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODA0ZDRmMS0zZmMxLTQxYmMtYmYzZS1hY2Y4YjUwMmMwMGQiLCJ0ZW5hbnRJZCI6ImFmYjA3NjdlLTY4OWYtNDQyOC04MmEzLWVjMmEwMmNlZjRlNiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzMwOTcyMCwiZXhwIjoxNzgzMzk2MTIwfQ.dlbwsN5mNiRaDnjY1oTQGhcEdrJyF0GCzSGKd-ryxuc",
+        "user": {
+          "id": "6804d4f1-3fc1-41bc-bf3e-acf8b502c00d",
+          "email": "bob1783309718592@test.com",
+          "name": "Bob Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-06T03:48:40.063Z",
+          "updatedAt": "2026-07-06T03:48:40.063Z",
+          "deletedAt": null,
+          "tenantId": "afb0767e-689f-4428-82a3-ec2a02cef4e6"
+        }
+      }
+    },
+    {
+      "name": "Get Products for Tenant B (Isolation Check)",
+      "endpoint": "GET http://localhost:3001/api/products",
+      "status": 200,
+      "success": true,
+      "data": []
+    }
+  ],
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "timestamp": "2026-07-06T03:43:38.013Z",
+  "tests": [
+    {
+      "name": "Health Check",
+      "endpoint": "GET http://localhost:3001/health",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "ok",
+        "timestamp": "2026-07-06T03:43:38.128Z"
+      }
+    },
+    {
+      "name": "Register Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "7a79ec14-8b96-4680-9023-6dd8156a2c8b",
+          "name": "Tenant A Corp 1783309418143",
+          "createdAt": "2026-07-06T03:43:38.382Z",
+          "updatedAt": "2026-07-06T03:43:38.382Z"
+        },
+        "user": {
+          "id": "2b7cf8b5-f0ab-47ca-91ed-61e6719355d9",
+          "email": "alice1783309418143@test.com",
+          "name": "Alice Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-06T03:43:38.387Z",
+          "updatedAt": "2026-07-06T03:43:38.387Z",
+          "tenantId": "7a79ec14-8b96-4680-9023-6dd8156a2c8b"
+        }
+      }
+    },
+    {
+      "name": "Login Tenant A",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Invalid credentials"
+      }
+    },
+    {
+      "name": "Create Attribute for Tenant A (POST)",
+      "endpoint": "POST http://localhost:3001/api/attributes",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Unauthorized"
+      }
+    },
+    {
+      "name": "Create Product for Tenant A (POST)",
+      "endpoint": "POST http://localhost:3001/api/products",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Unauthorized"
+      }
+    },
+    {
+      "name": "Register Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/register-tenant",
+      "status": 201,
+      "success": true,
+      "data": {
+        "message": "Tenant registered successfully",
+        "tenant": {
+          "id": "a617bc2b-a816-4f54-8da8-48dd163fde41",
+          "name": "Tenant B Corp 1783309418143",
+          "createdAt": "2026-07-06T03:43:38.639Z",
+          "updatedAt": "2026-07-06T03:43:38.639Z"
+        },
+        "user": {
+          "id": "5077e129-86c2-49a8-aa27-f2507e6c611f",
+          "email": "bob1783309418143@test.com",
+          "name": "Bob Admin",
+          "role": "ADMIN",
+          "createdAt": "2026-07-06T03:43:38.645Z",
+          "updatedAt": "2026-07-06T03:43:38.645Z",
+          "tenantId": "a617bc2b-a816-4f54-8da8-48dd163fde41"
+        }
+      }
+    },
+    {
+      "name": "Login Tenant B",
+      "endpoint": "POST http://localhost:3001/api/auth/login",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Invalid credentials"
+      }
+    },
+    {
+      "name": "Get Products for Tenant B (Isolation Check)",
+      "endpoint": "GET http://localhost:3001/api/products",
+      "status": 401,
+      "success": false,
+      "data": {
+        "error": "Unauthorized"
+      }
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 3,
+    "failed": 5
+  }
+}
