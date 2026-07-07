@@ -13,6 +13,10 @@ import roleRoutes from "./roleRoutes.js";
 import domainRoutes from "./domainRoutes.js";
 import categoryRoutes from "./categoryRoutes.js";
 import productFamilyRoutes from "./productFamilyRoutes.js";
+import currencyRoutes from "./currencyRoutes.js";
+import countryRoutes from "./countryRoutes.js";
+import uomRoutes from "./uomRoutes.js";
+import brandRoutes from "./brandRoutes.js";
 
 import { auditMiddleware } from "./auditMiddleware.js";
 
@@ -38,6 +42,10 @@ app.use("/api/roles", roleRoutes);
 app.use("/api/domains", domainRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/product-families", productFamilyRoutes);
+app.use("/api/currencies", currencyRoutes);
+app.use("/api/countries", countryRoutes);
+app.use("/api/uoms", uomRoutes);
+app.use("/api/brands", brandRoutes);
 app.listen(port, () => {
     console.log(`Backend listening on http://localhost:${port}`);
 });

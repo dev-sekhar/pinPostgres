@@ -81,10 +81,26 @@ router.put("/:id", requirePermission("product.update") as any, async (req: AuthR
     }
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.product.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.product.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Product not found");
+
+            const updated = await tx.product.update({
+                where: { id: req.params.id },
                 data: { sku, name, description, price, attributes, productFamilyId }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Product',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                changedFields: req.body,
+                auditMeta: (req as any).auditMeta
+            });
+            return updated;
         });
         res.json(product);
     } catch (error) {
@@ -96,10 +112,26 @@ router.put("/:id", requirePermission("product.update") as any, async (req: AuthR
 router.patch("/:id", requirePermission("product.update") as any, async (req: AuthRequest, res) => {
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.product.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.product.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Product not found");
+
+            const updated = await tx.product.update({
+                where: { id: req.params.id },
                 data: req.body
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Product',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                changedFields: req.body,
+                auditMeta: (req as any).auditMeta
+            });
+            return updated;
         });
         res.json(product);
     } catch (error) {
@@ -111,10 +143,25 @@ router.patch("/:id", requirePermission("product.update") as any, async (req: Aut
 router.delete("/:id", requirePermission("product.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.product.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.product.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Product not found");
+
+            const deleted = await tx.product.update({
+                where: { id: req.params.id },
                 data: { deletedAt: new Date() }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Product',
+                entityId: deleted.id,
+                operation: 'DELETE',
+                beforeState: existing,
+                afterState: deleted,
+                auditMeta: (req as any).auditMeta
+            });
+            return deleted;
         });
         res.json({ message: "Product deleted successfully" });
     } catch (error) {

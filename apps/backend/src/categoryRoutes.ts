@@ -73,10 +73,26 @@ router.put("/:id", requirePermission("category.update") as any, async (req: Auth
     if (!name) return res.status(400).json({ error: "Name is required" });
     try {
         const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.category.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.category.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Category not found");
+
+            const updated = await tx.category.update({
+                where: { id: req.params.id },
                 data: { name: name.trim(), description, parentId }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Category',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                changedFields: req.body,
+                auditMeta: (req as any).auditMeta
+            });
+            return updated;
         });
         res.json(category);
     } catch (error) {
@@ -88,10 +104,25 @@ router.put("/:id", requirePermission("category.update") as any, async (req: Auth
 router.delete("/:id", requirePermission("category.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.category.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.category.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Category not found");
+
+            const deleted = await tx.category.update({
+                where: { id: req.params.id },
                 data: { deletedAt: new Date() }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Category',
+                entityId: deleted.id,
+                operation: 'DELETE',
+                beforeState: existing,
+                afterState: deleted,
+                auditMeta: (req as any).auditMeta
+            });
+            return deleted;
         });
         res.json({ message: "Category deleted successfully" });
     } catch (error) {

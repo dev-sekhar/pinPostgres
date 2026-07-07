@@ -50,12 +50,22 @@ router.post("/", requirePermission("attribute.create") as any, async (req: AuthR
     }
     try {
         const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.attributeDefinition.create({
+            const newAttr = await tx.attributeDefinition.create({
                 data: {
                     code, name, type, isRequired, options, productFamilyId,
                     tenantId: req.user!.tenantId
                 }
             });
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'AttributeDefinition',
+                entityId: newAttr.id,
+                operation: 'CREATE',
+                afterState: newAttr,
+                auditMeta: (req as any).auditMeta
+            });
+            return newAttr;
         });
         res.status(201).json(attribute);
     } catch (error) {
@@ -87,10 +97,24 @@ router.put("/:id", requirePermission("attribute.update") as any, async (req: Aut
                 throw new Error("IN_USE");
             }
 
-            return tx.attributeDefinition.update({
+            const updated = await tx.attributeDefinition.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: { code, name, type, isRequired, options, productFamilyId }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'AttributeDefinition',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                changedFields: req.body,
+                auditMeta: (req as any).auditMeta
+            });
+
+            return updated;
         });
         res.json(attribute);
     } catch (error: any) {
@@ -104,10 +128,27 @@ router.put("/:id", requirePermission("attribute.update") as any, async (req: Aut
 router.patch("/:id", requirePermission("attribute.update") as any, async (req: AuthRequest, res) => {
     try {
         const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.attributeDefinition.update({
+            const existing = await tx.attributeDefinition.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Attribute not found");
+
+            const updated = await tx.attributeDefinition.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: req.body
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'AttributeDefinition',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                changedFields: req.body,
+                auditMeta: (req as any).auditMeta
+            });
+
+            return updated;
         });
         res.json(attribute);
     } catch (error) {
@@ -119,10 +160,26 @@ router.patch("/:id", requirePermission("attribute.update") as any, async (req: A
 router.delete("/:id", requirePermission("attribute.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.attributeDefinition.update({
+            const existing = await tx.attributeDefinition.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Attribute not found");
+
+            const deleted = await tx.attributeDefinition.update({
                 where: { id: req.params.id, deletedAt: null },
                 data: { deletedAt: new Date() }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'AttributeDefinition',
+                entityId: deleted.id,
+                operation: 'DELETE',
+                beforeState: existing,
+                afterState: deleted,
+                auditMeta: (req as any).auditMeta
+            });
+
+            return deleted;
         });
         res.json({ message: "Attribute deleted successfully" });
     } catch (error) {

@@ -56,6 +56,7 @@ model Tenant {
     attributeDefinitions AttributeDefinition[]
     auditLogs            AuditLog[]
     roles                Role[]
+    brands               Brand[]
 }
 
 model Domain {
@@ -160,6 +161,9 @@ model Product {
 
     tenantId String
     tenant   Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+    brandId  String?
+    brand    Brand?  @relation(fields: [brandId], references: [id], onDelete: SetNull)
 
     media     ProductMedia[]
 
@@ -301,4 +305,58 @@ model UserRole {
     @@unique([userId, roleId])
     @@index([userId])
     @@index([roleId])
+}
+
+model Brand {
+    id          String   @id @default(uuid())
+    tenantId    String
+    code        String
+    name        String
+    legalName   String?
+    description String?
+    logo        String?  
+    website     String?  
+    email       String?
+    phone       String?
+    status      String   @default("ACTIVE") 
+    
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    products    Product[]
+
+    @@unique([tenantId, code])
+    @@index([tenantId])
+}
+
+// ==========================================
+// GLOBAL MASTER DATA
+// ==========================================
+
+model Currency {
+    id        String   @id @default(uuid())
+    code      String   @unique // e.g. "USD", "EUR"
+    name      String   // e.g. "US Dollar", "Euro"
+    symbol    String?  // e.g. "$", "€"
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Country {
+    id        String   @id @default(uuid())
+    code      String   @unique // e.g. "US", "UK", "IN" (ISO alpha-2 or alpha-3)
+    name      String   // e.g. "United States", "United Kingdom", "India"
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model UnitOfMeasure {
+    id        String   @id @default(uuid())
+    code      String   @unique // e.g. "kg", "m", "L", "pcs"
+    name      String   // e.g. "Kilogram", "Meter", "Liter", "Pieces"
+    category  String?  // e.g. "WEIGHT", "DIMENSION", "VOLUME", "COUNT"
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

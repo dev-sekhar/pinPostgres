@@ -106,3 +106,23 @@ export type RolePermission = Prisma.RolePermissionModel
  * 
  */
 export type UserRole = Prisma.UserRoleModel
+/**
+ * Model Brand
+ * 
+ */
+export type Brand = Prisma.BrandModel
+/**
+ * Model Currency
+ * 
+ */
+export type Currency = Prisma.CurrencyModel
+/**
+ * Model Country
+ * 
+ */
+export type Country = Prisma.CountryModel
+/**
+ * Model UnitOfMeasure
+ * 
+ */
+export type UnitOfMeasure = Prisma.UnitOfMeasureModel

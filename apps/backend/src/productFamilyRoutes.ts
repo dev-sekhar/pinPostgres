@@ -73,10 +73,26 @@ router.put("/:id", requirePermission("productFamily.update") as any, async (req:
     if (!name) return res.status(400).json({ error: "Name is required" });
     try {
         const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.productFamily.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.productFamily.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Product family not found");
+
+            const updated = await tx.productFamily.update({
+                where: { id: req.params.id },
                 data: { name: name.trim(), description }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'ProductFamily',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                changedFields: req.body,
+                auditMeta: (req as any).auditMeta
+            });
+            return updated;
         });
         res.json(productFamily);
     } catch (error) {
@@ -88,10 +104,25 @@ router.put("/:id", requirePermission("productFamily.update") as any, async (req:
 router.delete("/:id", requirePermission("productFamily.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.productFamily.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.productFamily.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Product family not found");
+
+            const deleted = await tx.productFamily.update({
+                where: { id: req.params.id },
                 data: { deletedAt: new Date() }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'ProductFamily',
+                entityId: deleted.id,
+                operation: 'DELETE',
+                beforeState: existing,
+                afterState: deleted,
+                auditMeta: (req as any).auditMeta
+            });
+            return deleted;
         });
         res.json({ message: "Product family deleted successfully" });
     } catch (error) {

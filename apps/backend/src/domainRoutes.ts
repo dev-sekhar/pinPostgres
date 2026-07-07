@@ -71,10 +71,26 @@ router.put("/:id", requirePermission("domain.update") as any, async (req: AuthRe
     if (!name) return res.status(400).json({ error: "Name is required" });
     try {
         const domain = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.domain.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.domain.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Domain not found");
+
+            const updated = await tx.domain.update({
+                where: { id: req.params.id },
                 data: { name: name.trim(), description }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Domain',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                changedFields: req.body,
+                auditMeta: (req as any).auditMeta
+            });
+            return updated;
         });
         res.json(domain);
     } catch (error) {
@@ -86,10 +102,25 @@ router.put("/:id", requirePermission("domain.update") as any, async (req: AuthRe
 router.delete("/:id", requirePermission("domain.delete") as any, async (req: AuthRequest, res) => {
     try {
         await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.domain.update({
-                where: { id: req.params.id, deletedAt: null },
+            const existing = await tx.domain.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Domain not found");
+
+            const deleted = await tx.domain.update({
+                where: { id: req.params.id },
                 data: { deletedAt: new Date() }
             });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Domain',
+                entityId: deleted.id,
+                operation: 'DELETE',
+                beforeState: existing,
+                afterState: deleted,
+                auditMeta: (req as any).auditMeta
+            });
+            return deleted;
         });
         res.json({ message: "Domain deleted successfully" });
     } catch (error) {
