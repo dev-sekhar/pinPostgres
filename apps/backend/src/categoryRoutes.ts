@@ -9,23 +9,18 @@ router.use(requireAuth as any);
 
 // GET /api/categories
 router.get("/", async (req: AuthRequest, res) => {
-    try {
-        const categories = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    const categories = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.category.findMany({
                 where: { deletedAt: null },
                 orderBy: { name: "asc" }
             });
         });
         res.json(categories);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch categories" });
-    }
 });
 
 // GET /api/categories/:id
 router.get("/:id", async (req: AuthRequest, res) => {
-    try {
-        const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.category.findUnique({
                 where: { id: req.params.id, deletedAt: null },
                 include: { 
@@ -36,17 +31,13 @@ router.get("/:id", async (req: AuthRequest, res) => {
         });
         if (!category) return res.status(404).json({ error: "Category not found" });
         res.json(category);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch category" });
-    }
 });
 
 // POST /api/categories
 router.post("/", requirePermission("category.create") as any, async (req: AuthRequest, res) => {
     const { name, description, domainId, parentId } = req.body;
     if (!name || !domainId) return res.status(400).json({ error: "Name and domainId are required" });
-    try {
-        const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const newCategory = await tx.category.create({
                 data: { name: name.trim(), description, domainId, parentId, tenantId: req.user!.tenantId }
             });
@@ -62,17 +53,13 @@ router.post("/", requirePermission("category.create") as any, async (req: AuthRe
             return newCategory;
         });
         res.status(201).json(category);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to create category" });
-    }
 });
 
 // PUT /api/categories/:id
 router.put("/:id", requirePermission("category.update") as any, async (req: AuthRequest, res) => {
     const { name, description, parentId } = req.body;
     if (!name) return res.status(400).json({ error: "Name is required" });
-    try {
-        const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const existing = await tx.category.findUnique({ where: { id: req.params.id, deletedAt: null } });
             if (!existing) throw new Error("Category not found");
 
@@ -94,15 +81,11 @@ router.put("/:id", requirePermission("category.update") as any, async (req: Auth
             return updated;
         });
         res.json(category);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to update category" });
-    }
 });
 
 // DELETE /api/categories/:id
 router.delete("/:id", requirePermission("category.delete") as any, async (req: AuthRequest, res) => {
-    try {
-        await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const existing = await tx.category.findUnique({ where: { id: req.params.id, deletedAt: null } });
             if (!existing) throw new Error("Category not found");
 
@@ -124,9 +107,6 @@ router.delete("/:id", requirePermission("category.delete") as any, async (req: A
             return deleted;
         });
         res.json({ message: "Category deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ error: "Failed to delete category" });
-    }
 });
 
 export default router;

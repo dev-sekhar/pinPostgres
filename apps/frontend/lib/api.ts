@@ -19,7 +19,18 @@ export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
   const data = await response.json().catch(() => null);
 
   if (!response.ok) {
-    throw new Error(data?.error || `API request failed: ${response.statusText}`);
+    if (response.status === 401) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
+      }
+    }
+    const errorObj = new Error(data?.error || `API request failed: ${response.statusText}`);
+    // Attach error code for multi-lingual translation support
+    (errorObj as any).code = data?.code || 'ERROR_UNKNOWN';
+    throw errorObj;
   }
 
   return data;

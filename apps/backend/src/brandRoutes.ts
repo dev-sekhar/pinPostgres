@@ -10,34 +10,24 @@ router.use(requireAuth as any);
 
 // GET /api/brands
 router.get("/", requirePermission("brand.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const brands = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    const brands = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.brand.findMany({
                 where: { deletedAt: null },
                 orderBy: { name: "asc" }
             });
         });
         res.json(brands);
-    } catch (error) {
-        console.error("Error fetching brands:", error);
-        res.status(500).json({ error: "Failed to fetch brands" });
-    }
 });
 
 // GET /api/brands/:id
 router.get("/:id", requirePermission("brand.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const brand = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    const brand = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.brand.findUnique({
                 where: { id: req.params.id, deletedAt: null }
             });
         });
         if (!brand) return res.status(404).json({ error: "Brand not found" });
         res.json(brand);
-    } catch (error) {
-        console.error("Error fetching brand:", error);
-        res.status(500).json({ error: "Failed to fetch brand" });
-    }
 });
 
 // POST /api/brands
@@ -46,8 +36,7 @@ router.post("/", requirePermission("brand.create") as any, async (req: AuthReque
     if (!validation.isValid) {
         return res.status(400).json({ error: "Validation failed", details: validation.errors });
     }
-    try {
-        const brand = await brandService.createBrand(
+    const brand = await brandService.createBrand(
             req.user!.tenantId,
             req.user!.userId,
             req.body,
@@ -125,10 +114,6 @@ router.delete("/:id", requirePermission("brand.delete") as any, async (req: Auth
         );
         if (!brand) return res.status(404).json({ error: "Brand not found" });
         res.json({ message: "Brand deleted successfully" });
-    } catch (error) {
-        console.error("Error deleting brand:", error);
-        res.status(500).json({ error: "Failed to delete brand" });
-    }
 });
 
 export default router;

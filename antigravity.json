@@ -79,5 +79,12 @@
             "Run 'yarn dev' or 'npm run dev' in terminal when notified",
             "Frontend and backend servers must be started manually by developer"
         ]
+    },
+    "logging": {
+        "enabled": true,
+        "output": "consoleAndFile",
+        "filePath": "logs/instructions.log",
+        "format": "timestamped",
+        "printExecutedInstructions": true
     }
 }
