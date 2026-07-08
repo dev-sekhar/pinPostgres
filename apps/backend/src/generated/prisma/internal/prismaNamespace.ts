@@ -2330,7 +2330,8 @@ export const ProductScalarFieldEnum = {
   tenantId: 'tenantId',
   brandId: 'brandId',
   supplierId: 'supplierId',
-  manufacturerId: 'manufacturerId'
+  manufacturerId: 'manufacturerId',
+  status: 'status'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -2347,7 +2348,8 @@ export const AttributeDefinitionScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
-  tenantId: 'tenantId'
+  tenantId: 'tenantId',
+  status: 'status'
 } as const
 
 export type AttributeDefinitionScalarFieldEnum = (typeof AttributeDefinitionScalarFieldEnum)[keyof typeof AttributeDefinitionScalarFieldEnum]

@@ -65,6 +65,12 @@ export default function BrandsPage() {
           method: 'PUT',
           body: JSON.stringify(formData)
         });
+        if (editingItem.status !== formData.status) {
+            await fetchApi(`/api/brands/${editingItem.id}/status`, {
+                method: 'PATCH',
+                body: JSON.stringify({ status: formData.status })
+            });
+        }
       } else {
         await fetchApi('/api/brands', {
           method: 'POST',
@@ -175,6 +181,20 @@ export default function BrandsPage() {
                     value={formData.description} 
                     onChange={e => setFormData({...formData, description: e.target.value})} 
                   />
+                </div>
+                
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Status</label>
+                  <select 
+                    style={{ width: '100%', padding: '0.5rem', borderRadius: 'var(--radius-md)', background: 'var(--bg-panel)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+                    value={formData.status || 'ACTIVE'} 
+                    onChange={e => setFormData({...formData, status: e.target.value})}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                    <option value="DRAFT">DRAFT</option>
+                    <option value="ARCHIVED">ARCHIVED</option>
+                  </select>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginTop: '1rem' }}>
                   <Button type="button" variant="outline" onClick={() => setModalOpen(false)}>Cancel</Button>

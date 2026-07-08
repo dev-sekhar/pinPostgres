@@ -227,7 +227,8 @@ export default function EditProductPage() {
           supplierId: selectedSupplierId || null,
           manufacturerId: selectedManufacturerId || null,
           complianceTypeIds: selectedComplianceTypeIds,
-          channelIds: selectedChannelIds
+          channelIds: selectedChannelIds,
+          status: formData.status
         }),
       });
       router.push(`/products/${id}`);

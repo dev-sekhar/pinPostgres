@@ -224,7 +224,8 @@ function ProductForm() {
           supplierId: selectedSupplierId || undefined,
           manufacturerId: selectedManufacturerId || undefined,
           complianceTypeIds: selectedComplianceTypeIds,
-          channelIds: selectedChannelIds
+          channelIds: selectedChannelIds,
+          status: formData.status
         }),
       });
       // On success, redirect back to parent or products list

@@ -182,6 +182,7 @@ model Product {
     media     ProductMedia[]
     complianceTypes ProductComplianceType[]
     channels        ProductChannel[]
+    status      String   @default("ACTIVE")
 
     @@unique([tenantId, sku])
     @@index([tenantId])
@@ -206,6 +207,7 @@ model AttributeDefinition {
 
     tenantId String
     tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    status   String @default("ACTIVE")
 
     @@unique([productFamilyId, code])
     @@index([tenantId])

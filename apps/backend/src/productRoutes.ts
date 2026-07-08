@@ -65,7 +65,7 @@ router.get("/:id", requirePermission("product.read") as any, async (req: AuthReq
 
 // POST /api/products
 router.post("/", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
-    const { name, description, price, parentId, attributes, productFamilyId, brandId, supplierId, manufacturerId, complianceTypeIds, channelIds } = req.body;
+    const { name, description, price, parentId, attributes, productFamilyId, brandId, supplierId, manufacturerId, complianceTypeIds, channelIds, status } = req.body;
     if (!name || price === undefined || !productFamilyId) {
         return res.status(400).json({ error: "Missing required fields (name, price, productFamilyId)" });
     }
@@ -251,4 +251,41 @@ router.delete("/:id", requirePermission("product.delete") as any, async (req: Au
     res.json({ message: "Product deleted successfully" });
 });
 
+
+// PATCH /api/products/:id/status
+router.patch("/:id/status", requirePermission("product.status.update") as any, async (req: AuthRequest, res) => {
+    const { status } = req.body;
+    if (!status) return res.status(400).json({ error: "Status is required" });
+
+    try {
+        const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            const existing = await tx.product.findUnique({ where: { id: req.params.id, deletedAt: null } });
+            if (!existing) throw new Error("Product not found");
+
+            const updated = await tx.product.update({
+                where: { id: req.params.id },
+                data: { status }
+            });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                entityType: 'Product',
+                entityId: updated.id,
+                operation: 'UPDATE',
+                beforeState: existing,
+                afterState: updated,
+                remarks: `Status changed to ${status}`,
+                auditMeta: (req as any).auditMeta
+            });
+            return updated;
+        });
+        res.json(product);
+    } catch (error: any) {
+        console.error("Error updating product status:", error);
+        res.status(500).json({ error: "Failed to update product status" });
+    }
+});
+
 export default router;
+

@@ -35,6 +35,7 @@ export type AttributeDefinitionMinAggregateOutputType = {
   updatedAt: Date | null
   deletedAt: Date | null
   tenantId: string | null
+  status: string | null
 }
 
 export type AttributeDefinitionMaxAggregateOutputType = {
@@ -48,6 +49,7 @@ export type AttributeDefinitionMaxAggregateOutputType = {
   updatedAt: Date | null
   deletedAt: Date | null
   tenantId: string | null
+  status: string | null
 }
 
 export type AttributeDefinitionCountAggregateOutputType = {
@@ -62,6 +64,7 @@ export type AttributeDefinitionCountAggregateOutputType = {
   updatedAt: number
   deletedAt: number
   tenantId: number
+  status: number
   _all: number
 }
 
@@ -77,6 +80,7 @@ export type AttributeDefinitionMinAggregateInputType = {
   updatedAt?: true
   deletedAt?: true
   tenantId?: true
+  status?: true
 }
 
 export type AttributeDefinitionMaxAggregateInputType = {
@@ -90,6 +94,7 @@ export type AttributeDefinitionMaxAggregateInputType = {
   updatedAt?: true
   deletedAt?: true
   tenantId?: true
+  status?: true
 }
 
 export type AttributeDefinitionCountAggregateInputType = {
@@ -104,6 +109,7 @@ export type AttributeDefinitionCountAggregateInputType = {
   updatedAt?: true
   deletedAt?: true
   tenantId?: true
+  status?: true
   _all?: true
 }
 
@@ -191,6 +197,7 @@ export type AttributeDefinitionGroupByOutputType = {
   updatedAt: Date
   deletedAt: Date | null
   tenantId: string
+  status: string
   _count: AttributeDefinitionCountAggregateOutputType | null
   _min: AttributeDefinitionMinAggregateOutputType | null
   _max: AttributeDefinitionMaxAggregateOutputType | null
@@ -226,6 +233,7 @@ export type AttributeDefinitionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AttributeDefinition"> | Date | string | null
   tenantId?: Prisma.StringFilter<"AttributeDefinition"> | string
+  status?: Prisma.StringFilter<"AttributeDefinition"> | string
   productFamily?: Prisma.XOR<Prisma.ProductFamilyScalarRelationFilter, Prisma.ProductFamilyWhereInput>
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
@@ -242,6 +250,7 @@ export type AttributeDefinitionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   productFamily?: Prisma.ProductFamilyOrderByWithRelationInput
   tenant?: Prisma.TenantOrderByWithRelationInput
 }
@@ -262,6 +271,7 @@ export type AttributeDefinitionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AttributeDefinition"> | Date | string | null
   tenantId?: Prisma.StringFilter<"AttributeDefinition"> | string
+  status?: Prisma.StringFilter<"AttributeDefinition"> | string
   productFamily?: Prisma.XOR<Prisma.ProductFamilyScalarRelationFilter, Prisma.ProductFamilyWhereInput>
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "productFamilyId_code">
@@ -278,6 +288,7 @@ export type AttributeDefinitionOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.AttributeDefinitionCountOrderByAggregateInput
   _max?: Prisma.AttributeDefinitionMaxOrderByAggregateInput
   _min?: Prisma.AttributeDefinitionMinOrderByAggregateInput
@@ -298,6 +309,7 @@ export type AttributeDefinitionScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AttributeDefinition"> | Date | string | null
   tenantId?: Prisma.StringWithAggregatesFilter<"AttributeDefinition"> | string
+  status?: Prisma.StringWithAggregatesFilter<"AttributeDefinition"> | string
 }
 
 export type AttributeDefinitionCreateInput = {
@@ -310,6 +322,7 @@ export type AttributeDefinitionCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   productFamily: Prisma.ProductFamilyCreateNestedOneWithoutAttributeDefinitionsInput
   tenant: Prisma.TenantCreateNestedOneWithoutAttributeDefinitionsInput
 }
@@ -326,6 +339,7 @@ export type AttributeDefinitionUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
+  status?: string
 }
 
 export type AttributeDefinitionUpdateInput = {
@@ -338,6 +352,7 @@ export type AttributeDefinitionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
 }
@@ -354,6 +369,7 @@ export type AttributeDefinitionUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AttributeDefinitionCreateManyInput = {
@@ -368,6 +384,7 @@ export type AttributeDefinitionCreateManyInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
+  status?: string
 }
 
 export type AttributeDefinitionUpdateManyMutationInput = {
@@ -380,6 +397,7 @@ export type AttributeDefinitionUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AttributeDefinitionUncheckedUpdateManyInput = {
@@ -394,6 +412,7 @@ export type AttributeDefinitionUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AttributeDefinitionListRelationFilter = {
@@ -423,6 +442,7 @@ export type AttributeDefinitionCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type AttributeDefinitionMaxOrderByAggregateInput = {
@@ -436,6 +456,7 @@ export type AttributeDefinitionMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type AttributeDefinitionMinOrderByAggregateInput = {
@@ -449,6 +470,7 @@ export type AttributeDefinitionMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type AttributeDefinitionCreateNestedManyWithoutTenantInput = {
@@ -553,6 +575,7 @@ export type AttributeDefinitionCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   productFamily: Prisma.ProductFamilyCreateNestedOneWithoutAttributeDefinitionsInput
 }
 
@@ -567,6 +590,7 @@ export type AttributeDefinitionUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type AttributeDefinitionCreateOrConnectWithoutTenantInput = {
@@ -610,6 +634,7 @@ export type AttributeDefinitionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"AttributeDefinition"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AttributeDefinition"> | Date | string | null
   tenantId?: Prisma.StringFilter<"AttributeDefinition"> | string
+  status?: Prisma.StringFilter<"AttributeDefinition"> | string
 }
 
 export type AttributeDefinitionCreateWithoutProductFamilyInput = {
@@ -622,6 +647,7 @@ export type AttributeDefinitionCreateWithoutProductFamilyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutAttributeDefinitionsInput
 }
 
@@ -636,6 +662,7 @@ export type AttributeDefinitionUncheckedCreateWithoutProductFamilyInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
+  status?: string
 }
 
 export type AttributeDefinitionCreateOrConnectWithoutProductFamilyInput = {
@@ -675,6 +702,7 @@ export type AttributeDefinitionCreateManyTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type AttributeDefinitionUpdateWithoutTenantInput = {
@@ -687,6 +715,7 @@ export type AttributeDefinitionUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
 }
 
@@ -701,6 +730,7 @@ export type AttributeDefinitionUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AttributeDefinitionUncheckedUpdateManyWithoutTenantInput = {
@@ -714,6 +744,7 @@ export type AttributeDefinitionUncheckedUpdateManyWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AttributeDefinitionCreateManyProductFamilyInput = {
@@ -727,6 +758,7 @@ export type AttributeDefinitionCreateManyProductFamilyInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
+  status?: string
 }
 
 export type AttributeDefinitionUpdateWithoutProductFamilyInput = {
@@ -739,6 +771,7 @@ export type AttributeDefinitionUpdateWithoutProductFamilyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutAttributeDefinitionsNestedInput
 }
 
@@ -753,6 +786,7 @@ export type AttributeDefinitionUncheckedUpdateWithoutProductFamilyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyInput = {
@@ -766,6 +800,7 @@ export type AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -782,6 +817,7 @@ export type AttributeDefinitionSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
+  status?: boolean
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attributeDefinition"]>
@@ -798,6 +834,7 @@ export type AttributeDefinitionSelectCreateManyAndReturn<ExtArgs extends runtime
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
+  status?: boolean
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attributeDefinition"]>
@@ -814,6 +851,7 @@ export type AttributeDefinitionSelectUpdateManyAndReturn<ExtArgs extends runtime
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
+  status?: boolean
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attributeDefinition"]>
@@ -830,9 +868,10 @@ export type AttributeDefinitionSelectScalar = {
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
+  status?: boolean
 }
 
-export type AttributeDefinitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "type" | "isRequired" | "options" | "productFamilyId" | "createdAt" | "updatedAt" | "deletedAt" | "tenantId", ExtArgs["result"]["attributeDefinition"]>
+export type AttributeDefinitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "type" | "isRequired" | "options" | "productFamilyId" | "createdAt" | "updatedAt" | "deletedAt" | "tenantId" | "status", ExtArgs["result"]["attributeDefinition"]>
 export type AttributeDefinitionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -864,6 +903,7 @@ export type $AttributeDefinitionPayload<ExtArgs extends runtime.Types.Extensions
     updatedAt: Date
     deletedAt: Date | null
     tenantId: string
+    status: string
   }, ExtArgs["result"]["attributeDefinition"]>
   composites: {}
 }
@@ -1300,6 +1340,7 @@ export interface AttributeDefinitionFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"AttributeDefinition", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"AttributeDefinition", 'DateTime'>
   readonly tenantId: Prisma.FieldRef<"AttributeDefinition", 'String'>
+  readonly status: Prisma.FieldRef<"AttributeDefinition", 'String'>
 }
     
 

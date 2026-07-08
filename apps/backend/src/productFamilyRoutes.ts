@@ -57,6 +57,7 @@ router.post("/", requirePermission("productFamily.create") as any, async (req: A
 
 // PUT /api/product-families/:id
 router.put("/:id", requirePermission("productFamily.update") as any, async (req: AuthRequest, res) => {
+    delete req.body.status; // Prevent status update via generic endpoint
     const { name, description } = req.body;
     if (!name) return res.status(400).json({ error: "Name is required" });
     const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
@@ -107,6 +108,28 @@ router.delete("/:id", requirePermission("productFamily.delete") as any, async (r
                 return deleted;
             });
     res.json({ message: "Product family deleted successfully" });
+});
+
+
+// PATCH /api/productFamilys/:id/status
+router.patch("/:id/status", requirePermission("productFamily.status.update") as any, async (req: AuthRequest, res) => {
+    const { status } = req.body;
+    if (!status) return res.status(400).json({ error: "Status is required" });
+
+    try {
+        const updated = await productFamilyService.updateProductFamily(
+            req.user!.tenantId,
+            req.user!.userId,
+            req.params.id,
+            { status },
+            (req as any).auditMeta
+        );
+        if (!updated) return res.status(404).json({ error: "productFamily not found" });
+        res.json(updated);
+    } catch (error: any) {
+        console.error("Error updating productFamily status:", error);
+        res.status(500).json({ error: "Failed to update productFamily status" });
+    }
 });
 
 export default router;

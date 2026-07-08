@@ -57,6 +57,7 @@ router.post("/", requirePermission("category.create") as any, async (req: AuthRe
 
 // PUT /api/categories/:id
 router.put("/:id", requirePermission("category.update") as any, async (req: AuthRequest, res) => {
+    delete req.body.status; // Prevent status update via generic endpoint
     const { name, description, parentId } = req.body;
     if (!name) return res.status(400).json({ error: "Name is required" });
     const category = await withTenantTransaction(req.user!.tenantId, async (tx) => {
@@ -107,6 +108,28 @@ router.delete("/:id", requirePermission("category.delete") as any, async (req: A
                 return deleted;
             });
     res.json({ message: "Category deleted successfully" });
+});
+
+
+// PATCH /api/categorys/:id/status
+router.patch("/:id/status", requirePermission("category.status.update") as any, async (req: AuthRequest, res) => {
+    const { status } = req.body;
+    if (!status) return res.status(400).json({ error: "Status is required" });
+
+    try {
+        const updated = await categoryService.updateCategory(
+            req.user!.tenantId,
+            req.user!.userId,
+            req.params.id,
+            { status },
+            (req as any).auditMeta
+        );
+        if (!updated) return res.status(404).json({ error: "category not found" });
+        res.json(updated);
+    } catch (error: any) {
+        console.error("Error updating category status:", error);
+        res.status(500).json({ error: "Failed to update category status" });
+    }
 });
 
 export default router;

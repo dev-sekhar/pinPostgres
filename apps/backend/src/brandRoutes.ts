@@ -55,6 +55,7 @@ router.post("/", requirePermission("brand.create") as any, async (req: AuthReque
 
 // PUT /api/brands/:id
 router.put("/:id", requirePermission("brand.update") as any, async (req: AuthRequest, res) => {
+    delete req.body.status; // Prevent status update via generic endpoint
     // Treat PUT as full update, so we validate as normal (require name & code)
     const validation = validateBrandInput(req.body);
     if (!validation.isValid) {
@@ -81,6 +82,7 @@ router.put("/:id", requirePermission("brand.update") as any, async (req: AuthReq
 
 // PATCH /api/brands/:id
 router.patch("/:id", requirePermission("brand.update") as any, async (req: AuthRequest, res) => {
+    delete req.body.status; // Prevent status update via generic endpoint
     const validation = validateBrandInput(req.body, true); // true for partial update
     if (!validation.isValid) {
         return res.status(400).json({ error: "Validation failed", details: validation.errors });
@@ -114,6 +116,28 @@ router.delete("/:id", requirePermission("brand.delete") as any, async (req: Auth
             );
     if (!brand) return res.status(404).json({ error: "Brand not found" });
     res.json({ message: "Brand deleted successfully" });
+});
+
+
+// PATCH /api/brands/:id/status
+router.patch("/:id/status", requirePermission("brand.status.update") as any, async (req: AuthRequest, res) => {
+    const { status } = req.body;
+    if (!status) return res.status(400).json({ error: "Status is required" });
+
+    try {
+        const updated = await brandService.updateBrand(
+            req.user!.tenantId,
+            req.user!.userId,
+            req.params.id,
+            { status },
+            (req as any).auditMeta
+        );
+        if (!updated) return res.status(404).json({ error: "brand not found" });
+        res.json(updated);
+    } catch (error: any) {
+        console.error("Error updating brand status:", error);
+        res.status(500).json({ error: "Failed to update brand status" });
+    }
 });
 
 export default router;
