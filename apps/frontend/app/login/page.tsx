@@ -41,7 +41,7 @@ export default function LoginPage() {
       });
       // Save token
       if (data.token) {
-        localStorage.setItem('token', data.token);
+        sessionStorage.setItem('token', data.token);
         router.push('/');
       } else {
         throw new Error('No token received');

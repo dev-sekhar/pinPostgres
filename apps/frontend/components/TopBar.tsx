@@ -15,7 +15,7 @@ export function TopBar() {
     // Only fetch if we are on an authenticated route
     if (pathname === '/login' || pathname === '/register') return;
     
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (token) {
       fetchApi('/api/auth/me')
         .then(data => {
@@ -32,7 +32,7 @@ export function TopBar() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     clearPermissionsCache();
     router.push('/login');
   };
