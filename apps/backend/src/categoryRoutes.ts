@@ -89,7 +89,6 @@ router.put("/:id", requirePermission("category.update") as any, async (req: Auth
                 operation: 'UPDATE',
                 beforeState: existing,
                 afterState: updated,
-                changedFields: req.body,
                 auditMeta: (req as any).auditMeta
             });
             return updated;

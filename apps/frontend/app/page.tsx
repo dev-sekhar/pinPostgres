@@ -34,73 +34,78 @@ export default function DashboardPage() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}>
         <HasPermission permission="tenant.manage">
-          <Card>
+          <Card onClick={() => router.push('/roles')} style={{ cursor: 'pointer', transition: 'transform 0.2s', ':hover': { transform: 'translateY(-4px)' } } as any}>
             <CardHeader>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#818cf8' }}>Roles</h3>
             </CardHeader>
             <CardBody>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Manage roles and granular permissions.</p>
-              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/roles')}>Manage Roles</Button>
+              <p style={{ color: 'var(--text-secondary)' }}>Manage roles and granular permissions.</p>
             </CardBody>
           </Card>
         </HasPermission>
 
         <HasPermission permission="user.read">
-          <Card>
+          <Card onClick={() => router.push('/users')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <CardHeader>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#f472b6' }}>Team Members</h3>
             </CardHeader>
             <CardBody>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Invite and manage users in your workspace.</p>
-              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/users')}>Manage Team Members</Button>
+              <p style={{ color: 'var(--text-secondary)' }}>Invite and manage users in your workspace.</p>
             </CardBody>
           </Card>
         </HasPermission>
 
         <HasPermission permission="domain.read">
-          <Card>
+          <Card onClick={() => router.push('/classification')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <CardHeader>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#34d399' }}>Classification</h3>
             </CardHeader>
             <CardBody>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Manage domains, categories, and product families.</p>
-              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/classification')}>Manage Classification</Button>
+              <p style={{ color: 'var(--text-secondary)' }}>Manage domains, categories, and product families.</p>
             </CardBody>
           </Card>
         </HasPermission>
 
-        <HasPermission permission="attribute.read">
-          <Card>
+        <HasPermission permission="supplier.read">
+          <Card onClick={() => router.push('/master-data')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <CardHeader>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#fbbf24' }}>Attributes</h3>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#fbbf24' }}>Master Data</h3>
             </CardHeader>
             <CardBody>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Define custom product attributes for your tenant.</p>
-              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/attributes')}>Manage Attributes</Button>
+              <p style={{ color: 'var(--text-secondary)' }}>Manage Brands, Suppliers, Manufacturers, and Compliance Types.</p>
             </CardBody>
           </Card>
         </HasPermission>
 
         <HasPermission permission="product.read">
-          <Card>
+          <Card onClick={() => router.push('/products')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <CardHeader>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#60a5fa' }}>Products</h3>
             </CardHeader>
             <CardBody>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Manage your product catalog and inventory.</p>
-              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/products')}>Manage Products</Button>
+              <p style={{ color: 'var(--text-secondary)' }}>Manage your product catalog and inventory.</p>
             </CardBody>
           </Card>
         </HasPermission>
 
         <HasPermission permission="audit.read">
-          <Card>
+          <Card onClick={() => router.push('/audit')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <CardHeader>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#94a3b8' }}>Audit Trail</h3>
             </CardHeader>
             <CardBody>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>View the history of all changes made in your workspace.</p>
-              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push('/audit')}>View Logs</Button>
+              <p style={{ color: 'var(--text-secondary)' }}>View the history of all changes made in your workspace.</p>
+            </CardBody>
+          </Card>
+        </HasPermission>
+
+        <HasPermission permission="settings.read">
+          <Card onClick={() => router.push('/settings')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <CardHeader>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#c084fc' }}>Settings</h3>
+            </CardHeader>
+            <CardBody>
+              <p style={{ color: 'var(--text-secondary)' }}>Configure tenant-wide settings like SKU generation.</p>
             </CardBody>
           </Card>
         </HasPermission>

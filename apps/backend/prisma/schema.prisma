@@ -57,6 +57,9 @@ model Tenant {
     auditLogs            AuditLog[]
     roles                Role[]
     brands               Brand[]
+    suppliers            Supplier[]
+    channels             Channel[]
+    tenantSettings       TenantSettings?
 }
 
 model Domain {
@@ -70,6 +73,7 @@ model Domain {
 
     tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
     categories  Category[]
+    status      String   @default("ACTIVE")
 
     @@unique([tenantId, name])
     @@index([tenantId])
@@ -93,6 +97,7 @@ model Category {
     children    Category[] @relation("CategoryHierarchy")
 
     productFamilies ProductFamily[]
+    status      String   @default("ACTIVE")
 
     @@unique([domainId, parentId, name])
     @@index([tenantId])
@@ -115,6 +120,7 @@ model ProductFamily {
 
     products             Product[]
     attributeDefinitions AttributeDefinition[]
+    status      String   @default("ACTIVE")
 
     @@unique([categoryId, name])
     @@index([tenantId])
@@ -135,6 +141,7 @@ model User {
     tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
     auditLogs AuditLog[]
     userRoles UserRole[]
+    status      String   @default("ACTIVE")
 
     @@index([tenantId])
 }
@@ -154,6 +161,7 @@ model Product {
     parentId    String?
     parent      Product?  @relation("ProductVariants", fields: [parentId], references: [id], onDelete: Cascade)
     variants    Product[] @relation("ProductVariants")
+    variantSequence Int   @default(0)
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
@@ -165,7 +173,15 @@ model Product {
     brandId  String?
     brand    Brand?  @relation(fields: [brandId], references: [id], onDelete: SetNull)
 
+    supplierId String?
+    supplier   Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+
+    manufacturerId String?
+    manufacturer   Manufacturer? @relation(fields: [manufacturerId], references: [id], onDelete: SetNull)
+
     media     ProductMedia[]
+    complianceTypes ProductComplianceType[]
+    channels        ProductChannel[]
 
     @@unique([tenantId, sku])
     @@index([tenantId])
@@ -359,4 +375,107 @@ model UnitOfMeasure {
     category  String?  // e.g. "WEIGHT", "DIMENSION", "VOLUME", "COUNT"
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model TenantSettings {
+    id                String @id @default(uuid())
+    tenantId          String @unique
+    tenant            Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    
+    productSkuPattern String @default("SKU-{SEQ}")
+    productSkuSeq     Int    @default(0)
+    
+    variantSkuPattern String @default("{PARENT_SKU}-VAR-{SEQ}")
+}
+
+model Supplier {
+    id          String   @id @default(uuid())
+    tenantId    String
+    code        String
+    name        String
+    description String?
+    contactInfo Json?
+    status      String   @default("ACTIVE")
+    
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    products    Product[]
+
+    @@unique([tenantId, code])
+    @@index([tenantId])
+}
+
+model Channel {
+    id          String   @id @default(uuid())
+    tenantId    String
+    code        String
+    name        String
+    description String?
+    status      String   @default("ACTIVE")
+    
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    products    ProductChannel[]
+
+    @@unique([tenantId, code])
+    @@index([tenantId])
+}
+
+model Manufacturer {
+    id          String   @id @default(uuid())
+    code        String   @unique
+    name        String
+    description String?
+    contactInfo Json?
+    status      String   @default("ACTIVE")
+    
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    products    Product[]
+}
+
+model ComplianceType {
+    id          String   @id @default(uuid())
+    code        String   @unique
+    name        String
+    description String?
+    status      String   @default("ACTIVE")
+    
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    products    ProductComplianceType[]
+}
+
+model ProductComplianceType {
+    productId        String
+    complianceTypeId String
+
+    product        Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+    complianceType ComplianceType @relation(fields: [complianceTypeId], references: [id], onDelete: Cascade)
+
+    @@id([productId, complianceTypeId])
+    @@index([productId])
+    @@index([complianceTypeId])
+}
+
+model ProductChannel {
+    productId String
+    channelId String
+
+    product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+    channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+    @@id([productId, channelId])
+    @@index([productId])
+    @@index([channelId])
 }

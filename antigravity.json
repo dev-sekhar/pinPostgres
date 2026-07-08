@@ -1,0 +1,83 @@
+{
+    "testing": {
+        "autoCreateTests": true,
+        "scope": "newFeaturesOnly",
+        "reporting": {
+            "enabled": true,
+            "outputFolder": "reports",
+            "filePattern": "yyyyMMdd_n.json",
+            "retentionDays": 30,
+            "detailLevel": "summary"
+        },
+        "permissions": {
+            "modifyTestedFeatures": false
+        }
+    },
+    "codeReview": {
+        "optimizeCodeSize": true,
+        "eliminateDeadCode": true,
+        "minimizeFootprint": true,
+        "requireApprovalForMajorChanges": true
+    },
+    "performance": {
+        "reviewPageLoadTimes": true,
+        "ensureFastLoading": true,
+        "checkBundleSize": true,
+        "monitorApiLatency": true
+    },
+    "security": {
+        "scanDependencies": true,
+        "preventSensitiveDataLeak": true
+    },
+    "workflow": {
+        "sequence": [
+            "runTests",
+            "generateReport",
+            "codeReview",
+            "performanceCheck",
+            "updateDocumentation",
+            "auditTrailCheck",
+            "rbacValidation",
+            "projectStructureOptimization",
+            "notifyManualDevRun"
+        ],
+        "rollbackOnFailure": true
+    },
+    "documentation": {
+        "autoUpdateOnFeatureChange": true,
+        "updateScope": "systemInstructionsAndFeatureDocs",
+        "format": "markdown",
+        "location": "docs/system/",
+        "governance": {
+            "requireReview": true,
+            "approvalRole": "systemOwner"
+        }
+    },
+    "projectSpecific": {
+        "auditTrail": {
+            "enforceForNewFeatures": true,
+            "retentionPolicy": "90daysHotStorage",
+            "archivalPolicy": "coldStorageAfter90Days"
+        },
+        "rbac": {
+            "requireRoleValidation": true,
+            "enforceLeastPrivilege": true,
+            "approvalWorkflow": "mandatoryForNewRoles"
+        },
+        "projectStructure": {
+            "enforceModularity": true,
+            "standardFolderLayout": true,
+            "removeUnusedDependencies": true,
+            "alignDocsWithStructure": true,
+            "checkForCircularDependencies": true
+        }
+    },
+    "execution": {
+        "autoRunDevServers": false,
+        "notifyWhenManualRunNeeded": true,
+        "manualRunInstructions": [
+            "Run 'yarn dev' or 'npm run dev' in terminal when notified",
+            "Frontend and backend servers must be started manually by developer"
+        ]
+    }
+}

@@ -17,8 +17,15 @@ import currencyRoutes from "./currencyRoutes.js";
 import countryRoutes from "./countryRoutes.js";
 import uomRoutes from "./uomRoutes.js";
 import brandRoutes from "./brandRoutes.js";
+import settingsRoutes from "./settingsRoutes.js";
+import permissionRoutes from "./permissionRoutes.js";
+import supplierRoutes from "./supplierRoutes.js";
+import manufacturerRoutes from "./manufacturerRoutes.js";
+import complianceTypeRoutes from "./complianceTypeRoutes.js";
+import channelRoutes from "./channelRoutes.js";
 
 import { auditMiddleware } from "./auditMiddleware.js";
+import { errorHandler } from "./errorMiddleware.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 4000);
@@ -45,7 +52,17 @@ app.use("/api/product-families", productFamilyRoutes);
 app.use("/api/currencies", currencyRoutes);
 app.use("/api/countries", countryRoutes);
 app.use("/api/uoms", uomRoutes);
+app.use("/api/permissions", permissionRoutes);
 app.use("/api/brands", brandRoutes);
+app.use("/api/suppliers", supplierRoutes);
+app.use("/api/manufacturers", manufacturerRoutes);
+app.use("/api/compliance-types", complianceTypeRoutes);
+app.use("/api/channels", channelRoutes);
+app.use("/api/settings", settingsRoutes);
+
+// Global Error Handler
+app.use(errorHandler as any);
+
 app.listen(port, () => {
     console.log(`Backend listening on http://localhost:${port}`);
 });

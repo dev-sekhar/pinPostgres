@@ -55,3 +55,6 @@ coverage/
 # Temporary / Cache Directories
 .turbo/
 .cache/
+
+# Test Reports
+reports/

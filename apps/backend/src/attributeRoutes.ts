@@ -2,6 +2,7 @@ import { Router } from "express";
 import { prisma, withTenantTransaction } from "./prismaClient.js";
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
 import { requirePermission } from "./rbacMiddleware.js";
+import { auditService } from "./services/auditService.js";
 
 const router = Router();
 router.use(requireAuth as any);
@@ -110,7 +111,6 @@ router.put("/:id", requirePermission("attribute.update") as any, async (req: Aut
                 operation: 'UPDATE',
                 beforeState: existing,
                 afterState: updated,
-                changedFields: req.body,
                 auditMeta: (req as any).auditMeta
             });
 
@@ -144,7 +144,6 @@ router.patch("/:id", requirePermission("attribute.update") as any, async (req: A
                 operation: 'UPDATE',
                 beforeState: existing,
                 afterState: updated,
-                changedFields: req.body,
                 auditMeta: (req as any).auditMeta
             });
 

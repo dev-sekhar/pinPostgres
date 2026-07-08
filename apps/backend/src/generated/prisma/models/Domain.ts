@@ -32,6 +32,7 @@ export type DomainMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  status: string | null
 }
 
 export type DomainMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type DomainMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  status: string | null
 }
 
 export type DomainCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type DomainCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   deletedAt: number
+  status: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type DomainMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  status?: true
 }
 
 export type DomainMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type DomainMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  status?: true
 }
 
 export type DomainCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type DomainCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type DomainGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+  status: string
   _count: DomainCountAggregateOutputType | null
   _min: DomainMinAggregateOutputType | null
   _max: DomainMaxAggregateOutputType | null
@@ -198,6 +205,7 @@ export type DomainWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Domain"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Domain"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Domain"> | Date | string | null
+  status?: Prisma.StringFilter<"Domain"> | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   categories?: Prisma.CategoryListRelationFilter
 }
@@ -210,6 +218,7 @@ export type DomainOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   categories?: Prisma.CategoryOrderByRelationAggregateInput
 }
@@ -226,6 +235,7 @@ export type DomainWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Domain"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Domain"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Domain"> | Date | string | null
+  status?: Prisma.StringFilter<"Domain"> | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   categories?: Prisma.CategoryListRelationFilter
 }, "id" | "tenantId_name">
@@ -238,6 +248,7 @@ export type DomainOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.DomainCountOrderByAggregateInput
   _max?: Prisma.DomainMaxOrderByAggregateInput
   _min?: Prisma.DomainMinOrderByAggregateInput
@@ -254,6 +265,7 @@ export type DomainScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Domain"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Domain"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Domain"> | Date | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Domain"> | string
 }
 
 export type DomainCreateInput = {
@@ -263,6 +275,7 @@ export type DomainCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutDomainsInput
   categories?: Prisma.CategoryCreateNestedManyWithoutDomainInput
 }
@@ -275,6 +288,7 @@ export type DomainUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDomainInput
 }
 
@@ -285,6 +299,7 @@ export type DomainUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutDomainsNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutDomainNestedInput
 }
@@ -297,6 +312,7 @@ export type DomainUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutDomainNestedInput
 }
 
@@ -308,6 +324,7 @@ export type DomainCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type DomainUpdateManyMutationInput = {
@@ -317,6 +334,7 @@ export type DomainUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DomainUncheckedUpdateManyInput = {
@@ -327,6 +345,7 @@ export type DomainUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DomainListRelationFilter = {
@@ -352,6 +371,7 @@ export type DomainCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type DomainMaxOrderByAggregateInput = {
@@ -362,6 +382,7 @@ export type DomainMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type DomainMinOrderByAggregateInput = {
@@ -372,6 +393,7 @@ export type DomainMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type DomainScalarRelationFilter = {
@@ -446,6 +468,7 @@ export type DomainCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   categories?: Prisma.CategoryCreateNestedManyWithoutDomainInput
 }
 
@@ -456,6 +479,7 @@ export type DomainUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDomainInput
 }
 
@@ -496,6 +520,7 @@ export type DomainScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Domain"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Domain"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Domain"> | Date | string | null
+  status?: Prisma.StringFilter<"Domain"> | string
 }
 
 export type DomainCreateWithoutCategoriesInput = {
@@ -505,6 +530,7 @@ export type DomainCreateWithoutCategoriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutDomainsInput
 }
 
@@ -516,6 +542,7 @@ export type DomainUncheckedCreateWithoutCategoriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type DomainCreateOrConnectWithoutCategoriesInput = {
@@ -541,6 +568,7 @@ export type DomainUpdateWithoutCategoriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutDomainsNestedInput
 }
 
@@ -552,6 +580,7 @@ export type DomainUncheckedUpdateWithoutCategoriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DomainCreateManyTenantInput = {
@@ -561,6 +590,7 @@ export type DomainCreateManyTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type DomainUpdateWithoutTenantInput = {
@@ -570,6 +600,7 @@ export type DomainUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.CategoryUpdateManyWithoutDomainNestedInput
 }
 
@@ -580,6 +611,7 @@ export type DomainUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutDomainNestedInput
 }
 
@@ -590,6 +622,7 @@ export type DomainUncheckedUpdateManyWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -631,6 +664,7 @@ export type DomainSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   categories?: boolean | Prisma.Domain$categoriesArgs<ExtArgs>
   _count?: boolean | Prisma.DomainCountOutputTypeDefaultArgs<ExtArgs>
@@ -644,6 +678,7 @@ export type DomainSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["domain"]>
 
@@ -655,6 +690,7 @@ export type DomainSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["domain"]>
 
@@ -666,9 +702,10 @@ export type DomainSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
 }
 
-export type DomainOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "name" | "description" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["domain"]>
+export type DomainOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "name" | "description" | "createdAt" | "updatedAt" | "deletedAt" | "status", ExtArgs["result"]["domain"]>
 export type DomainInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   categories?: boolean | Prisma.Domain$categoriesArgs<ExtArgs>
@@ -695,6 +732,7 @@ export type $DomainPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
+    status: string
   }, ExtArgs["result"]["domain"]>
   composites: {}
 }
@@ -1127,6 +1165,7 @@ export interface DomainFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Domain", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Domain", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Domain", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Domain", 'String'>
 }
     
 

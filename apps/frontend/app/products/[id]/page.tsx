@@ -15,6 +15,11 @@ interface Product {
   attributes: any;
   parentId: string | null;
   variants?: Product[];
+  brandId?: string | null;
+  supplierId?: string | null;
+  manufacturerId?: string | null;
+  complianceTypes?: any[];
+  channels?: any[];
 }
 
 export default function ProductDetailsPage() {
@@ -23,6 +28,14 @@ export default function ProductDetailsPage() {
   const { id } = params;
 
   const [product, setProduct] = useState<Product | null>(null);
+  
+  // Master Data mappings
+  const [brands, setBrands] = useState<Record<string, string>>({});
+  const [suppliers, setSuppliers] = useState<Record<string, string>>({});
+  const [manufacturers, setManufacturers] = useState<Record<string, string>>({});
+  const [complianceTypes, setComplianceTypes] = useState<Record<string, string>>({});
+  const [channels, setChannels] = useState<Record<string, string>>({});
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -31,8 +44,24 @@ export default function ProductDetailsPage() {
     
     const loadProduct = async () => {
       try {
-        const data = await fetchApi(`/api/products/${id}`);
+        const [data, bData, sData, mData, ctData, chData] = await Promise.all([
+          fetchApi(`/api/products/${id}`),
+          fetchApi('/api/brands'),
+          fetchApi('/api/suppliers'),
+          fetchApi('/api/manufacturers'),
+          fetchApi('/api/compliance-types'),
+          fetchApi('/api/channels')
+        ]);
+        
         setProduct(data);
+        
+        // Create lookup maps
+        const bMap: Record<string, string> = {}; bData.forEach((b: any) => bMap[b.id] = b.name); setBrands(bMap);
+        const sMap: Record<string, string> = {}; sData.forEach((s: any) => sMap[s.id] = s.name); setSuppliers(sMap);
+        const mMap: Record<string, string> = {}; mData.forEach((m: any) => mMap[m.id] = m.name); setManufacturers(mMap);
+        const ctMap: Record<string, string> = {}; ctData.forEach((ct: any) => ctMap[ct.id] = ct.name); setComplianceTypes(ctMap);
+        const chMap: Record<string, string> = {}; chData.forEach((ch: any) => chMap[ch.id] = ch.name); setChannels(chMap);
+        
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -78,6 +107,55 @@ export default function ProductDetailsPage() {
                 <p style={{ marginTop: '0.25rem', lineHeight: 1.5 }}>{product.description}</p>
               </div>
             )}
+            {/* Master Data */}
+            <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
+              <h3 style={{ fontSize: '1.125rem', marginBottom: '1rem' }}>Master Data</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Brand</div>
+                  <div style={{ fontWeight: 500 }}>{product.brandId ? brands[product.brandId] || 'Unknown' : 'None'}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Supplier</div>
+                  <div style={{ fontWeight: 500 }}>{product.supplierId ? suppliers[product.supplierId] || 'Unknown' : 'None'}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Manufacturer</div>
+                  <div style={{ fontWeight: 500 }}>{product.manufacturerId ? manufacturers[product.manufacturerId] || 'Unknown' : 'None'}</div>
+                </div>
+              </div>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+                <div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Compliance Types</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.25rem' }}>
+                    {product.complianceTypes && product.complianceTypes.length > 0 ? (
+                      product.complianceTypes.map((c: any) => (
+                        <span key={c.complianceTypeId} style={{ padding: '0.25rem 0.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '0.25rem', fontSize: '0.875rem' }}>
+                          {complianceTypes[c.complianceTypeId] || 'Unknown'}
+                        </span>
+                      ))
+                    ) : (
+                      <span style={{ fontWeight: 500 }}>None</span>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Channels</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.25rem' }}>
+                    {product.channels && product.channels.length > 0 ? (
+                      product.channels.map((c: any) => (
+                        <span key={c.channelId} style={{ padding: '0.25rem 0.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '0.25rem', fontSize: '0.875rem' }}>
+                          {channels[c.channelId] || 'Unknown'}
+                        </span>
+                      ))
+                    ) : (
+                      <span style={{ fontWeight: 500 }}>None</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Custom Attributes */}
             {product.attributes && Object.keys(product.attributes).length > 0 && (

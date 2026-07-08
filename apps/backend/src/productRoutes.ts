@@ -2,6 +2,7 @@ import { Router } from "express";
 import { prisma, withTenantTransaction } from "./prismaClient.js";
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
 import { auditService } from "./services/auditService.js";
+import { skuService } from "./services/skuService.js";
 import { requirePermission } from "./rbacMiddleware.js";
 
 const router = Router();
@@ -25,13 +26,46 @@ router.get("/", requirePermission("product.read") as any, async (req: AuthReques
     }
 });
 
+// GET /api/products/next-sku
+router.get("/next-sku", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
+    try {
+        const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            return await skuService.previewNextSku(tx, req.user!.tenantId);
+        });
+        res.json({ nextSku });
+    } catch (error) {
+        console.error("Error previewing next SKU:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// GET /api/products/:parentId/next-variant-sku
+router.get("/:parentId/next-variant-sku", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
+    try {
+        const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            const parent = await tx.product.findUnique({ where: { id: req.params.parentId } });
+            if (!parent) throw new Error("PARENT_NOT_FOUND");
+            return await skuService.previewNextVariantSku(tx, req.user!.tenantId, parent.sku);
+        });
+        res.json({ nextSku });
+    } catch (error: any) {
+        console.error("Error previewing next variant SKU:", error);
+        if (error.message === 'PARENT_NOT_FOUND') return res.status(404).json({ error: "Parent not found" });
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 // GET /api/products/:id
 router.get("/:id", requirePermission("product.read") as any, async (req: AuthRequest, res) => {
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.product.findUnique({
                 where: { id: req.params.id, deletedAt: null },
-                include: { variants: { where: { deletedAt: null } } }
+                include: { 
+                    variants: { where: { deletedAt: null } },
+                    complianceTypes: true,
+                    channels: true
+                }
             });
         });
         if (!product) return res.status(404).json({ error: "Product not found" });
@@ -41,16 +75,49 @@ router.get("/:id", requirePermission("product.read") as any, async (req: AuthReq
     }
 });
 
+
+
 // POST /api/products
 router.post("/", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
-    const { sku, name, description, price, parentId, attributes, productFamilyId } = req.body;
-    if (!sku || !name || price === undefined || !productFamilyId) {
-        return res.status(400).json({ error: "Missing required fields (sku, name, price, productFamilyId)" });
+    const { name, description, price, parentId, attributes, productFamilyId, brandId, supplierId, manufacturerId, complianceTypeIds, channelIds } = req.body;
+    if (!name || price === undefined || !productFamilyId) {
+        return res.status(400).json({ error: "Missing required fields (name, price, productFamilyId)" });
     }
     try {
         const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+
+
+            let finalSku = "";
+
+            if (parentId) {
+                const parent = await tx.product.findUnique({ where: { id: parentId } });
+                if (!parent) throw new Error("PARENT_NOT_FOUND");
+                finalSku = await skuService.generateAndClaimNextVariantSku(tx, req.user!.tenantId, parent.sku);
+            } else {
+                finalSku = await skuService.generateAndClaimNextSku(tx, req.user!.tenantId);
+            }
+
             const newProduct = await tx.product.create({
-                data: { sku, name, description, price, parentId, attributes, productFamilyId, tenantId: req.user!.tenantId }
+                data: { 
+                    sku: finalSku, 
+                    name, 
+                    description, 
+                    price, 
+                    parentId, 
+                    attributes, 
+                    productFamilyId, 
+                    brandId, 
+                    supplierId,
+                    manufacturerId,
+                    tenantId: req.user!.tenantId,
+                    complianceTypes: complianceTypeIds?.length ? {
+                        create: complianceTypeIds.map((id: string) => ({ complianceTypeId: id }))
+                    } : undefined,
+                    channels: channelIds?.length ? {
+                        create: channelIds.map((id: string) => ({ channelId: id }))
+                    } : undefined
+                },
+                include: { complianceTypes: true, channels: true }
             });
             
             await auditService.logEvent(tx, {
@@ -67,16 +134,22 @@ router.post("/", requirePermission("product.create") as any, async (req: AuthReq
         });
 
         res.status(201).json(product);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error creating product:", error);
+        if (error.message === 'PARENT_NOT_FOUND') {
+            return res.status(400).json({ error: "Parent product not found" });
+        }
+        if (error.code === 'P2002') {
+            return res.status(400).json({ error: "Product with this SKU already exists" });
+        }
         res.status(500).json({ error: "Internal server error" });
     }
 });
 
 // PUT /api/products/:id
 router.put("/:id", requirePermission("product.update") as any, async (req: AuthRequest, res) => {
-    const { sku, name, description, price, attributes, productFamilyId } = req.body;
-    if (!sku || !name || price === undefined || !productFamilyId) {
+    const { name, description, price, attributes, productFamilyId, brandId, supplierId, manufacturerId, complianceTypeIds, channelIds } = req.body;
+    if (!name || price === undefined || !productFamilyId) {
         return res.status(400).json({ error: "Missing required fields" });
     }
     try {
@@ -86,7 +159,25 @@ router.put("/:id", requirePermission("product.update") as any, async (req: AuthR
 
             const updated = await tx.product.update({
                 where: { id: req.params.id },
-                data: { sku, name, description, price, attributes, productFamilyId }
+                data: { 
+                    name, 
+                    description, 
+                    price, 
+                    attributes, 
+                    productFamilyId,
+                    brandId,
+                    supplierId,
+                    manufacturerId,
+                    complianceTypes: complianceTypeIds !== undefined ? {
+                        deleteMany: {},
+                        create: complianceTypeIds.map((id: string) => ({ complianceTypeId: id }))
+                    } : undefined,
+                    channels: channelIds !== undefined ? {
+                        deleteMany: {},
+                        create: channelIds.map((id: string) => ({ channelId: id }))
+                    } : undefined
+                },
+                include: { complianceTypes: true, channels: true }
             });
 
             await auditService.logEvent(tx, {
@@ -97,13 +188,16 @@ router.put("/:id", requirePermission("product.update") as any, async (req: AuthR
                 operation: 'UPDATE',
                 beforeState: existing,
                 afterState: updated,
-                changedFields: req.body,
                 auditMeta: (req as any).auditMeta
             });
             return updated;
         });
         res.json(product);
-    } catch (error) {
+    } catch (error: any) {
+        console.error("Error updating product:", error);
+        if (error.code === 'P2002') {
+            return res.status(400).json({ error: "Product with this SKU already exists" });
+        }
         res.status(500).json({ error: "Failed to update product" });
     }
 });
@@ -115,9 +209,12 @@ router.patch("/:id", requirePermission("product.update") as any, async (req: Aut
             const existing = await tx.product.findUnique({ where: { id: req.params.id, deletedAt: null } });
             if (!existing) throw new Error("Product not found");
 
+            const updateData = { ...req.body };
+            delete updateData.sku; // Prevent modifying auto-generated SKU
+
             const updated = await tx.product.update({
                 where: { id: req.params.id },
-                data: req.body
+                data: updateData
             });
 
             await auditService.logEvent(tx, {
@@ -128,13 +225,16 @@ router.patch("/:id", requirePermission("product.update") as any, async (req: Aut
                 operation: 'UPDATE',
                 beforeState: existing,
                 afterState: updated,
-                changedFields: req.body,
                 auditMeta: (req as any).auditMeta
             });
             return updated;
         });
         res.json(product);
-    } catch (error) {
+    } catch (error: any) {
+        console.error("Error updating product:", error);
+        if (error.code === 'P2002') {
+            return res.status(400).json({ error: "Product with this SKU already exists" });
+        }
         res.status(500).json({ error: "Failed to update product" });
     }
 });

@@ -2,6 +2,15 @@ import { prisma } from '../prismaClient.js';
 
 export class PermissionService {
     /**
+     * Resolves all unique permissions in the system.
+     */
+    async getAllPermissions() {
+        return prisma.permission.findMany({
+            orderBy: { module: 'asc' }
+        });
+    }
+
+    /**
      * Resolves all unique permission codes for a given user.
      */
     async getUserPermissions(userId: string): Promise<string[]> {

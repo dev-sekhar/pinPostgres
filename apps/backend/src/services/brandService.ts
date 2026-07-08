@@ -64,7 +64,6 @@ export const brandService = {
                     operation: "UPDATE",
                     beforeState: existing,
                     afterState: updated,
-                    changedFields: data,
                     auditMeta
                 });
             }

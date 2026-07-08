@@ -67,7 +67,14 @@ export const ModelName = {
   Brand: 'Brand',
   Currency: 'Currency',
   Country: 'Country',
-  UnitOfMeasure: 'UnitOfMeasure'
+  UnitOfMeasure: 'UnitOfMeasure',
+  TenantSettings: 'TenantSettings',
+  Supplier: 'Supplier',
+  Channel: 'Channel',
+  Manufacturer: 'Manufacturer',
+  ComplianceType: 'ComplianceType',
+  ProductComplianceType: 'ProductComplianceType',
+  ProductChannel: 'ProductChannel'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -104,7 +111,8 @@ export const DomainScalarFieldEnum = {
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  status: 'status'
 } as const
 
 export type DomainScalarFieldEnum = (typeof DomainScalarFieldEnum)[keyof typeof DomainScalarFieldEnum]
@@ -119,7 +127,8 @@ export const CategoryScalarFieldEnum = {
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  status: 'status'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -133,7 +142,8 @@ export const ProductFamilyScalarFieldEnum = {
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  status: 'status'
 } as const
 
 export type ProductFamilyScalarFieldEnum = (typeof ProductFamilyScalarFieldEnum)[keyof typeof ProductFamilyScalarFieldEnum]
@@ -148,7 +158,8 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
-  tenantId: 'tenantId'
+  tenantId: 'tenantId',
+  status: 'status'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -163,11 +174,14 @@ export const ProductScalarFieldEnum = {
   attributes: 'attributes',
   productFamilyId: 'productFamilyId',
   parentId: 'parentId',
+  variantSequence: 'variantSequence',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
   tenantId: 'tenantId',
-  brandId: 'brandId'
+  brandId: 'brandId',
+  supplierId: 'supplierId',
+  manufacturerId: 'manufacturerId'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -326,6 +340,93 @@ export const UnitOfMeasureScalarFieldEnum = {
 } as const
 
 export type UnitOfMeasureScalarFieldEnum = (typeof UnitOfMeasureScalarFieldEnum)[keyof typeof UnitOfMeasureScalarFieldEnum]
+
+
+export const TenantSettingsScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  productSkuPattern: 'productSkuPattern',
+  productSkuSeq: 'productSkuSeq',
+  variantSkuPattern: 'variantSkuPattern'
+} as const
+
+export type TenantSettingsScalarFieldEnum = (typeof TenantSettingsScalarFieldEnum)[keyof typeof TenantSettingsScalarFieldEnum]
+
+
+export const SupplierScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  contactInfo: 'contactInfo',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typeof SupplierScalarFieldEnum]
+
+
+export const ChannelScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ChannelScalarFieldEnum = (typeof ChannelScalarFieldEnum)[keyof typeof ChannelScalarFieldEnum]
+
+
+export const ManufacturerScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  contactInfo: 'contactInfo',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ManufacturerScalarFieldEnum = (typeof ManufacturerScalarFieldEnum)[keyof typeof ManufacturerScalarFieldEnum]
+
+
+export const ComplianceTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ComplianceTypeScalarFieldEnum = (typeof ComplianceTypeScalarFieldEnum)[keyof typeof ComplianceTypeScalarFieldEnum]
+
+
+export const ProductComplianceTypeScalarFieldEnum = {
+  productId: 'productId',
+  complianceTypeId: 'complianceTypeId'
+} as const
+
+export type ProductComplianceTypeScalarFieldEnum = (typeof ProductComplianceTypeScalarFieldEnum)[keyof typeof ProductComplianceTypeScalarFieldEnum]
+
+
+export const ProductChannelScalarFieldEnum = {
+  productId: 'productId',
+  channelId: 'channelId'
+} as const
+
+export type ProductChannelScalarFieldEnum = (typeof ProductChannelScalarFieldEnum)[keyof typeof ProductChannelScalarFieldEnum]
 
 
 export const SortOrder = {

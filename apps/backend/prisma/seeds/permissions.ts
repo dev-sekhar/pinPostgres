@@ -18,4 +18,7 @@ export const permissions = [
     { code: "brand.create", name: "Create Brand", module: "Product", description: "Allows creating brand" },
     { code: "brand.update", name: "Update Brand", module: "Product", description: "Allows updating brand" },
     { code: "brand.delete", name: "Delete Brand", module: "Product", description: "Allows deleting brand" },
+
+    { code: "settings.read", name: "Read Settings", module: "System", description: "Allows reading settings" },
+    { code: "settings.update", name: "Update Settings", module: "System", description: "Allows updating settings" },
 ];

@@ -126,3 +126,38 @@ export type Country = Prisma.CountryModel
  * 
  */
 export type UnitOfMeasure = Prisma.UnitOfMeasureModel
+/**
+ * Model TenantSettings
+ * 
+ */
+export type TenantSettings = Prisma.TenantSettingsModel
+/**
+ * Model Supplier
+ * 
+ */
+export type Supplier = Prisma.SupplierModel
+/**
+ * Model Channel
+ * 
+ */
+export type Channel = Prisma.ChannelModel
+/**
+ * Model Manufacturer
+ * 
+ */
+export type Manufacturer = Prisma.ManufacturerModel
+/**
+ * Model ComplianceType
+ * 
+ */
+export type ComplianceType = Prisma.ComplianceTypeModel
+/**
+ * Model ProductComplianceType
+ * 
+ */
+export type ProductComplianceType = Prisma.ProductComplianceTypeModel
+/**
+ * Model ProductChannel
+ * 
+ */
+export type ProductChannel = Prisma.ProductChannelModel

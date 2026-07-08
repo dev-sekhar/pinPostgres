@@ -33,6 +33,7 @@ export type ProductFamilyMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  status: string | null
 }
 
 export type ProductFamilyMaxAggregateOutputType = {
@@ -44,6 +45,7 @@ export type ProductFamilyMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  status: string | null
 }
 
 export type ProductFamilyCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type ProductFamilyCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   deletedAt: number
+  status: number
   _all: number
 }
 
@@ -68,6 +71,7 @@ export type ProductFamilyMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  status?: true
 }
 
 export type ProductFamilyMaxAggregateInputType = {
@@ -79,6 +83,7 @@ export type ProductFamilyMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  status?: true
 }
 
 export type ProductFamilyCountAggregateInputType = {
@@ -90,6 +95,7 @@ export type ProductFamilyCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -174,6 +180,7 @@ export type ProductFamilyGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+  status: string
   _count: ProductFamilyCountAggregateOutputType | null
   _min: ProductFamilyMinAggregateOutputType | null
   _max: ProductFamilyMaxAggregateOutputType | null
@@ -206,6 +213,7 @@ export type ProductFamilyWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ProductFamily"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductFamily"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"ProductFamily"> | Date | string | null
+  status?: Prisma.StringFilter<"ProductFamily"> | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   products?: Prisma.ProductListRelationFilter
@@ -221,6 +229,7 @@ export type ProductFamilyOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
   products?: Prisma.ProductOrderByRelationAggregateInput
@@ -240,6 +249,7 @@ export type ProductFamilyWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ProductFamily"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductFamily"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"ProductFamily"> | Date | string | null
+  status?: Prisma.StringFilter<"ProductFamily"> | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   products?: Prisma.ProductListRelationFilter
@@ -255,6 +265,7 @@ export type ProductFamilyOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.ProductFamilyCountOrderByAggregateInput
   _max?: Prisma.ProductFamilyMaxOrderByAggregateInput
   _min?: Prisma.ProductFamilyMinOrderByAggregateInput
@@ -272,6 +283,7 @@ export type ProductFamilyScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProductFamily"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ProductFamily"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProductFamily"> | Date | string | null
+  status?: Prisma.StringWithAggregatesFilter<"ProductFamily"> | string
 }
 
 export type ProductFamilyCreateInput = {
@@ -281,6 +293,7 @@ export type ProductFamilyCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutProductFamiliesInput
   category: Prisma.CategoryCreateNestedOneWithoutProductFamiliesInput
   products?: Prisma.ProductCreateNestedManyWithoutProductFamilyInput
@@ -296,6 +309,7 @@ export type ProductFamilyUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutProductFamilyInput
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedCreateNestedManyWithoutProductFamilyInput
 }
@@ -307,6 +321,7 @@ export type ProductFamilyUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductFamiliesNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductFamiliesNestedInput
   products?: Prisma.ProductUpdateManyWithoutProductFamilyNestedInput
@@ -322,6 +337,7 @@ export type ProductFamilyUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutProductFamilyNestedInput
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyNestedInput
 }
@@ -335,6 +351,7 @@ export type ProductFamilyCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type ProductFamilyUpdateManyMutationInput = {
@@ -344,6 +361,7 @@ export type ProductFamilyUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProductFamilyUncheckedUpdateManyInput = {
@@ -355,6 +373,7 @@ export type ProductFamilyUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProductFamilyListRelationFilter = {
@@ -381,6 +400,7 @@ export type ProductFamilyCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type ProductFamilyMaxOrderByAggregateInput = {
@@ -392,6 +412,7 @@ export type ProductFamilyMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type ProductFamilyMinOrderByAggregateInput = {
@@ -403,6 +424,7 @@ export type ProductFamilyMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type ProductFamilyScalarRelationFilter = {
@@ -529,6 +551,7 @@ export type ProductFamilyCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   category: Prisma.CategoryCreateNestedOneWithoutProductFamiliesInput
   products?: Prisma.ProductCreateNestedManyWithoutProductFamilyInput
   attributeDefinitions?: Prisma.AttributeDefinitionCreateNestedManyWithoutProductFamilyInput
@@ -542,6 +565,7 @@ export type ProductFamilyUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutProductFamilyInput
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedCreateNestedManyWithoutProductFamilyInput
 }
@@ -584,6 +608,7 @@ export type ProductFamilyScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ProductFamily"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductFamily"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"ProductFamily"> | Date | string | null
+  status?: Prisma.StringFilter<"ProductFamily"> | string
 }
 
 export type ProductFamilyCreateWithoutCategoryInput = {
@@ -593,6 +618,7 @@ export type ProductFamilyCreateWithoutCategoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutProductFamiliesInput
   products?: Prisma.ProductCreateNestedManyWithoutProductFamilyInput
   attributeDefinitions?: Prisma.AttributeDefinitionCreateNestedManyWithoutProductFamilyInput
@@ -606,6 +632,7 @@ export type ProductFamilyUncheckedCreateWithoutCategoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutProductFamilyInput
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedCreateNestedManyWithoutProductFamilyInput
 }
@@ -643,6 +670,7 @@ export type ProductFamilyCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutProductFamiliesInput
   category: Prisma.CategoryCreateNestedOneWithoutProductFamiliesInput
   attributeDefinitions?: Prisma.AttributeDefinitionCreateNestedManyWithoutProductFamilyInput
@@ -657,6 +685,7 @@ export type ProductFamilyUncheckedCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedCreateNestedManyWithoutProductFamilyInput
 }
 
@@ -683,6 +712,7 @@ export type ProductFamilyUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductFamiliesNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductFamiliesNestedInput
   attributeDefinitions?: Prisma.AttributeDefinitionUpdateManyWithoutProductFamilyNestedInput
@@ -697,6 +727,7 @@ export type ProductFamilyUncheckedUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyNestedInput
 }
 
@@ -707,6 +738,7 @@ export type ProductFamilyCreateWithoutAttributeDefinitionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutProductFamiliesInput
   category: Prisma.CategoryCreateNestedOneWithoutProductFamiliesInput
   products?: Prisma.ProductCreateNestedManyWithoutProductFamilyInput
@@ -721,6 +753,7 @@ export type ProductFamilyUncheckedCreateWithoutAttributeDefinitionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutProductFamilyInput
 }
 
@@ -747,6 +780,7 @@ export type ProductFamilyUpdateWithoutAttributeDefinitionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductFamiliesNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductFamiliesNestedInput
   products?: Prisma.ProductUpdateManyWithoutProductFamilyNestedInput
@@ -761,6 +795,7 @@ export type ProductFamilyUncheckedUpdateWithoutAttributeDefinitionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutProductFamilyNestedInput
 }
 
@@ -772,6 +807,7 @@ export type ProductFamilyCreateManyTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type ProductFamilyUpdateWithoutTenantInput = {
@@ -781,6 +817,7 @@ export type ProductFamilyUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductFamiliesNestedInput
   products?: Prisma.ProductUpdateManyWithoutProductFamilyNestedInput
   attributeDefinitions?: Prisma.AttributeDefinitionUpdateManyWithoutProductFamilyNestedInput
@@ -794,6 +831,7 @@ export type ProductFamilyUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutProductFamilyNestedInput
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyNestedInput
 }
@@ -806,6 +844,7 @@ export type ProductFamilyUncheckedUpdateManyWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProductFamilyCreateManyCategoryInput = {
@@ -816,6 +855,7 @@ export type ProductFamilyCreateManyCategoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  status?: string
 }
 
 export type ProductFamilyUpdateWithoutCategoryInput = {
@@ -825,6 +865,7 @@ export type ProductFamilyUpdateWithoutCategoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductFamiliesNestedInput
   products?: Prisma.ProductUpdateManyWithoutProductFamilyNestedInput
   attributeDefinitions?: Prisma.AttributeDefinitionUpdateManyWithoutProductFamilyNestedInput
@@ -838,6 +879,7 @@ export type ProductFamilyUncheckedUpdateWithoutCategoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutProductFamilyNestedInput
   attributeDefinitions?: Prisma.AttributeDefinitionUncheckedUpdateManyWithoutProductFamilyNestedInput
 }
@@ -850,6 +892,7 @@ export type ProductFamilyUncheckedUpdateManyWithoutCategoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -901,6 +944,7 @@ export type ProductFamilySelect<ExtArgs extends runtime.Types.Extensions.Interna
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   products?: boolean | Prisma.ProductFamily$productsArgs<ExtArgs>
@@ -917,6 +961,7 @@ export type ProductFamilySelectCreateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productFamily"]>
@@ -930,6 +975,7 @@ export type ProductFamilySelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productFamily"]>
@@ -943,9 +989,10 @@ export type ProductFamilySelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  status?: boolean
 }
 
-export type ProductFamilyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "categoryId" | "name" | "description" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["productFamily"]>
+export type ProductFamilyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "categoryId" | "name" | "description" | "createdAt" | "updatedAt" | "deletedAt" | "status", ExtArgs["result"]["productFamily"]>
 export type ProductFamilyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -979,6 +1026,7 @@ export type $ProductFamilyPayload<ExtArgs extends runtime.Types.Extensions.Inter
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
+    status: string
   }, ExtArgs["result"]["productFamily"]>
   composites: {}
 }
@@ -1414,6 +1462,7 @@ export interface ProductFamilyFieldRefs {
   readonly createdAt: Prisma.FieldRef<"ProductFamily", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ProductFamily", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"ProductFamily", 'DateTime'>
+  readonly status: Prisma.FieldRef<"ProductFamily", 'String'>
 }
     
 

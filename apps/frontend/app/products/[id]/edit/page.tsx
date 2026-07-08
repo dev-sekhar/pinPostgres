@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader } from '../../../../components/ui/Card';
 import { Input } from '../../../../components/ui/Input';
 import { Button } from '../../../../components/ui/Button';
 import { fetchApi } from '../../../../lib/api';
+import toast from 'react-hot-toast';
 
 interface AttributeDefinition {
   id: string;
@@ -46,6 +47,19 @@ export default function EditProductPage() {
   const [selectedFamilyId, setSelectedFamilyId] = useState('');
   const [parentId, setParentId] = useState<string | null>(null);
 
+  // Master Data state
+  const [brands, setBrands] = useState<any[]>([]);
+  const [suppliers, setSuppliers] = useState<any[]>([]);
+  const [manufacturers, setManufacturers] = useState<any[]>([]);
+  const [complianceTypes, setComplianceTypes] = useState<any[]>([]);
+  const [channels, setChannels] = useState<any[]>([]);
+
+  const [selectedBrandId, setSelectedBrandId] = useState('');
+  const [selectedSupplierId, setSelectedSupplierId] = useState('');
+  const [selectedManufacturerId, setSelectedManufacturerId] = useState('');
+  const [selectedComplianceTypeIds, setSelectedComplianceTypeIds] = useState<string[]>([]);
+  const [selectedChannelIds, setSelectedChannelIds] = useState<string[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -56,18 +70,30 @@ export default function EditProductPage() {
     
     const loadData = async () => {
       try {
-        const [productData, attrsData, dData, cData, fData] = await Promise.all([
+        const [productData, attrsData, dData, cData, fData, bData, sData, mData, ctData, chData] = await Promise.all([
           fetchApi(`/api/products/${id}`),
           fetchApi('/api/attributes'),
           fetchApi('/api/domains'),
           fetchApi('/api/categories'),
-          fetchApi('/api/product-families')
+          fetchApi('/api/product-families'),
+          fetchApi('/api/brands'),
+          fetchApi('/api/suppliers'),
+          fetchApi('/api/manufacturers'),
+          fetchApi('/api/compliance-types'),
+          fetchApi('/api/channels')
         ]);
         
         setAttributeDefs(attrsData);
         setDomains(dData);
         setCategories(cData);
         setFamilies(fData);
+
+        // Filter master data to only ACTIVE
+        setBrands(bData.filter((b: any) => b.status === 'ACTIVE'));
+        setSuppliers(sData.filter((s: any) => s.status === 'ACTIVE'));
+        setManufacturers(mData.filter((m: any) => m.status === 'ACTIVE'));
+        setComplianceTypes(ctData.filter((c: any) => c.status === 'ACTIVE'));
+        setChannels(chData.filter((c: any) => c.status === 'ACTIVE'));
 
         setFormData({
           sku: productData.sku,
@@ -89,6 +115,17 @@ export default function EditProductPage() {
               setSelectedDomainId(cat.domainId);
             }
           }
+        }
+        
+        setSelectedBrandId(productData.brandId || '');
+        setSelectedSupplierId(productData.supplierId || '');
+        setSelectedManufacturerId(productData.manufacturerId || '');
+        
+        if (productData.complianceTypes) {
+          setSelectedComplianceTypeIds(productData.complianceTypes.map((c: any) => c.complianceTypeId));
+        }
+        if (productData.channels) {
+          setSelectedChannelIds(productData.channels.map((c: any) => c.channelId));
         }
         
         // Populate existing assignments from JSON
@@ -115,7 +152,7 @@ export default function EditProductPage() {
         
         setAssignments(existingAssignments);
       } catch (err: any) {
-        setError(err.message);
+        toast.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -155,7 +192,7 @@ export default function EditProductPage() {
     setError('');
 
     if (!selectedFamilyId) {
-      setError("Please select a Product Family.");
+      toast.error("Please select a Product Family.");
       setSaving(false);
       return;
     }
@@ -165,7 +202,7 @@ export default function EditProductPage() {
     for (const def of requiredDefs) {
       const assignment = assignments.find(a => a.attributeCode === def.code);
       if (!assignment || assignment.value === '' || assignment.value === undefined) {
-        setError(`Required attribute "${def.name}" is missing or empty.`);
+        toast.error(`Required attribute "${def.name}" is missing or empty.`);
         setSaving(false);
         return;
       }
@@ -185,12 +222,18 @@ export default function EditProductPage() {
           ...formData,
           price: Number(formData.price),
           productFamilyId: selectedFamilyId,
-          attributes: attributesObj
+          attributes: attributesObj,
+          brandId: selectedBrandId || null,
+          supplierId: selectedSupplierId || null,
+          manufacturerId: selectedManufacturerId || null,
+          complianceTypeIds: selectedComplianceTypeIds,
+          channelIds: selectedChannelIds
         }),
       });
       router.push(`/products/${id}`);
+      toast.success('Product updated successfully');
     } catch (err: any) {
-      setError(err.message);
+      toast.error(err.message);
     } finally {
       setSaving(false);
     }
@@ -226,7 +269,7 @@ export default function EditProductPage() {
                   label="SKU"
                   value={formData.sku}
                   onChange={handleChange}
-                  required
+                  disabled={true}
                 />
                 <Input
                   id="price"
@@ -308,6 +351,87 @@ export default function EditProductPage() {
                     resize: 'vertical'
                   }}
                 />
+              </div>
+
+              {/* Master Data Section */}
+              <div style={{ marginTop: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border-color)' }}>
+                <h3 style={{ fontSize: '1.125rem', marginBottom: '1rem' }}>Master Data Links</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Brand</label>
+                    <select 
+                      value={selectedBrandId} 
+                      onChange={e => setSelectedBrandId(e.target.value)}
+                      style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none' }}
+                    >
+                      <option value="">-- Select Brand --</option>
+                      {brands.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+                    </select>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Supplier</label>
+                    <select 
+                      value={selectedSupplierId} 
+                      onChange={e => setSelectedSupplierId(e.target.value)}
+                      style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none' }}
+                    >
+                      <option value="">-- Select Supplier --</option>
+                      {suppliers.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                    </select>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Manufacturer</label>
+                    <select 
+                      value={selectedManufacturerId} 
+                      onChange={e => setSelectedManufacturerId(e.target.value)}
+                      style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', outline: 'none' }}
+                    >
+                      <option value="">-- Select Manufacturer --</option>
+                      {manufacturers.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Compliance Types</label>
+                    <div style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '150px', overflowY: 'auto' }}>
+                      {complianceTypes.map(c => (
+                        <label key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                          <input 
+                            type="checkbox" 
+                            checked={selectedComplianceTypeIds.includes(c.id)}
+                            onChange={(e) => {
+                              if (e.target.checked) setSelectedComplianceTypeIds([...selectedComplianceTypeIds, c.id]);
+                              else setSelectedComplianceTypeIds(selectedComplianceTypeIds.filter(id => id !== c.id));
+                            }}
+                          />
+                          {c.name}
+                        </label>
+                      ))}
+                      {complianceTypes.length === 0 && <span style={{ color: 'var(--text-secondary)' }}>No active compliance types.</span>}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Channels</label>
+                    <div style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '150px', overflowY: 'auto' }}>
+                      {channels.map(c => (
+                        <label key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                          <input 
+                            type="checkbox" 
+                            checked={selectedChannelIds.includes(c.id)}
+                            onChange={(e) => {
+                              if (e.target.checked) setSelectedChannelIds([...selectedChannelIds, c.id]);
+                              else setSelectedChannelIds(selectedChannelIds.filter(id => id !== c.id));
+                            }}
+                          />
+                          {c.name}
+                        </label>
+                      ))}
+                      {channels.length === 0 && <span style={{ color: 'var(--text-secondary)' }}>No active channels.</span>}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {attributeDefs.length > 0 && (
@@ -436,12 +560,6 @@ export default function EditProductPage() {
                       })}
                     </div>
                   )}
-                </div>
-              )}
-
-              {error && (
-                <div style={{ color: 'var(--error-color)', fontSize: '0.875rem', marginBottom: '1rem', padding: '0.5rem', background: 'rgba(239, 68, 68, 0.1)', borderRadius: 'var(--radius-sm)', marginTop: '2rem' }}>
-                  {error}
                 </div>
               )}
               

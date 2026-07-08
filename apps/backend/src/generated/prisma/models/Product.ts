@@ -28,10 +28,12 @@ export type AggregateProduct = {
 
 export type ProductAvgAggregateOutputType = {
   price: runtime.Decimal | null
+  variantSequence: number | null
 }
 
 export type ProductSumAggregateOutputType = {
   price: runtime.Decimal | null
+  variantSequence: number | null
 }
 
 export type ProductMinAggregateOutputType = {
@@ -42,11 +44,14 @@ export type ProductMinAggregateOutputType = {
   price: runtime.Decimal | null
   productFamilyId: string | null
   parentId: string | null
+  variantSequence: number | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
   tenantId: string | null
   brandId: string | null
+  supplierId: string | null
+  manufacturerId: string | null
 }
 
 export type ProductMaxAggregateOutputType = {
@@ -57,11 +62,14 @@ export type ProductMaxAggregateOutputType = {
   price: runtime.Decimal | null
   productFamilyId: string | null
   parentId: string | null
+  variantSequence: number | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
   tenantId: string | null
   brandId: string | null
+  supplierId: string | null
+  manufacturerId: string | null
 }
 
 export type ProductCountAggregateOutputType = {
@@ -73,21 +81,26 @@ export type ProductCountAggregateOutputType = {
   attributes: number
   productFamilyId: number
   parentId: number
+  variantSequence: number
   createdAt: number
   updatedAt: number
   deletedAt: number
   tenantId: number
   brandId: number
+  supplierId: number
+  manufacturerId: number
   _all: number
 }
 
 
 export type ProductAvgAggregateInputType = {
   price?: true
+  variantSequence?: true
 }
 
 export type ProductSumAggregateInputType = {
   price?: true
+  variantSequence?: true
 }
 
 export type ProductMinAggregateInputType = {
@@ -98,11 +111,14 @@ export type ProductMinAggregateInputType = {
   price?: true
   productFamilyId?: true
   parentId?: true
+  variantSequence?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
   tenantId?: true
   brandId?: true
+  supplierId?: true
+  manufacturerId?: true
 }
 
 export type ProductMaxAggregateInputType = {
@@ -113,11 +129,14 @@ export type ProductMaxAggregateInputType = {
   price?: true
   productFamilyId?: true
   parentId?: true
+  variantSequence?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
   tenantId?: true
   brandId?: true
+  supplierId?: true
+  manufacturerId?: true
 }
 
 export type ProductCountAggregateInputType = {
@@ -129,11 +148,14 @@ export type ProductCountAggregateInputType = {
   attributes?: true
   productFamilyId?: true
   parentId?: true
+  variantSequence?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
   tenantId?: true
   brandId?: true
+  supplierId?: true
+  manufacturerId?: true
   _all?: true
 }
 
@@ -232,11 +254,14 @@ export type ProductGroupByOutputType = {
   attributes: runtime.JsonValue
   productFamilyId: string
   parentId: string | null
+  variantSequence: number
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
   tenantId: string
   brandId: string | null
+  supplierId: string | null
+  manufacturerId: string | null
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
   _sum: ProductSumAggregateOutputType | null
@@ -271,17 +296,24 @@ export type ProductWhereInput = {
   attributes?: Prisma.JsonFilter<"Product">
   productFamilyId?: Prisma.StringFilter<"Product"> | string
   parentId?: Prisma.StringNullableFilter<"Product"> | string | null
+  variantSequence?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   tenantId?: Prisma.StringFilter<"Product"> | string
   brandId?: Prisma.StringNullableFilter<"Product"> | string | null
+  supplierId?: Prisma.StringNullableFilter<"Product"> | string | null
+  manufacturerId?: Prisma.StringNullableFilter<"Product"> | string | null
   productFamily?: Prisma.XOR<Prisma.ProductFamilyScalarRelationFilter, Prisma.ProductFamilyWhereInput>
   parent?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
   variants?: Prisma.ProductListRelationFilter
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   brand?: Prisma.XOR<Prisma.BrandNullableScalarRelationFilter, Prisma.BrandWhereInput> | null
+  supplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null
+  manufacturer?: Prisma.XOR<Prisma.ManufacturerNullableScalarRelationFilter, Prisma.ManufacturerWhereInput> | null
   media?: Prisma.ProductMediaListRelationFilter
+  complianceTypes?: Prisma.ProductComplianceTypeListRelationFilter
+  channels?: Prisma.ProductChannelListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -293,17 +325,24 @@ export type ProductOrderByWithRelationInput = {
   attributes?: Prisma.SortOrder
   productFamilyId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  variantSequence?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   brandId?: Prisma.SortOrderInput | Prisma.SortOrder
+  supplierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  manufacturerId?: Prisma.SortOrderInput | Prisma.SortOrder
   productFamily?: Prisma.ProductFamilyOrderByWithRelationInput
   parent?: Prisma.ProductOrderByWithRelationInput
   variants?: Prisma.ProductOrderByRelationAggregateInput
   tenant?: Prisma.TenantOrderByWithRelationInput
   brand?: Prisma.BrandOrderByWithRelationInput
+  supplier?: Prisma.SupplierOrderByWithRelationInput
+  manufacturer?: Prisma.ManufacturerOrderByWithRelationInput
   media?: Prisma.ProductMediaOrderByRelationAggregateInput
+  complianceTypes?: Prisma.ProductComplianceTypeOrderByRelationAggregateInput
+  channels?: Prisma.ProductChannelOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -319,17 +358,24 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   attributes?: Prisma.JsonFilter<"Product">
   productFamilyId?: Prisma.StringFilter<"Product"> | string
   parentId?: Prisma.StringNullableFilter<"Product"> | string | null
+  variantSequence?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   tenantId?: Prisma.StringFilter<"Product"> | string
   brandId?: Prisma.StringNullableFilter<"Product"> | string | null
+  supplierId?: Prisma.StringNullableFilter<"Product"> | string | null
+  manufacturerId?: Prisma.StringNullableFilter<"Product"> | string | null
   productFamily?: Prisma.XOR<Prisma.ProductFamilyScalarRelationFilter, Prisma.ProductFamilyWhereInput>
   parent?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
   variants?: Prisma.ProductListRelationFilter
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   brand?: Prisma.XOR<Prisma.BrandNullableScalarRelationFilter, Prisma.BrandWhereInput> | null
+  supplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null
+  manufacturer?: Prisma.XOR<Prisma.ManufacturerNullableScalarRelationFilter, Prisma.ManufacturerWhereInput> | null
   media?: Prisma.ProductMediaListRelationFilter
+  complianceTypes?: Prisma.ProductComplianceTypeListRelationFilter
+  channels?: Prisma.ProductChannelListRelationFilter
 }, "id" | "tenantId_sku">
 
 export type ProductOrderByWithAggregationInput = {
@@ -341,11 +387,14 @@ export type ProductOrderByWithAggregationInput = {
   attributes?: Prisma.SortOrder
   productFamilyId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  variantSequence?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   brandId?: Prisma.SortOrderInput | Prisma.SortOrder
+  supplierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  manufacturerId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
@@ -365,11 +414,14 @@ export type ProductScalarWhereWithAggregatesInput = {
   attributes?: Prisma.JsonWithAggregatesFilter<"Product">
   productFamilyId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   parentId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  variantSequence?: Prisma.IntWithAggregatesFilter<"Product"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
   tenantId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   brandId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  supplierId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  manufacturerId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
 }
 
 export type ProductCreateInput = {
@@ -379,6 +431,7 @@ export type ProductCreateInput = {
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -387,7 +440,11 @@ export type ProductCreateInput = {
   variants?: Prisma.ProductCreateNestedManyWithoutParentInput
   tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
   brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
   media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -399,13 +456,18 @@ export type ProductUncheckedCreateInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
   variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
   media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -415,6 +477,7 @@ export type ProductUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -423,7 +486,11 @@ export type ProductUpdateInput = {
   variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
   brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
   media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -435,13 +502,18 @@ export type ProductUncheckedUpdateInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
   media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -453,11 +525,14 @@ export type ProductCreateManyInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
 }
 
 export type ProductUpdateManyMutationInput = {
@@ -467,6 +542,7 @@ export type ProductUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -481,11 +557,14 @@ export type ProductUncheckedUpdateManyInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductListRelationFilter = {
@@ -517,15 +596,19 @@ export type ProductCountOrderByAggregateInput = {
   attributes?: Prisma.SortOrder
   productFamilyId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
+  variantSequence?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
+  supplierId?: Prisma.SortOrder
+  manufacturerId?: Prisma.SortOrder
 }
 
 export type ProductAvgOrderByAggregateInput = {
   price?: Prisma.SortOrder
+  variantSequence?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
@@ -536,11 +619,14 @@ export type ProductMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   productFamilyId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
+  variantSequence?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
+  supplierId?: Prisma.SortOrder
+  manufacturerId?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
@@ -551,15 +637,19 @@ export type ProductMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   productFamilyId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
+  variantSequence?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
+  supplierId?: Prisma.SortOrder
+  manufacturerId?: Prisma.SortOrder
 }
 
 export type ProductSumOrderByAggregateInput = {
   price?: Prisma.SortOrder
+  variantSequence?: Prisma.SortOrder
 }
 
 export type ProductScalarRelationFilter = {
@@ -679,6 +769,14 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type ProductUpdateOneWithoutVariantsNestedInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutVariantsInput, Prisma.ProductUncheckedCreateWithoutVariantsInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutVariantsInput
@@ -773,6 +871,118 @@ export type ProductUncheckedUpdateManyWithoutBrandNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type ProductCreateNestedManyWithoutSupplierInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSupplierInput, Prisma.ProductUncheckedCreateWithoutSupplierInput> | Prisma.ProductCreateWithoutSupplierInput[] | Prisma.ProductUncheckedCreateWithoutSupplierInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSupplierInput | Prisma.ProductCreateOrConnectWithoutSupplierInput[]
+  createMany?: Prisma.ProductCreateManySupplierInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUncheckedCreateNestedManyWithoutSupplierInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSupplierInput, Prisma.ProductUncheckedCreateWithoutSupplierInput> | Prisma.ProductCreateWithoutSupplierInput[] | Prisma.ProductUncheckedCreateWithoutSupplierInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSupplierInput | Prisma.ProductCreateOrConnectWithoutSupplierInput[]
+  createMany?: Prisma.ProductCreateManySupplierInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUpdateManyWithoutSupplierNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSupplierInput, Prisma.ProductUncheckedCreateWithoutSupplierInput> | Prisma.ProductCreateWithoutSupplierInput[] | Prisma.ProductUncheckedCreateWithoutSupplierInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSupplierInput | Prisma.ProductCreateOrConnectWithoutSupplierInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutSupplierInput | Prisma.ProductUpsertWithWhereUniqueWithoutSupplierInput[]
+  createMany?: Prisma.ProductCreateManySupplierInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutSupplierInput | Prisma.ProductUpdateWithWhereUniqueWithoutSupplierInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutSupplierInput | Prisma.ProductUpdateManyWithWhereWithoutSupplierInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductUncheckedUpdateManyWithoutSupplierNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSupplierInput, Prisma.ProductUncheckedCreateWithoutSupplierInput> | Prisma.ProductCreateWithoutSupplierInput[] | Prisma.ProductUncheckedCreateWithoutSupplierInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSupplierInput | Prisma.ProductCreateOrConnectWithoutSupplierInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutSupplierInput | Prisma.ProductUpsertWithWhereUniqueWithoutSupplierInput[]
+  createMany?: Prisma.ProductCreateManySupplierInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutSupplierInput | Prisma.ProductUpdateWithWhereUniqueWithoutSupplierInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutSupplierInput | Prisma.ProductUpdateManyWithWhereWithoutSupplierInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductCreateNestedManyWithoutManufacturerInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutManufacturerInput, Prisma.ProductUncheckedCreateWithoutManufacturerInput> | Prisma.ProductCreateWithoutManufacturerInput[] | Prisma.ProductUncheckedCreateWithoutManufacturerInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutManufacturerInput | Prisma.ProductCreateOrConnectWithoutManufacturerInput[]
+  createMany?: Prisma.ProductCreateManyManufacturerInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUncheckedCreateNestedManyWithoutManufacturerInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutManufacturerInput, Prisma.ProductUncheckedCreateWithoutManufacturerInput> | Prisma.ProductCreateWithoutManufacturerInput[] | Prisma.ProductUncheckedCreateWithoutManufacturerInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutManufacturerInput | Prisma.ProductCreateOrConnectWithoutManufacturerInput[]
+  createMany?: Prisma.ProductCreateManyManufacturerInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUpdateManyWithoutManufacturerNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutManufacturerInput, Prisma.ProductUncheckedCreateWithoutManufacturerInput> | Prisma.ProductCreateWithoutManufacturerInput[] | Prisma.ProductUncheckedCreateWithoutManufacturerInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutManufacturerInput | Prisma.ProductCreateOrConnectWithoutManufacturerInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutManufacturerInput | Prisma.ProductUpsertWithWhereUniqueWithoutManufacturerInput[]
+  createMany?: Prisma.ProductCreateManyManufacturerInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutManufacturerInput | Prisma.ProductUpdateWithWhereUniqueWithoutManufacturerInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutManufacturerInput | Prisma.ProductUpdateManyWithWhereWithoutManufacturerInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductUncheckedUpdateManyWithoutManufacturerNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutManufacturerInput, Prisma.ProductUncheckedCreateWithoutManufacturerInput> | Prisma.ProductCreateWithoutManufacturerInput[] | Prisma.ProductUncheckedCreateWithoutManufacturerInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutManufacturerInput | Prisma.ProductCreateOrConnectWithoutManufacturerInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutManufacturerInput | Prisma.ProductUpsertWithWhereUniqueWithoutManufacturerInput[]
+  createMany?: Prisma.ProductCreateManyManufacturerInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutManufacturerInput | Prisma.ProductUpdateWithWhereUniqueWithoutManufacturerInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutManufacturerInput | Prisma.ProductUpdateManyWithWhereWithoutManufacturerInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductCreateNestedOneWithoutComplianceTypesInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutComplianceTypesInput, Prisma.ProductUncheckedCreateWithoutComplianceTypesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutComplianceTypesInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutComplianceTypesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutComplianceTypesInput, Prisma.ProductUncheckedCreateWithoutComplianceTypesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutComplianceTypesInput
+  upsert?: Prisma.ProductUpsertWithoutComplianceTypesInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutComplianceTypesInput, Prisma.ProductUpdateWithoutComplianceTypesInput>, Prisma.ProductUncheckedUpdateWithoutComplianceTypesInput>
+}
+
+export type ProductCreateNestedOneWithoutChannelsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChannelsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutChannelsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChannelsInput
+  upsert?: Prisma.ProductUpsertWithoutChannelsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutChannelsInput, Prisma.ProductUpdateWithoutChannelsInput>, Prisma.ProductUncheckedUpdateWithoutChannelsInput>
+}
+
 export type ProductCreateWithoutTenantInput = {
   id?: string
   sku: string
@@ -780,6 +990,7 @@ export type ProductCreateWithoutTenantInput = {
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -787,7 +998,11 @@ export type ProductCreateWithoutTenantInput = {
   parent?: Prisma.ProductCreateNestedOneWithoutVariantsInput
   variants?: Prisma.ProductCreateNestedManyWithoutParentInput
   brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
   media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutTenantInput = {
@@ -799,12 +1014,17 @@ export type ProductUncheckedCreateWithoutTenantInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
   variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
   media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutTenantInput = {
@@ -845,11 +1065,14 @@ export type ProductScalarWhereInput = {
   attributes?: Prisma.JsonFilter<"Product">
   productFamilyId?: Prisma.StringFilter<"Product"> | string
   parentId?: Prisma.StringNullableFilter<"Product"> | string | null
+  variantSequence?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   tenantId?: Prisma.StringFilter<"Product"> | string
   brandId?: Prisma.StringNullableFilter<"Product"> | string | null
+  supplierId?: Prisma.StringNullableFilter<"Product"> | string | null
+  manufacturerId?: Prisma.StringNullableFilter<"Product"> | string | null
 }
 
 export type ProductCreateWithoutProductFamilyInput = {
@@ -859,6 +1082,7 @@ export type ProductCreateWithoutProductFamilyInput = {
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -866,7 +1090,11 @@ export type ProductCreateWithoutProductFamilyInput = {
   variants?: Prisma.ProductCreateNestedManyWithoutParentInput
   tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
   brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
   media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutProductFamilyInput = {
@@ -877,13 +1105,18 @@ export type ProductUncheckedCreateWithoutProductFamilyInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
   variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
   media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutProductFamilyInput = {
@@ -919,6 +1152,7 @@ export type ProductCreateWithoutVariantsInput = {
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -926,7 +1160,11 @@ export type ProductCreateWithoutVariantsInput = {
   parent?: Prisma.ProductCreateNestedOneWithoutVariantsInput
   tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
   brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
   media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutVariantsInput = {
@@ -938,12 +1176,17 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
   media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutVariantsInput = {
@@ -958,6 +1201,7 @@ export type ProductCreateWithoutParentInput = {
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -965,7 +1209,11 @@ export type ProductCreateWithoutParentInput = {
   variants?: Prisma.ProductCreateNestedManyWithoutParentInput
   tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
   brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
   media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutParentInput = {
@@ -976,13 +1224,18 @@ export type ProductUncheckedCreateWithoutParentInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
   variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
   media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutParentInput = {
@@ -1013,6 +1266,7 @@ export type ProductUpdateWithoutVariantsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1020,7 +1274,11 @@ export type ProductUpdateWithoutVariantsInput = {
   parent?: Prisma.ProductUpdateOneWithoutVariantsNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
   brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
   media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutVariantsInput = {
@@ -1032,12 +1290,17 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUpsertWithWhereUniqueWithoutParentInput = {
@@ -1063,6 +1326,7 @@ export type ProductCreateWithoutMediaInput = {
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1071,6 +1335,10 @@ export type ProductCreateWithoutMediaInput = {
   variants?: Prisma.ProductCreateNestedManyWithoutParentInput
   tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
   brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutMediaInput = {
@@ -1082,12 +1350,17 @@ export type ProductUncheckedCreateWithoutMediaInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
   variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutMediaInput = {
@@ -1113,6 +1386,7 @@ export type ProductUpdateWithoutMediaInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1121,6 +1395,10 @@ export type ProductUpdateWithoutMediaInput = {
   variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
   brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutMediaInput = {
@@ -1132,12 +1410,17 @@ export type ProductUncheckedUpdateWithoutMediaInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutBrandInput = {
@@ -1147,6 +1430,7 @@ export type ProductCreateWithoutBrandInput = {
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1154,7 +1438,11 @@ export type ProductCreateWithoutBrandInput = {
   parent?: Prisma.ProductCreateNestedOneWithoutVariantsInput
   variants?: Prisma.ProductCreateNestedManyWithoutParentInput
   tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
   media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBrandInput = {
@@ -1166,12 +1454,17 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
+  supplierId?: string | null
+  manufacturerId?: string | null
   variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
   media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBrandInput = {
@@ -1200,6 +1493,354 @@ export type ProductUpdateManyWithWhereWithoutBrandInput = {
   data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutBrandInput>
 }
 
+export type ProductCreateWithoutSupplierInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productFamily: Prisma.ProductFamilyCreateNestedOneWithoutProductsInput
+  parent?: Prisma.ProductCreateNestedOneWithoutVariantsInput
+  variants?: Prisma.ProductCreateNestedManyWithoutParentInput
+  tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
+  brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
+  media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutSupplierInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
+  parentId?: string | null
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+  brandId?: string | null
+  manufacturerId?: string | null
+  variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
+  media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutSupplierInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutSupplierInput, Prisma.ProductUncheckedCreateWithoutSupplierInput>
+}
+
+export type ProductCreateManySupplierInputEnvelope = {
+  data: Prisma.ProductCreateManySupplierInput | Prisma.ProductCreateManySupplierInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProductUpsertWithWhereUniqueWithoutSupplierInput = {
+  where: Prisma.ProductWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutSupplierInput, Prisma.ProductUncheckedUpdateWithoutSupplierInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutSupplierInput, Prisma.ProductUncheckedCreateWithoutSupplierInput>
+}
+
+export type ProductUpdateWithWhereUniqueWithoutSupplierInput = {
+  where: Prisma.ProductWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutSupplierInput, Prisma.ProductUncheckedUpdateWithoutSupplierInput>
+}
+
+export type ProductUpdateManyWithWhereWithoutSupplierInput = {
+  where: Prisma.ProductScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutSupplierInput>
+}
+
+export type ProductCreateWithoutManufacturerInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productFamily: Prisma.ProductFamilyCreateNestedOneWithoutProductsInput
+  parent?: Prisma.ProductCreateNestedOneWithoutVariantsInput
+  variants?: Prisma.ProductCreateNestedManyWithoutParentInput
+  tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
+  brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutManufacturerInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
+  parentId?: string | null
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+  brandId?: string | null
+  supplierId?: string | null
+  variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
+  media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutManufacturerInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutManufacturerInput, Prisma.ProductUncheckedCreateWithoutManufacturerInput>
+}
+
+export type ProductCreateManyManufacturerInputEnvelope = {
+  data: Prisma.ProductCreateManyManufacturerInput | Prisma.ProductCreateManyManufacturerInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProductUpsertWithWhereUniqueWithoutManufacturerInput = {
+  where: Prisma.ProductWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutManufacturerInput, Prisma.ProductUncheckedUpdateWithoutManufacturerInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutManufacturerInput, Prisma.ProductUncheckedCreateWithoutManufacturerInput>
+}
+
+export type ProductUpdateWithWhereUniqueWithoutManufacturerInput = {
+  where: Prisma.ProductWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutManufacturerInput, Prisma.ProductUncheckedUpdateWithoutManufacturerInput>
+}
+
+export type ProductUpdateManyWithWhereWithoutManufacturerInput = {
+  where: Prisma.ProductScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutManufacturerInput>
+}
+
+export type ProductCreateWithoutComplianceTypesInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productFamily: Prisma.ProductFamilyCreateNestedOneWithoutProductsInput
+  parent?: Prisma.ProductCreateNestedOneWithoutVariantsInput
+  variants?: Prisma.ProductCreateNestedManyWithoutParentInput
+  tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
+  brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
+  media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutComplianceTypesInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
+  parentId?: string | null
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+  brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
+  variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
+  media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutComplianceTypesInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutComplianceTypesInput, Prisma.ProductUncheckedCreateWithoutComplianceTypesInput>
+}
+
+export type ProductUpsertWithoutComplianceTypesInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutComplianceTypesInput, Prisma.ProductUncheckedUpdateWithoutComplianceTypesInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutComplianceTypesInput, Prisma.ProductUncheckedCreateWithoutComplianceTypesInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutComplianceTypesInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutComplianceTypesInput, Prisma.ProductUncheckedUpdateWithoutComplianceTypesInput>
+}
+
+export type ProductUpdateWithoutComplianceTypesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutProductsNestedInput
+  parent?: Prisma.ProductUpdateOneWithoutVariantsNestedInput
+  variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
+  brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
+  media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutComplianceTypesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
+  media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutChannelsInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productFamily: Prisma.ProductFamilyCreateNestedOneWithoutProductsInput
+  parent?: Prisma.ProductCreateNestedOneWithoutVariantsInput
+  variants?: Prisma.ProductCreateNestedManyWithoutParentInput
+  tenant: Prisma.TenantCreateNestedOneWithoutProductsInput
+  brand?: Prisma.BrandCreateNestedOneWithoutProductsInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutProductsInput
+  manufacturer?: Prisma.ManufacturerCreateNestedOneWithoutProductsInput
+  media?: Prisma.ProductMediaCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutChannelsInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
+  parentId?: string | null
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+  brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
+  variants?: Prisma.ProductUncheckedCreateNestedManyWithoutParentInput
+  media?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutProductInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutChannelsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+}
+
+export type ProductUpsertWithoutChannelsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutChannelsInput, Prisma.ProductUncheckedUpdateWithoutChannelsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutChannelsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutChannelsInput, Prisma.ProductUncheckedUpdateWithoutChannelsInput>
+}
+
+export type ProductUpdateWithoutChannelsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutProductsNestedInput
+  parent?: Prisma.ProductUpdateOneWithoutVariantsNestedInput
+  variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
+  brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
+  media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutChannelsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
+  media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+}
+
 export type ProductCreateManyTenantInput = {
   id?: string
   sku: string
@@ -1209,10 +1850,13 @@ export type ProductCreateManyTenantInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
 }
 
 export type ProductUpdateWithoutTenantInput = {
@@ -1222,6 +1866,7 @@ export type ProductUpdateWithoutTenantInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1229,7 +1874,11 @@ export type ProductUpdateWithoutTenantInput = {
   parent?: Prisma.ProductUpdateOneWithoutVariantsNestedInput
   variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
   brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
   media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutTenantInput = {
@@ -1241,12 +1890,17 @@ export type ProductUncheckedUpdateWithoutTenantInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
   media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutTenantInput = {
@@ -1258,10 +1912,13 @@ export type ProductUncheckedUpdateManyWithoutTenantInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductCreateManyProductFamilyInput = {
@@ -1272,11 +1929,14 @@ export type ProductCreateManyProductFamilyInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
 }
 
 export type ProductUpdateWithoutProductFamilyInput = {
@@ -1286,6 +1946,7 @@ export type ProductUpdateWithoutProductFamilyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1293,7 +1954,11 @@ export type ProductUpdateWithoutProductFamilyInput = {
   variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
   brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
   media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutProductFamilyInput = {
@@ -1304,13 +1969,18 @@ export type ProductUncheckedUpdateWithoutProductFamilyInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
   media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutProductFamilyInput = {
@@ -1321,11 +1991,14 @@ export type ProductUncheckedUpdateManyWithoutProductFamilyInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductCreateManyParentInput = {
@@ -1336,11 +2009,14 @@ export type ProductCreateManyParentInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
   brandId?: string | null
+  supplierId?: string | null
+  manufacturerId?: string | null
 }
 
 export type ProductUpdateWithoutParentInput = {
@@ -1350,6 +2026,7 @@ export type ProductUpdateWithoutParentInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1357,7 +2034,11 @@ export type ProductUpdateWithoutParentInput = {
   variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
   brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
   media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutParentInput = {
@@ -1368,13 +2049,18 @@ export type ProductUncheckedUpdateWithoutParentInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
   media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutParentInput = {
@@ -1385,11 +2071,14 @@ export type ProductUncheckedUpdateManyWithoutParentInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductCreateManyBrandInput = {
@@ -1401,10 +2090,13 @@ export type ProductCreateManyBrandInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId: string
   parentId?: string | null
+  variantSequence?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenantId: string
+  supplierId?: string | null
+  manufacturerId?: string | null
 }
 
 export type ProductUpdateWithoutBrandInput = {
@@ -1414,6 +2106,7 @@ export type ProductUpdateWithoutBrandInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1421,7 +2114,11 @@ export type ProductUpdateWithoutBrandInput = {
   parent?: Prisma.ProductUpdateOneWithoutVariantsNestedInput
   variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
   media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBrandInput = {
@@ -1433,12 +2130,17 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
   media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutBrandInput = {
@@ -1450,10 +2152,173 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
   attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ProductCreateManySupplierInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
+  parentId?: string | null
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+  brandId?: string | null
+  manufacturerId?: string | null
+}
+
+export type ProductUpdateWithoutSupplierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutProductsNestedInput
+  parent?: Prisma.ProductUpdateOneWithoutVariantsNestedInput
+  variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
+  brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  manufacturer?: Prisma.ManufacturerUpdateOneWithoutProductsNestedInput
+  media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutSupplierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
+  media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateManyWithoutSupplierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ProductCreateManyManufacturerInput = {
+  id?: string
+  sku: string
+  name: string
+  description?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId: string
+  parentId?: string | null
+  variantSequence?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenantId: string
+  brandId?: string | null
+  supplierId?: string | null
+}
+
+export type ProductUpdateWithoutManufacturerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productFamily?: Prisma.ProductFamilyUpdateOneRequiredWithoutProductsNestedInput
+  parent?: Prisma.ProductUpdateOneWithoutVariantsNestedInput
+  variants?: Prisma.ProductUpdateManyWithoutParentNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutProductsNestedInput
+  brand?: Prisma.BrandUpdateOneWithoutProductsNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutProductsNestedInput
+  media?: Prisma.ProductMediaUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutManufacturerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variants?: Prisma.ProductUncheckedUpdateManyWithoutParentNestedInput
+  media?: Prisma.ProductMediaUncheckedUpdateManyWithoutProductNestedInput
+  complianceTypes?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ProductChannelUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateManyWithoutManufacturerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  attributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  productFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  variantSequence?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1464,11 +2329,15 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
 export type ProductCountOutputType = {
   variants: number
   media: number
+  complianceTypes: number
+  channels: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   variants?: boolean | ProductCountOutputTypeCountVariantsArgs
   media?: boolean | ProductCountOutputTypeCountMediaArgs
+  complianceTypes?: boolean | ProductCountOutputTypeCountComplianceTypesArgs
+  channels?: boolean | ProductCountOutputTypeCountChannelsArgs
 }
 
 /**
@@ -1495,6 +2364,20 @@ export type ProductCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.ProductMediaWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountComplianceTypesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductComplianceTypeWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountChannelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductChannelWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1505,17 +2388,24 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   attributes?: boolean
   productFamilyId?: boolean
   parentId?: boolean
+  variantSequence?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   brandId?: boolean
+  supplierId?: boolean
+  manufacturerId?: boolean
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Product$parentArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   brand?: boolean | Prisma.Product$brandArgs<ExtArgs>
+  supplier?: boolean | Prisma.Product$supplierArgs<ExtArgs>
+  manufacturer?: boolean | Prisma.Product$manufacturerArgs<ExtArgs>
   media?: boolean | Prisma.Product$mediaArgs<ExtArgs>
+  complianceTypes?: boolean | Prisma.Product$complianceTypesArgs<ExtArgs>
+  channels?: boolean | Prisma.Product$channelsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -1528,15 +2418,20 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   attributes?: boolean
   productFamilyId?: boolean
   parentId?: boolean
+  variantSequence?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   brandId?: boolean
+  supplierId?: boolean
+  manufacturerId?: boolean
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Product$parentArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   brand?: boolean | Prisma.Product$brandArgs<ExtArgs>
+  supplier?: boolean | Prisma.Product$supplierArgs<ExtArgs>
+  manufacturer?: boolean | Prisma.Product$manufacturerArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1548,15 +2443,20 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   attributes?: boolean
   productFamilyId?: boolean
   parentId?: boolean
+  variantSequence?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   brandId?: boolean
+  supplierId?: boolean
+  manufacturerId?: boolean
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Product$parentArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   brand?: boolean | Prisma.Product$brandArgs<ExtArgs>
+  supplier?: boolean | Prisma.Product$supplierArgs<ExtArgs>
+  manufacturer?: boolean | Prisma.Product$manufacturerArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
@@ -1568,21 +2468,28 @@ export type ProductSelectScalar = {
   attributes?: boolean
   productFamilyId?: boolean
   parentId?: boolean
+  variantSequence?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   brandId?: boolean
+  supplierId?: boolean
+  manufacturerId?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "description" | "price" | "attributes" | "productFamilyId" | "parentId" | "createdAt" | "updatedAt" | "deletedAt" | "tenantId" | "brandId", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "description" | "price" | "attributes" | "productFamilyId" | "parentId" | "variantSequence" | "createdAt" | "updatedAt" | "deletedAt" | "tenantId" | "brandId" | "supplierId" | "manufacturerId", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Product$parentArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   brand?: boolean | Prisma.Product$brandArgs<ExtArgs>
+  supplier?: boolean | Prisma.Product$supplierArgs<ExtArgs>
+  manufacturer?: boolean | Prisma.Product$manufacturerArgs<ExtArgs>
   media?: boolean | Prisma.Product$mediaArgs<ExtArgs>
+  complianceTypes?: boolean | Prisma.Product$complianceTypesArgs<ExtArgs>
+  channels?: boolean | Prisma.Product$channelsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1590,12 +2497,16 @@ export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   parent?: boolean | Prisma.Product$parentArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   brand?: boolean | Prisma.Product$brandArgs<ExtArgs>
+  supplier?: boolean | Prisma.Product$supplierArgs<ExtArgs>
+  manufacturer?: boolean | Prisma.Product$manufacturerArgs<ExtArgs>
 }
 export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   productFamily?: boolean | Prisma.ProductFamilyDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Product$parentArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   brand?: boolean | Prisma.Product$brandArgs<ExtArgs>
+  supplier?: boolean | Prisma.Product$supplierArgs<ExtArgs>
+  manufacturer?: boolean | Prisma.Product$manufacturerArgs<ExtArgs>
 }
 
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1606,7 +2517,11 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     variants: Prisma.$ProductPayload<ExtArgs>[]
     tenant: Prisma.$TenantPayload<ExtArgs>
     brand: Prisma.$BrandPayload<ExtArgs> | null
+    supplier: Prisma.$SupplierPayload<ExtArgs> | null
+    manufacturer: Prisma.$ManufacturerPayload<ExtArgs> | null
     media: Prisma.$ProductMediaPayload<ExtArgs>[]
+    complianceTypes: Prisma.$ProductComplianceTypePayload<ExtArgs>[]
+    channels: Prisma.$ProductChannelPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1617,11 +2532,14 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     attributes: runtime.JsonValue
     productFamilyId: string
     parentId: string | null
+    variantSequence: number
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
     tenantId: string
     brandId: string | null
+    supplierId: string | null
+    manufacturerId: string | null
   }, ExtArgs["result"]["product"]>
   composites: {}
 }
@@ -2021,7 +2939,11 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   variants<T extends Prisma.Product$variantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   brand<T extends Prisma.Product$brandArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$brandArgs<ExtArgs>>): Prisma.Prisma__BrandClient<runtime.Types.Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  supplier<T extends Prisma.Product$supplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$supplierArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  manufacturer<T extends Prisma.Product$manufacturerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$manufacturerArgs<ExtArgs>>): Prisma.Prisma__ManufacturerClient<runtime.Types.Result.GetResult<Prisma.$ManufacturerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   media<T extends Prisma.Product$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complianceTypes<T extends Prisma.Product$complianceTypesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$complianceTypesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductComplianceTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  channels<T extends Prisma.Product$channelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$channelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2059,11 +2981,14 @@ export interface ProductFieldRefs {
   readonly attributes: Prisma.FieldRef<"Product", 'Json'>
   readonly productFamilyId: Prisma.FieldRef<"Product", 'String'>
   readonly parentId: Prisma.FieldRef<"Product", 'String'>
+  readonly variantSequence: Prisma.FieldRef<"Product", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly tenantId: Prisma.FieldRef<"Product", 'String'>
   readonly brandId: Prisma.FieldRef<"Product", 'String'>
+  readonly supplierId: Prisma.FieldRef<"Product", 'String'>
+  readonly manufacturerId: Prisma.FieldRef<"Product", 'String'>
 }
     
 
@@ -2527,6 +3452,44 @@ export type Product$brandArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
+ * Product.supplier
+ */
+export type Product$supplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Supplier
+   */
+  select?: Prisma.SupplierSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Supplier
+   */
+  omit?: Prisma.SupplierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
+  where?: Prisma.SupplierWhereInput
+}
+
+/**
+ * Product.manufacturer
+ */
+export type Product$manufacturerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Manufacturer
+   */
+  select?: Prisma.ManufacturerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Manufacturer
+   */
+  omit?: Prisma.ManufacturerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ManufacturerInclude<ExtArgs> | null
+  where?: Prisma.ManufacturerWhereInput
+}
+
+/**
  * Product.media
  */
 export type Product$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2548,6 +3511,54 @@ export type Product$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ProductMediaScalarFieldEnum | Prisma.ProductMediaScalarFieldEnum[]
+}
+
+/**
+ * Product.complianceTypes
+ */
+export type Product$complianceTypesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductComplianceType
+   */
+  select?: Prisma.ProductComplianceTypeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductComplianceType
+   */
+  omit?: Prisma.ProductComplianceTypeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductComplianceTypeInclude<ExtArgs> | null
+  where?: Prisma.ProductComplianceTypeWhereInput
+  orderBy?: Prisma.ProductComplianceTypeOrderByWithRelationInput | Prisma.ProductComplianceTypeOrderByWithRelationInput[]
+  cursor?: Prisma.ProductComplianceTypeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductComplianceTypeScalarFieldEnum | Prisma.ProductComplianceTypeScalarFieldEnum[]
+}
+
+/**
+ * Product.channels
+ */
+export type Product$channelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductChannel
+   */
+  select?: Prisma.ProductChannelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductChannel
+   */
+  omit?: Prisma.ProductChannelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductChannelInclude<ExtArgs> | null
+  where?: Prisma.ProductChannelWhereInput
+  orderBy?: Prisma.ProductChannelOrderByWithRelationInput | Prisma.ProductChannelOrderByWithRelationInput[]
+  cursor?: Prisma.ProductChannelWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductChannelScalarFieldEnum | Prisma.ProductChannelScalarFieldEnum[]
 }
 
 /**

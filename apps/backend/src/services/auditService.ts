@@ -51,6 +51,8 @@ export const auditService = {
         try {
             const changedFields = auditService.computeChangedFields(input.beforeState, input.afterState);
 
+            await tx.$executeRaw`SELECT set_config('app.current_tenant', ${input.tenantId}, true)`;
+
             await tx.auditLog.create({
                 data: {
                     tenantId: input.tenantId,

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { TopBar } from "../components/TopBar";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
     title: "PIM Postgres",
@@ -17,6 +18,7 @@ export default function RootLayout({
             <body>
                 <TopBar />
                 {children}
+                <Toaster position="bottom-right" />
             </body>
         </html>
     );
