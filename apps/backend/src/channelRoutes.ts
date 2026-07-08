@@ -7,31 +7,19 @@ const router = Router();
 router.use(requireAuth as any);
 
 router.get("/", requirePermission("channel.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const items = await channelService.getChannels(req.user!.tenantId);
-        res.json(items);
-    } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
-    }
+    const items = await channelService.getChannels(req.user!.tenantId);
+    res.json(items);
 });
 
 router.get("/:id", requirePermission("channel.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const item = await channelService.getChannelById(req.user!.tenantId, req.params.id);
-        if (!item) return res.status(404).json({ error: "Not found" });
-        res.json(item);
-    } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
-    }
+    const item = await channelService.getChannelById(req.user!.tenantId, req.params.id);
+    if (!item) return res.status(404).json({ error: "Not found" });
+    res.json(item);
 });
 
 router.post("/", requirePermission("channel.create") as any, async (req: AuthRequest, res) => {
-    try {
-        const item = await channelService.createChannel(req.user!.tenantId, req.user!.userId, req.body, (req as any).auditMeta);
-        res.status(201).json(item);
-    } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
-    }
+    const item = await channelService.createChannel(req.user!.tenantId, req.user!.userId, req.body, (req as any).auditMeta);
+    res.status(201).json(item);
 });
 
 router.put("/:id", requirePermission("channel.update") as any, async (req: AuthRequest, res) => {

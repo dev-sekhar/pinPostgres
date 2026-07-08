@@ -16,42 +16,34 @@ const excludePassword = (user: any) => {
 
 // GET /api/users
 router.get("/", requirePermission("user.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const users = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.user.findMany({
-                where: { deletedAt: null },
-                orderBy: { createdAt: "desc" },
-                include: {
-                    userRoles: {
-                        include: { role: true }
+    const users = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.user.findMany({
+                    where: { deletedAt: null },
+                    orderBy: { createdAt: "desc" },
+                    include: {
+                        userRoles: {
+                            include: { role: true }
+                        }
                     }
-                }
+                });
             });
-        });
-        res.json(users.map(excludePassword));
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch users" });
-    }
+    res.json(users.map(excludePassword));
 });
 
 // GET /api/users/:id
 router.get("/:id", requirePermission("user.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.user.findUnique({
-                where: { id: req.params.id, deletedAt: null },
-                include: {
-                    userRoles: {
-                        include: { role: true }
+    const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.user.findUnique({
+                    where: { id: req.params.id, deletedAt: null },
+                    include: {
+                        userRoles: {
+                            include: { role: true }
+                        }
                     }
-                }
+                });
             });
-        });
-        if (!user) return res.status(404).json({ error: "User not found" });
-        res.json(excludePassword(user));
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch user" });
-    }
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(excludePassword(user));
 });
 
 // POST /api/users (Create a new user)
@@ -94,51 +86,41 @@ router.put("/:id", requirePermission("user.update") as any, async (req: AuthRequ
     if (!email) {
         return res.status(400).json({ error: "Missing required fields" });
     }
-    try {
-        const data: any = { email, name };
-        if (password) {
-            data.password = await bcrypt.hash(password, 10);
-        }
-
-        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            const updatedUser = await tx.user.update({
-                where: { id: req.params.id, deletedAt: null },
-                data
-            });
-
-            if (roleIds && Array.isArray(roleIds)) {
-                // Prevent removing Master Admin role from self? Not implemented here yet.
-                await tx.userRole.deleteMany({ where: { userId: req.params.id } });
-                await tx.userRole.createMany({
-                    data: roleIds.map(rId => ({ userId: req.params.id, roleId: rId }))
-                });
+    const data: any = { email, name };
+    if (password) {
+                data.password = await bcrypt.hash(password, 10);
             }
-            return updatedUser;
-        });
-        res.json(excludePassword(user));
-    } catch (error) {
-        res.status(500).json({ error: "Failed to update user" });
-    }
+    const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                const updatedUser = await tx.user.update({
+                    where: { id: req.params.id, deletedAt: null },
+                    data
+                });
+
+                if (roleIds && Array.isArray(roleIds)) {
+                    // Prevent removing Master Admin role from self? Not implemented here yet.
+                    await tx.userRole.deleteMany({ where: { userId: req.params.id } });
+                    await tx.userRole.createMany({
+                        data: roleIds.map(rId => ({ userId: req.params.id, roleId: rId }))
+                    });
+                }
+                return updatedUser;
+            });
+    res.json(excludePassword(user));
 });
 
 // PATCH /api/users/:id
 router.patch("/:id", requirePermission("user.update") as any, async (req: AuthRequest, res) => {
-    try {
-        const data = { ...req.body };
-        if (data.password) {
-            data.password = await bcrypt.hash(data.password, 10);
-        }
-
-        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.user.update({
-                where: { id: req.params.id, deletedAt: null },
-                data
+    const data = { ...req.body };
+    if (data.password) {
+                data.password = await bcrypt.hash(data.password, 10);
+            }
+    const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.user.update({
+                    where: { id: req.params.id, deletedAt: null },
+                    data
+                });
             });
-        });
-        res.json(excludePassword(user));
-    } catch (error) {
-        res.status(500).json({ error: "Failed to update user" });
-    }
+    res.json(excludePassword(user));
 });
 
 // DELETE /api/users/:id (Soft Delete)

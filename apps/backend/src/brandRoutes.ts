@@ -10,34 +10,24 @@ router.use(requireAuth as any);
 
 // GET /api/brands
 router.get("/", requirePermission("brand.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const brands = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.brand.findMany({
-                where: { deletedAt: null },
-                orderBy: { name: "asc" }
+    const brands = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.brand.findMany({
+                    where: { deletedAt: null },
+                    orderBy: { name: "asc" }
+                });
             });
-        });
-        res.json(brands);
-    } catch (error) {
-        console.error("Error fetching brands:", error);
-        res.status(500).json({ error: "Failed to fetch brands" });
-    }
+    res.json(brands);
 });
 
 // GET /api/brands/:id
 router.get("/:id", requirePermission("brand.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const brand = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.brand.findUnique({
-                where: { id: req.params.id, deletedAt: null }
+    const brand = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.brand.findUnique({
+                    where: { id: req.params.id, deletedAt: null }
+                });
             });
-        });
-        if (!brand) return res.status(404).json({ error: "Brand not found" });
-        res.json(brand);
-    } catch (error) {
-        console.error("Error fetching brand:", error);
-        res.status(500).json({ error: "Failed to fetch brand" });
-    }
+    if (!brand) return res.status(404).json({ error: "Brand not found" });
+    res.json(brand);
 });
 
 // POST /api/brands
@@ -116,19 +106,14 @@ router.patch("/:id", requirePermission("brand.update") as any, async (req: AuthR
 
 // DELETE /api/brands/:id
 router.delete("/:id", requirePermission("brand.delete") as any, async (req: AuthRequest, res) => {
-    try {
-        const brand = await brandService.deleteBrand(
-            req.user!.tenantId,
-            req.user!.userId,
-            req.params.id,
-            (req as any).auditMeta
-        );
-        if (!brand) return res.status(404).json({ error: "Brand not found" });
-        res.json({ message: "Brand deleted successfully" });
-    } catch (error) {
-        console.error("Error deleting brand:", error);
-        res.status(500).json({ error: "Failed to delete brand" });
-    }
+    const brand = await brandService.deleteBrand(
+                req.user!.tenantId,
+                req.user!.userId,
+                req.params.id,
+                (req as any).auditMeta
+            );
+    if (!brand) return res.status(404).json({ error: "Brand not found" });
+    res.json({ message: "Brand deleted successfully" });
 });
 
 export default router;

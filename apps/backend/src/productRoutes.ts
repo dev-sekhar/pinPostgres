@@ -11,32 +11,22 @@ router.use(requireAuth as any);
 
 // GET /api/products
 router.get("/", requirePermission("product.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const products = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.product.findMany({
-                where: { deletedAt: null, parentId: null },
-                take: 50,
-                orderBy: { createdAt: "desc" },
+    const products = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.product.findMany({
+                    where: { deletedAt: null, parentId: null },
+                    take: 50,
+                    orderBy: { createdAt: "desc" },
+                });
             });
-        });
-        res.json(products);
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
+    res.json(products);
 });
 
 // GET /api/products/next-sku
 router.get("/next-sku", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
-    try {
-        const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return await skuService.previewNextSku(tx, req.user!.tenantId);
-        });
-        res.json({ nextSku });
-    } catch (error) {
-        console.error("Error previewing next SKU:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
+    const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return await skuService.previewNextSku(tx, req.user!.tenantId);
+            });
+    res.json({ nextSku });
 });
 
 // GET /api/products/:parentId/next-variant-sku
@@ -57,22 +47,18 @@ router.get("/:parentId/next-variant-sku", requirePermission("product.create") as
 
 // GET /api/products/:id
 router.get("/:id", requirePermission("product.read") as any, async (req: AuthRequest, res) => {
-    try {
-        const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.product.findUnique({
-                where: { id: req.params.id, deletedAt: null },
-                include: { 
-                    variants: { where: { deletedAt: null } },
-                    complianceTypes: true,
-                    channels: true
-                }
+    const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.product.findUnique({
+                    where: { id: req.params.id, deletedAt: null },
+                    include: { 
+                        variants: { where: { deletedAt: null } },
+                        complianceTypes: true,
+                        channels: true
+                    }
+                });
             });
-        });
-        if (!product) return res.status(404).json({ error: "Product not found" });
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
-    }
+    if (!product) return res.status(404).json({ error: "Product not found" });
+    res.json(product);
 });
 
 
@@ -241,32 +227,28 @@ router.patch("/:id", requirePermission("product.update") as any, async (req: Aut
 
 // DELETE /api/products/:id (Soft Delete)
 router.delete("/:id", requirePermission("product.delete") as any, async (req: AuthRequest, res) => {
-    try {
-        await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            const existing = await tx.product.findUnique({ where: { id: req.params.id, deletedAt: null } });
-            if (!existing) throw new Error("Product not found");
+    await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                const existing = await tx.product.findUnique({ where: { id: req.params.id, deletedAt: null } });
+                if (!existing) throw new Error("Product not found");
 
-            const deleted = await tx.product.update({
-                where: { id: req.params.id },
-                data: { deletedAt: new Date() }
-            });
+                const deleted = await tx.product.update({
+                    where: { id: req.params.id },
+                    data: { deletedAt: new Date() }
+                });
 
-            await auditService.logEvent(tx, {
-                tenantId: req.user!.tenantId,
-                userId: req.user!.userId,
-                entityType: 'Product',
-                entityId: deleted.id,
-                operation: 'DELETE',
-                beforeState: existing,
-                afterState: deleted,
-                auditMeta: (req as any).auditMeta
+                await auditService.logEvent(tx, {
+                    tenantId: req.user!.tenantId,
+                    userId: req.user!.userId,
+                    entityType: 'Product',
+                    entityId: deleted.id,
+                    operation: 'DELETE',
+                    beforeState: existing,
+                    afterState: deleted,
+                    auditMeta: (req as any).auditMeta
+                });
+                return deleted;
             });
-            return deleted;
-        });
-        res.json({ message: "Product deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ error: "Failed to delete product" });
-    }
+    res.json({ message: "Product deleted successfully" });
 });
 
 export default router;

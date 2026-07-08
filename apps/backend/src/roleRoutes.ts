@@ -10,22 +10,18 @@ router.use(requirePermission("tenant.manage") as any);
 
 // GET /api/roles
 router.get("/", async (req: AuthRequest, res) => {
-    try {
-        const roles = await withTenantTransaction(req.user!.tenantId, async (tx) => {
-            return tx.role.findMany({
-                where: { tenantId: req.user!.tenantId },
-                include: {
-                    rolePermissions: {
-                        include: { permission: true }
-                    }
-                },
-                orderBy: { createdAt: "desc" }
+    const roles = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.role.findMany({
+                    where: { tenantId: req.user!.tenantId },
+                    include: {
+                        rolePermissions: {
+                            include: { permission: true }
+                        }
+                    },
+                    orderBy: { createdAt: "desc" }
+                });
             });
-        });
-        res.json(roles);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch roles" });
-    }
+    res.json(roles);
 });
 
 // POST /api/roles
@@ -161,14 +157,10 @@ router.delete("/:id", async (req: AuthRequest, res) => {
 
 // GET /api/permissions (Global list of available permissions)
 router.get("/permissions/all", async (req: AuthRequest, res) => {
-    try {
-        const permissions = await prisma.permission.findMany({
-            orderBy: [{ module: 'asc' }, { name: 'asc' }]
-        });
-        res.json(permissions);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch permissions" });
-    }
+    const permissions = await prisma.permission.findMany({
+                orderBy: [{ module: 'asc' }, { name: 'asc' }]
+            });
+    res.json(permissions);
 });
 
 export default router;
