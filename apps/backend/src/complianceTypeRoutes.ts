@@ -7,19 +7,31 @@ const router = Router();
 router.use(requireAuth as any);
 
 router.get("/", requirePermission("complianceType.read") as any, async (req: AuthRequest, res) => {
-    const items = await complianceTypeService.getComplianceTypes();
+    try {
+        const items = await complianceTypeService.getComplianceTypes();
         res.json(items);
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 router.get("/:id", requirePermission("complianceType.read") as any, async (req: AuthRequest, res) => {
-    const item = await complianceTypeService.getComplianceTypeById(req.params.id);
+    try {
+        const item = await complianceTypeService.getComplianceTypeById(req.params.id);
         if (!item) return res.status(404).json({ error: "Not found" });
         res.json(item);
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 router.post("/", requirePermission("complianceType.create") as any, async (req: AuthRequest, res) => {
-    const item = await complianceTypeService.createComplianceType(req.user!.tenantId, req.user!.userId, req.body, (req as any).auditMeta);
+    try {
+        const item = await complianceTypeService.createComplianceType(req.user!.tenantId, req.user!.userId, req.body, (req as any).auditMeta);
         res.status(201).json(item);
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 router.put("/:id", requirePermission("complianceType.update") as any, async (req: AuthRequest, res) => {

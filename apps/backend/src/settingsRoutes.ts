@@ -9,7 +9,8 @@ router.use(requireAuth as any);
 
 // GET /api/settings/sku
 router.get("/sku", requirePermission("settings.read") as any, async (req: AuthRequest, res) => {
-    let settings = await prisma.tenantSettings.findUnique({
+    try {
+        let settings = await prisma.tenantSettings.findUnique({
             where: { tenantId: req.user!.tenantId }
         });
 
@@ -21,6 +22,10 @@ router.get("/sku", requirePermission("settings.read") as any, async (req: AuthRe
         }
 
         res.json(settings);
+    } catch (error) {
+        console.error("Error fetching SKU settings:", error);
+        res.status(500).json({ error: "Failed to fetch SKU settings" });
+    }
 });
 
 // PUT /api/settings/sku
@@ -31,7 +36,8 @@ router.put("/sku", requirePermission("settings.update") as any, async (req: Auth
         return res.status(400).json({ error: "Missing required pattern fields" });
     }
 
-    const settings = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const settings = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             let existing = await tx.tenantSettings.findUnique({
                 where: { tenantId: req.user!.tenantId }
             });
@@ -62,6 +68,10 @@ router.put("/sku", requirePermission("settings.update") as any, async (req: Auth
         });
 
         res.json(settings);
+    } catch (error) {
+        console.error("Error updating SKU settings:", error);
+        res.status(500).json({ error: "Failed to update SKU settings" });
+    }
 });
 
 export default router;

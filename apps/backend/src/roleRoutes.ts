@@ -10,7 +10,8 @@ router.use(requirePermission("tenant.manage") as any);
 
 // GET /api/roles
 router.get("/", async (req: AuthRequest, res) => {
-    const roles = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const roles = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.role.findMany({
                 where: { tenantId: req.user!.tenantId },
                 include: {
@@ -22,6 +23,9 @@ router.get("/", async (req: AuthRequest, res) => {
             });
         });
         res.json(roles);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch roles" });
+    }
 });
 
 // POST /api/roles
@@ -29,7 +33,8 @@ router.post("/", async (req: AuthRequest, res) => {
     const { name, description, permissionIds } = req.body;
     if (!name) return res.status(400).json({ error: "Role name is required" });
 
-    const role = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const role = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const newRole = await tx.role.create({
                 data: {
                     name,
@@ -161,6 +166,9 @@ router.get("/permissions/all", async (req: AuthRequest, res) => {
             orderBy: [{ module: 'asc' }, { name: 'asc' }]
         });
         res.json(permissions);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch permissions" });
+    }
 });
 
 export default router;

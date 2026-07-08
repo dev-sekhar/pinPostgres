@@ -9,18 +9,23 @@ router.use(requireAuth as any);
 
 // GET /api/product-families
 router.get("/", async (req: AuthRequest, res) => {
-    const productFamilies = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const productFamilies = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.productFamily.findMany({
                 where: { deletedAt: null },
                 orderBy: { name: "asc" }
             });
         });
         res.json(productFamilies);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch product families" });
+    }
 });
 
 // GET /api/product-families/:id
 router.get("/:id", async (req: AuthRequest, res) => {
-    const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.productFamily.findUnique({
                 where: { id: req.params.id, deletedAt: null },
                 include: { 
@@ -31,13 +36,17 @@ router.get("/:id", async (req: AuthRequest, res) => {
         });
         if (!productFamily) return res.status(404).json({ error: "Product family not found" });
         res.json(productFamily);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch product family" });
+    }
 });
 
 // POST /api/product-families
 router.post("/", requirePermission("productFamily.create") as any, async (req: AuthRequest, res) => {
     const { name, description, categoryId } = req.body;
     if (!name || !categoryId) return res.status(400).json({ error: "Name and categoryId are required" });
-    const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const newFamily = await tx.productFamily.create({
                 data: { name: name.trim(), description, categoryId, tenantId: req.user!.tenantId }
             });
@@ -53,13 +62,17 @@ router.post("/", requirePermission("productFamily.create") as any, async (req: A
             return newFamily;
         });
         res.status(201).json(productFamily);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to create product family" });
+    }
 });
 
 // PUT /api/product-families/:id
 router.put("/:id", requirePermission("productFamily.update") as any, async (req: AuthRequest, res) => {
     const { name, description } = req.body;
     if (!name) return res.status(400).json({ error: "Name is required" });
-    const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const existing = await tx.productFamily.findUnique({ where: { id: req.params.id, deletedAt: null } });
             if (!existing) throw new Error("Product family not found");
 
@@ -81,11 +94,15 @@ router.put("/:id", requirePermission("productFamily.update") as any, async (req:
             return updated;
         });
         res.json(productFamily);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update product family" });
+    }
 });
 
 // DELETE /api/product-families/:id
 router.delete("/:id", requirePermission("productFamily.delete") as any, async (req: AuthRequest, res) => {
-    await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const existing = await tx.productFamily.findUnique({ where: { id: req.params.id, deletedAt: null } });
             if (!existing) throw new Error("Product family not found");
 
@@ -107,6 +124,9 @@ router.delete("/:id", requirePermission("productFamily.delete") as any, async (r
             return deleted;
         });
         res.json({ message: "Product family deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete product family" });
+    }
 });
 
 export default router;

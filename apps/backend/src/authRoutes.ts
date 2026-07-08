@@ -7,7 +7,8 @@ import { auditService } from "./services/auditService.js";
 const router = Router();
 
 router.post("/register-tenant", async (req, res) => {
-    const { companyName, adminName, adminEmail, adminPassword } = req.body;
+    try {
+        const { companyName, adminName, adminEmail, adminPassword } = req.body;
 
         if (!companyName || !adminEmail || !adminPassword) {
             return res.status(400).json({ error: "Missing required fields" });
@@ -104,12 +105,17 @@ router.post("/register-tenant", async (req, res) => {
             tenant: result.tenant,
             user: userWithoutPassword
         });
+    } catch (error) {
+        console.error("Error registering tenant:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret-for-dev";
 
 router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: "Missing email or password" });
@@ -159,21 +165,31 @@ router.post("/login", async (req, res) => {
             token,
             user: userWithoutPassword
         });
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 import { requireAuth, AuthRequest } from "./authMiddleware.js";
 import { permissionService } from "./services/permissionService.js";
 
 router.get("/me/permissions", requireAuth as any, async (req: AuthRequest, res) => {
-    if (!req.user || !req.user.userId) {
+    try {
+        if (!req.user || !req.user.userId) {
             return res.status(401).json({ error: "Unauthorized" });
         }
         const permissions = await permissionService.getUserPermissions(req.user.userId);
         res.json({ permissions });
+    } catch (error) {
+        console.error("Error fetching permissions:", error);
+        res.status(500).json({ error: "Failed to fetch user permissions" });
+    }
 });
 
 router.get("/me", requireAuth as any, async (req: AuthRequest, res) => {
-    if (!req.user || !req.user.userId) {
+    try {
+        if (!req.user || !req.user.userId) {
             return res.status(401).json({ error: "Unauthorized" });
         }
         
@@ -192,6 +208,10 @@ router.get("/me", requireAuth as any, async (req: AuthRequest, res) => {
         
         const { password, ...userWithoutPassword } = userWithTenant;
         res.json({ user: userWithoutPassword, tenant: userWithTenant.tenant });
+    } catch (error) {
+        console.error("Error fetching current user:", error);
+        res.status(500).json({ error: "Failed to fetch current user" });
+    }
 });
 
 export default router;

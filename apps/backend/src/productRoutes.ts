@@ -11,7 +11,8 @@ router.use(requireAuth as any);
 
 // GET /api/products
 router.get("/", requirePermission("product.read") as any, async (req: AuthRequest, res) => {
-    const products = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const products = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.product.findMany({
                 where: { deletedAt: null, parentId: null },
                 take: 50,
@@ -19,19 +20,29 @@ router.get("/", requirePermission("product.read") as any, async (req: AuthReques
             });
         });
         res.json(products);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 // GET /api/products/next-sku
 router.get("/next-sku", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
-    const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return await skuService.previewNextSku(tx, req.user!.tenantId);
         });
         res.json({ nextSku });
+    } catch (error) {
+        console.error("Error previewing next SKU:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 // GET /api/products/:parentId/next-variant-sku
 router.get("/:parentId/next-variant-sku", requirePermission("product.create") as any, async (req: AuthRequest, res) => {
-    const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const nextSku = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const parent = await tx.product.findUnique({ where: { id: req.params.parentId } });
             if (!parent) throw new Error("PARENT_NOT_FOUND");
             return await skuService.previewNextVariantSku(tx, req.user!.tenantId, parent.sku);
@@ -59,6 +70,9 @@ router.get("/:id", requirePermission("product.read") as any, async (req: AuthReq
         });
         if (!product) return res.status(404).json({ error: "Product not found" });
         res.json(product);
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 
@@ -69,7 +83,8 @@ router.post("/", requirePermission("product.create") as any, async (req: AuthReq
     if (!name || price === undefined || !productFamilyId) {
         return res.status(400).json({ error: "Missing required fields (name, price, productFamilyId)" });
     }
-    const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const product = await withTenantTransaction(req.user!.tenantId, async (tx) => {
 
 
             let finalSku = "";
@@ -249,6 +264,9 @@ router.delete("/:id", requirePermission("product.delete") as any, async (req: Au
             return deleted;
         });
         res.json({ message: "Product deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete product" });
+    }
 });
 
 export default router;

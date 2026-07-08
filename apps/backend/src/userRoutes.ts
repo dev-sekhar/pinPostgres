@@ -16,7 +16,8 @@ const excludePassword = (user: any) => {
 
 // GET /api/users
 router.get("/", requirePermission("user.read") as any, async (req: AuthRequest, res) => {
-    const users = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const users = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.user.findMany({
                 where: { deletedAt: null },
                 orderBy: { createdAt: "desc" },
@@ -28,11 +29,15 @@ router.get("/", requirePermission("user.read") as any, async (req: AuthRequest, 
             });
         });
         res.json(users.map(excludePassword));
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch users" });
+    }
 });
 
 // GET /api/users/:id
 router.get("/:id", requirePermission("user.read") as any, async (req: AuthRequest, res) => {
-    const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.user.findUnique({
                 where: { id: req.params.id, deletedAt: null },
                 include: {
@@ -44,6 +49,9 @@ router.get("/:id", requirePermission("user.read") as any, async (req: AuthReques
         });
         if (!user) return res.status(404).json({ error: "User not found" });
         res.json(excludePassword(user));
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch user" });
+    }
 });
 
 // POST /api/users (Create a new user)
@@ -52,7 +60,8 @@ router.post("/", requirePermission("user.create") as any, async (req: AuthReques
     if (!email || !password) {
         return res.status(400).json({ error: "Missing required fields (email, password)" });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
         const user = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const newUser = await tx.user.create({
                 data: {
@@ -107,11 +116,15 @@ router.put("/:id", requirePermission("user.update") as any, async (req: AuthRequ
             return updatedUser;
         });
         res.json(excludePassword(user));
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update user" });
+    }
 });
 
 // PATCH /api/users/:id
 router.patch("/:id", requirePermission("user.update") as any, async (req: AuthRequest, res) => {
-    const data = { ...req.body };
+    try {
+        const data = { ...req.body };
         if (data.password) {
             data.password = await bcrypt.hash(data.password, 10);
         }
@@ -123,6 +136,9 @@ router.patch("/:id", requirePermission("user.update") as any, async (req: AuthRe
             });
         });
         res.json(excludePassword(user));
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update user" });
+    }
 });
 
 // DELETE /api/users/:id (Soft Delete)

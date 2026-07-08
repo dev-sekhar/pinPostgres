@@ -10,7 +10,8 @@ router.use(requireAuth as any);
 // Fetch audit trail logs for the current tenant.
 // Taking top 100 for this implementation.
 router.get("/", requirePermission("audit.read") as any, async (req: AuthRequest, res) => {
-    const auditLogs = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const auditLogs = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.auditLog.findMany({
                 where: { tenantId: req.user!.tenantId },
                 orderBy: { createdAt: "desc" },
@@ -26,6 +27,10 @@ router.get("/", requirePermission("audit.read") as any, async (req: AuthRequest,
             });
         });
         res.json(auditLogs);
+    } catch (error) {
+        console.error("Error fetching audit logs:", error);
+        res.status(500).json({ error: "Failed to fetch audit trail" });
+    }
 });
 
 export default router;

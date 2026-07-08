@@ -9,24 +9,32 @@ router.use(requireAuth as any);
 
 // GET /api/attributes
 router.get("/", async (req: AuthRequest, res) => {
-    const attributes = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const attributes = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.findMany({
                 where: { deletedAt: null },
                 orderBy: { createdAt: "desc" }
             });
         });
         res.json(attributes);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch attributes" });
+    }
 });
 
 // GET /api/attributes/:id
 router.get("/:id", async (req: AuthRequest, res) => {
-    const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             return tx.attributeDefinition.findUnique({
                 where: { id: req.params.id, deletedAt: null }
             });
         });
         if (!attribute) return res.status(404).json({ error: "Attribute not found" });
         res.json(attribute);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch attribute" });
+    }
 });
 
 // POST /api/attributes
@@ -41,7 +49,8 @@ router.post("/", requirePermission("attribute.create") as any, async (req: AuthR
     if ((type === 'SELECT' || type === 'MULTI_SELECT') && (!options || !Array.isArray(options) || options.length === 0)) {
         return res.status(400).json({ error: "Options array is required for SELECT types" });
     }
-    const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const newAttr = await tx.attributeDefinition.create({
                 data: {
                     code, name, type, isRequired, options, productFamilyId,
@@ -60,6 +69,9 @@ router.post("/", requirePermission("attribute.create") as any, async (req: AuthR
             return newAttr;
         });
         res.status(201).json(attribute);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to create attribute" });
+    }
 });
 
 // PUT /api/attributes/:id
@@ -74,7 +86,8 @@ router.put("/:id", requirePermission("attribute.update") as any, async (req: Aut
     if ((type === 'SELECT' || type === 'MULTI_SELECT') && (!options || !Array.isArray(options) || options.length === 0)) {
         return res.status(400).json({ error: "Options array is required for SELECT types" });
     }
-    const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        const attribute = await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const existing = await tx.attributeDefinition.findUnique({
                 where: { id: req.params.id, deletedAt: null }
             });
@@ -137,11 +150,15 @@ router.patch("/:id", requirePermission("attribute.update") as any, async (req: A
             return updated;
         });
         res.json(attribute);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update attribute" });
+    }
 });
 
 // DELETE /api/attributes/:id (Soft Delete)
 router.delete("/:id", requirePermission("attribute.delete") as any, async (req: AuthRequest, res) => {
-    await withTenantTransaction(req.user!.tenantId, async (tx) => {
+    try {
+        await withTenantTransaction(req.user!.tenantId, async (tx) => {
             const existing = await tx.attributeDefinition.findUnique({ where: { id: req.params.id, deletedAt: null } });
             if (!existing) throw new Error("Attribute not found");
 
@@ -164,6 +181,9 @@ router.delete("/:id", requirePermission("attribute.delete") as any, async (req: 
             return deleted;
         });
         res.json({ message: "Attribute deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete attribute" });
+    }
 });
 
 export default router;
