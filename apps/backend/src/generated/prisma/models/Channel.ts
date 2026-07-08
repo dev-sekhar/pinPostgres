@@ -216,6 +216,7 @@ export type ChannelWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Channel"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   products?: Prisma.ProductChannelListRelationFilter
+  channelMedias?: Prisma.ChannelMediaListRelationFilter
 }
 
 export type ChannelOrderByWithRelationInput = {
@@ -230,6 +231,7 @@ export type ChannelOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   products?: Prisma.ProductChannelOrderByRelationAggregateInput
+  channelMedias?: Prisma.ChannelMediaOrderByRelationAggregateInput
 }
 
 export type ChannelWhereUniqueInput = Prisma.AtLeast<{
@@ -248,6 +250,7 @@ export type ChannelWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Channel"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   products?: Prisma.ProductChannelListRelationFilter
+  channelMedias?: Prisma.ChannelMediaListRelationFilter
 }, "id" | "tenantId_code">
 
 export type ChannelOrderByWithAggregationInput = {
@@ -291,6 +294,7 @@ export type ChannelCreateInput = {
   deletedAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutChannelsInput
   products?: Prisma.ProductChannelCreateNestedManyWithoutChannelInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUncheckedCreateInput = {
@@ -304,6 +308,7 @@ export type ChannelUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutChannelInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUpdateInput = {
@@ -317,6 +322,7 @@ export type ChannelUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutChannelsNestedInput
   products?: Prisma.ProductChannelUpdateManyWithoutChannelNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateInput = {
@@ -330,6 +336,7 @@ export type ChannelUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductChannelUncheckedUpdateManyWithoutChannelNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelCreateManyInput = {
@@ -479,6 +486,20 @@ export type ChannelUpdateOneRequiredWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChannelUpdateToOneWithWhereWithoutProductsInput, Prisma.ChannelUpdateWithoutProductsInput>, Prisma.ChannelUncheckedUpdateWithoutProductsInput>
 }
 
+export type ChannelCreateNestedOneWithoutChannelMediasInput = {
+  create?: Prisma.XOR<Prisma.ChannelCreateWithoutChannelMediasInput, Prisma.ChannelUncheckedCreateWithoutChannelMediasInput>
+  connectOrCreate?: Prisma.ChannelCreateOrConnectWithoutChannelMediasInput
+  connect?: Prisma.ChannelWhereUniqueInput
+}
+
+export type ChannelUpdateOneRequiredWithoutChannelMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.ChannelCreateWithoutChannelMediasInput, Prisma.ChannelUncheckedCreateWithoutChannelMediasInput>
+  connectOrCreate?: Prisma.ChannelCreateOrConnectWithoutChannelMediasInput
+  upsert?: Prisma.ChannelUpsertWithoutChannelMediasInput
+  connect?: Prisma.ChannelWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChannelUpdateToOneWithWhereWithoutChannelMediasInput, Prisma.ChannelUpdateWithoutChannelMediasInput>, Prisma.ChannelUncheckedUpdateWithoutChannelMediasInput>
+}
+
 export type ChannelCreateWithoutTenantInput = {
   id?: string
   code: string
@@ -489,6 +510,7 @@ export type ChannelCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductChannelCreateNestedManyWithoutChannelInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUncheckedCreateWithoutTenantInput = {
@@ -501,6 +523,7 @@ export type ChannelUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutChannelInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelCreateOrConnectWithoutTenantInput = {
@@ -554,6 +577,7 @@ export type ChannelCreateWithoutProductsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutChannelsInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUncheckedCreateWithoutProductsInput = {
@@ -566,6 +590,7 @@ export type ChannelUncheckedCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelCreateOrConnectWithoutProductsInput = {
@@ -594,6 +619,7 @@ export type ChannelUpdateWithoutProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutChannelsNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateWithoutProductsInput = {
@@ -606,6 +632,75 @@ export type ChannelUncheckedUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutChannelNestedInput
+}
+
+export type ChannelCreateWithoutChannelMediasInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutChannelsInput
+  products?: Prisma.ProductChannelCreateNestedManyWithoutChannelInput
+}
+
+export type ChannelUncheckedCreateWithoutChannelMediasInput = {
+  id?: string
+  tenantId: string
+  code: string
+  name: string
+  description?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  products?: Prisma.ProductChannelUncheckedCreateNestedManyWithoutChannelInput
+}
+
+export type ChannelCreateOrConnectWithoutChannelMediasInput = {
+  where: Prisma.ChannelWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChannelCreateWithoutChannelMediasInput, Prisma.ChannelUncheckedCreateWithoutChannelMediasInput>
+}
+
+export type ChannelUpsertWithoutChannelMediasInput = {
+  update: Prisma.XOR<Prisma.ChannelUpdateWithoutChannelMediasInput, Prisma.ChannelUncheckedUpdateWithoutChannelMediasInput>
+  create: Prisma.XOR<Prisma.ChannelCreateWithoutChannelMediasInput, Prisma.ChannelUncheckedCreateWithoutChannelMediasInput>
+  where?: Prisma.ChannelWhereInput
+}
+
+export type ChannelUpdateToOneWithWhereWithoutChannelMediasInput = {
+  where?: Prisma.ChannelWhereInput
+  data: Prisma.XOR<Prisma.ChannelUpdateWithoutChannelMediasInput, Prisma.ChannelUncheckedUpdateWithoutChannelMediasInput>
+}
+
+export type ChannelUpdateWithoutChannelMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutChannelsNestedInput
+  products?: Prisma.ProductChannelUpdateManyWithoutChannelNestedInput
+}
+
+export type ChannelUncheckedUpdateWithoutChannelMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  products?: Prisma.ProductChannelUncheckedUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelCreateManyTenantInput = {
@@ -629,6 +724,7 @@ export type ChannelUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductChannelUpdateManyWithoutChannelNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateWithoutTenantInput = {
@@ -641,6 +737,7 @@ export type ChannelUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductChannelUncheckedUpdateManyWithoutChannelNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateManyWithoutTenantInput = {
@@ -661,10 +758,12 @@ export type ChannelUncheckedUpdateManyWithoutTenantInput = {
 
 export type ChannelCountOutputType = {
   products: number
+  channelMedias: number
 }
 
 export type ChannelCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | ChannelCountOutputTypeCountProductsArgs
+  channelMedias?: boolean | ChannelCountOutputTypeCountChannelMediasArgs
 }
 
 /**
@@ -684,6 +783,13 @@ export type ChannelCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Type
   where?: Prisma.ProductChannelWhereInput
 }
 
+/**
+ * ChannelCountOutputType without action
+ */
+export type ChannelCountOutputTypeCountChannelMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChannelMediaWhereInput
+}
+
 
 export type ChannelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -697,6 +803,7 @@ export type ChannelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   deletedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Channel$productsArgs<ExtArgs>
+  channelMedias?: boolean | Prisma.Channel$channelMediasArgs<ExtArgs>
   _count?: boolean | Prisma.ChannelCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["channel"]>
 
@@ -742,6 +849,7 @@ export type ChannelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type ChannelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Channel$productsArgs<ExtArgs>
+  channelMedias?: boolean | Prisma.Channel$channelMediasArgs<ExtArgs>
   _count?: boolean | Prisma.ChannelCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChannelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -756,6 +864,7 @@ export type $ChannelPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
     products: Prisma.$ProductChannelPayload<ExtArgs>[]
+    channelMedias: Prisma.$ChannelMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1163,6 +1272,7 @@ export interface Prisma__ChannelClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   products<T extends Prisma.Channel$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Channel$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  channelMedias<T extends Prisma.Channel$channelMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Channel$channelMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1623,6 +1733,30 @@ export type Channel$productsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ProductChannelScalarFieldEnum | Prisma.ProductChannelScalarFieldEnum[]
+}
+
+/**
+ * Channel.channelMedias
+ */
+export type Channel$channelMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChannelMedia
+   */
+  select?: Prisma.ChannelMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChannelMedia
+   */
+  omit?: Prisma.ChannelMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChannelMediaInclude<ExtArgs> | null
+  where?: Prisma.ChannelMediaWhereInput
+  orderBy?: Prisma.ChannelMediaOrderByWithRelationInput | Prisma.ChannelMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ChannelMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChannelMediaScalarFieldEnum | Prisma.ChannelMediaScalarFieldEnum[]
 }
 
 /**

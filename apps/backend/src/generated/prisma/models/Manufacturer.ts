@@ -211,6 +211,7 @@ export type ManufacturerWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Manufacturer"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Manufacturer"> | Date | string | null
   products?: Prisma.ProductListRelationFilter
+  manufacturerMedias?: Prisma.ManufacturerMediaListRelationFilter
 }
 
 export type ManufacturerOrderByWithRelationInput = {
@@ -224,6 +225,7 @@ export type ManufacturerOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   products?: Prisma.ProductOrderByRelationAggregateInput
+  manufacturerMedias?: Prisma.ManufacturerMediaOrderByRelationAggregateInput
 }
 
 export type ManufacturerWhereUniqueInput = Prisma.AtLeast<{
@@ -240,6 +242,7 @@ export type ManufacturerWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Manufacturer"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Manufacturer"> | Date | string | null
   products?: Prisma.ProductListRelationFilter
+  manufacturerMedias?: Prisma.ManufacturerMediaListRelationFilter
 }, "id" | "code">
 
 export type ManufacturerOrderByWithAggregationInput = {
@@ -283,6 +286,7 @@ export type ManufacturerCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductCreateNestedManyWithoutManufacturerInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutManufacturerInput
 }
 
 export type ManufacturerUncheckedCreateInput = {
@@ -296,6 +300,7 @@ export type ManufacturerUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutManufacturerInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutManufacturerInput
 }
 
 export type ManufacturerUpdateInput = {
@@ -309,6 +314,7 @@ export type ManufacturerUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUpdateManyWithoutManufacturerNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutManufacturerNestedInput
 }
 
 export type ManufacturerUncheckedUpdateInput = {
@@ -322,6 +328,7 @@ export type ManufacturerUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUncheckedUpdateManyWithoutManufacturerNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutManufacturerNestedInput
 }
 
 export type ManufacturerCreateManyInput = {
@@ -399,6 +406,11 @@ export type ManufacturerMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
 }
 
+export type ManufacturerScalarRelationFilter = {
+  is?: Prisma.ManufacturerWhereInput
+  isNot?: Prisma.ManufacturerWhereInput
+}
+
 export type ManufacturerCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.ManufacturerCreateWithoutProductsInput, Prisma.ManufacturerUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.ManufacturerCreateOrConnectWithoutProductsInput
@@ -415,6 +427,20 @@ export type ManufacturerUpdateOneWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ManufacturerUpdateToOneWithWhereWithoutProductsInput, Prisma.ManufacturerUpdateWithoutProductsInput>, Prisma.ManufacturerUncheckedUpdateWithoutProductsInput>
 }
 
+export type ManufacturerCreateNestedOneWithoutManufacturerMediasInput = {
+  create?: Prisma.XOR<Prisma.ManufacturerCreateWithoutManufacturerMediasInput, Prisma.ManufacturerUncheckedCreateWithoutManufacturerMediasInput>
+  connectOrCreate?: Prisma.ManufacturerCreateOrConnectWithoutManufacturerMediasInput
+  connect?: Prisma.ManufacturerWhereUniqueInput
+}
+
+export type ManufacturerUpdateOneRequiredWithoutManufacturerMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.ManufacturerCreateWithoutManufacturerMediasInput, Prisma.ManufacturerUncheckedCreateWithoutManufacturerMediasInput>
+  connectOrCreate?: Prisma.ManufacturerCreateOrConnectWithoutManufacturerMediasInput
+  upsert?: Prisma.ManufacturerUpsertWithoutManufacturerMediasInput
+  connect?: Prisma.ManufacturerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ManufacturerUpdateToOneWithWhereWithoutManufacturerMediasInput, Prisma.ManufacturerUpdateWithoutManufacturerMediasInput>, Prisma.ManufacturerUncheckedUpdateWithoutManufacturerMediasInput>
+}
+
 export type ManufacturerCreateWithoutProductsInput = {
   id?: string
   code: string
@@ -425,6 +451,7 @@ export type ManufacturerCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutManufacturerInput
 }
 
 export type ManufacturerUncheckedCreateWithoutProductsInput = {
@@ -437,6 +464,7 @@ export type ManufacturerUncheckedCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutManufacturerInput
 }
 
 export type ManufacturerCreateOrConnectWithoutProductsInput = {
@@ -465,6 +493,7 @@ export type ManufacturerUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutManufacturerNestedInput
 }
 
 export type ManufacturerUncheckedUpdateWithoutProductsInput = {
@@ -477,6 +506,75 @@ export type ManufacturerUncheckedUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutManufacturerNestedInput
+}
+
+export type ManufacturerCreateWithoutManufacturerMediasInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  products?: Prisma.ProductCreateNestedManyWithoutManufacturerInput
+}
+
+export type ManufacturerUncheckedCreateWithoutManufacturerMediasInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutManufacturerInput
+}
+
+export type ManufacturerCreateOrConnectWithoutManufacturerMediasInput = {
+  where: Prisma.ManufacturerWhereUniqueInput
+  create: Prisma.XOR<Prisma.ManufacturerCreateWithoutManufacturerMediasInput, Prisma.ManufacturerUncheckedCreateWithoutManufacturerMediasInput>
+}
+
+export type ManufacturerUpsertWithoutManufacturerMediasInput = {
+  update: Prisma.XOR<Prisma.ManufacturerUpdateWithoutManufacturerMediasInput, Prisma.ManufacturerUncheckedUpdateWithoutManufacturerMediasInput>
+  create: Prisma.XOR<Prisma.ManufacturerCreateWithoutManufacturerMediasInput, Prisma.ManufacturerUncheckedCreateWithoutManufacturerMediasInput>
+  where?: Prisma.ManufacturerWhereInput
+}
+
+export type ManufacturerUpdateToOneWithWhereWithoutManufacturerMediasInput = {
+  where?: Prisma.ManufacturerWhereInput
+  data: Prisma.XOR<Prisma.ManufacturerUpdateWithoutManufacturerMediasInput, Prisma.ManufacturerUncheckedUpdateWithoutManufacturerMediasInput>
+}
+
+export type ManufacturerUpdateWithoutManufacturerMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  products?: Prisma.ProductUpdateManyWithoutManufacturerNestedInput
+}
+
+export type ManufacturerUncheckedUpdateWithoutManufacturerMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  products?: Prisma.ProductUncheckedUpdateManyWithoutManufacturerNestedInput
 }
 
 
@@ -486,10 +584,12 @@ export type ManufacturerUncheckedUpdateWithoutProductsInput = {
 
 export type ManufacturerCountOutputType = {
   products: number
+  manufacturerMedias: number
 }
 
 export type ManufacturerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | ManufacturerCountOutputTypeCountProductsArgs
+  manufacturerMedias?: boolean | ManufacturerCountOutputTypeCountManufacturerMediasArgs
 }
 
 /**
@@ -509,6 +609,13 @@ export type ManufacturerCountOutputTypeCountProductsArgs<ExtArgs extends runtime
   where?: Prisma.ProductWhereInput
 }
 
+/**
+ * ManufacturerCountOutputType without action
+ */
+export type ManufacturerCountOutputTypeCountManufacturerMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ManufacturerMediaWhereInput
+}
+
 
 export type ManufacturerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -521,6 +628,7 @@ export type ManufacturerSelect<ExtArgs extends runtime.Types.Extensions.Internal
   updatedAt?: boolean
   deletedAt?: boolean
   products?: boolean | Prisma.Manufacturer$productsArgs<ExtArgs>
+  manufacturerMedias?: boolean | Prisma.Manufacturer$manufacturerMediasArgs<ExtArgs>
   _count?: boolean | Prisma.ManufacturerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["manufacturer"]>
 
@@ -563,6 +671,7 @@ export type ManufacturerSelectScalar = {
 export type ManufacturerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "contactInfo" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["manufacturer"]>
 export type ManufacturerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.Manufacturer$productsArgs<ExtArgs>
+  manufacturerMedias?: boolean | Prisma.Manufacturer$manufacturerMediasArgs<ExtArgs>
   _count?: boolean | Prisma.ManufacturerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ManufacturerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -572,6 +681,7 @@ export type $ManufacturerPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "Manufacturer"
   objects: {
     products: Prisma.$ProductPayload<ExtArgs>[]
+    manufacturerMedias: Prisma.$ManufacturerMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -978,6 +1088,7 @@ readonly fields: ManufacturerFieldRefs;
 export interface Prisma__ManufacturerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   products<T extends Prisma.Manufacturer$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Manufacturer$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  manufacturerMedias<T extends Prisma.Manufacturer$manufacturerMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Manufacturer$manufacturerMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManufacturerMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1430,6 +1541,30 @@ export type Manufacturer$productsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
+}
+
+/**
+ * Manufacturer.manufacturerMedias
+ */
+export type Manufacturer$manufacturerMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ManufacturerMedia
+   */
+  select?: Prisma.ManufacturerMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ManufacturerMedia
+   */
+  omit?: Prisma.ManufacturerMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ManufacturerMediaInclude<ExtArgs> | null
+  where?: Prisma.ManufacturerMediaWhereInput
+  orderBy?: Prisma.ManufacturerMediaOrderByWithRelationInput | Prisma.ManufacturerMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ManufacturerMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ManufacturerMediaScalarFieldEnum | Prisma.ManufacturerMediaScalarFieldEnum[]
 }
 
 /**

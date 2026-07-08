@@ -256,6 +256,7 @@ export type BrandWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Brand"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   products?: Prisma.ProductListRelationFilter
+  brandMedias?: Prisma.BrandMediaListRelationFilter
 }
 
 export type BrandOrderByWithRelationInput = {
@@ -275,6 +276,7 @@ export type BrandOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   products?: Prisma.ProductOrderByRelationAggregateInput
+  brandMedias?: Prisma.BrandMediaOrderByRelationAggregateInput
 }
 
 export type BrandWhereUniqueInput = Prisma.AtLeast<{
@@ -298,6 +300,7 @@ export type BrandWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Brand"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   products?: Prisma.ProductListRelationFilter
+  brandMedias?: Prisma.BrandMediaListRelationFilter
 }, "id" | "tenantId_code">
 
 export type BrandOrderByWithAggregationInput = {
@@ -356,6 +359,7 @@ export type BrandCreateInput = {
   deletedAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutBrandsInput
   products?: Prisma.ProductCreateNestedManyWithoutBrandInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutBrandInput
 }
 
 export type BrandUncheckedCreateInput = {
@@ -374,6 +378,7 @@ export type BrandUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBrandInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutBrandInput
 }
 
 export type BrandUpdateInput = {
@@ -392,6 +397,7 @@ export type BrandUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutBrandsNestedInput
   products?: Prisma.ProductUpdateManyWithoutBrandNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutBrandNestedInput
 }
 
 export type BrandUncheckedUpdateInput = {
@@ -410,6 +416,7 @@ export type BrandUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUncheckedUpdateManyWithoutBrandNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutBrandNestedInput
 }
 
 export type BrandCreateManyInput = {
@@ -533,6 +540,11 @@ export type BrandMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
 }
 
+export type BrandScalarRelationFilter = {
+  is?: Prisma.BrandWhereInput
+  isNot?: Prisma.BrandWhereInput
+}
+
 export type BrandCreateNestedManyWithoutTenantInput = {
   create?: Prisma.XOR<Prisma.BrandCreateWithoutTenantInput, Prisma.BrandUncheckedCreateWithoutTenantInput> | Prisma.BrandCreateWithoutTenantInput[] | Prisma.BrandUncheckedCreateWithoutTenantInput[]
   connectOrCreate?: Prisma.BrandCreateOrConnectWithoutTenantInput | Prisma.BrandCreateOrConnectWithoutTenantInput[]
@@ -591,6 +603,20 @@ export type BrandUpdateOneWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BrandUpdateToOneWithWhereWithoutProductsInput, Prisma.BrandUpdateWithoutProductsInput>, Prisma.BrandUncheckedUpdateWithoutProductsInput>
 }
 
+export type BrandCreateNestedOneWithoutBrandMediasInput = {
+  create?: Prisma.XOR<Prisma.BrandCreateWithoutBrandMediasInput, Prisma.BrandUncheckedCreateWithoutBrandMediasInput>
+  connectOrCreate?: Prisma.BrandCreateOrConnectWithoutBrandMediasInput
+  connect?: Prisma.BrandWhereUniqueInput
+}
+
+export type BrandUpdateOneRequiredWithoutBrandMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.BrandCreateWithoutBrandMediasInput, Prisma.BrandUncheckedCreateWithoutBrandMediasInput>
+  connectOrCreate?: Prisma.BrandCreateOrConnectWithoutBrandMediasInput
+  upsert?: Prisma.BrandUpsertWithoutBrandMediasInput
+  connect?: Prisma.BrandWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BrandUpdateToOneWithWhereWithoutBrandMediasInput, Prisma.BrandUpdateWithoutBrandMediasInput>, Prisma.BrandUncheckedUpdateWithoutBrandMediasInput>
+}
+
 export type BrandCreateWithoutTenantInput = {
   id?: string
   code: string
@@ -606,6 +632,7 @@ export type BrandCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductCreateNestedManyWithoutBrandInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutBrandInput
 }
 
 export type BrandUncheckedCreateWithoutTenantInput = {
@@ -623,6 +650,7 @@ export type BrandUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBrandInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutBrandInput
 }
 
 export type BrandCreateOrConnectWithoutTenantInput = {
@@ -686,6 +714,7 @@ export type BrandCreateWithoutProductsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutBrandsInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutBrandInput
 }
 
 export type BrandUncheckedCreateWithoutProductsInput = {
@@ -703,6 +732,7 @@ export type BrandUncheckedCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutBrandInput
 }
 
 export type BrandCreateOrConnectWithoutProductsInput = {
@@ -736,6 +766,7 @@ export type BrandUpdateWithoutProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutBrandsNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutBrandNestedInput
 }
 
 export type BrandUncheckedUpdateWithoutProductsInput = {
@@ -753,6 +784,95 @@ export type BrandUncheckedUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutBrandNestedInput
+}
+
+export type BrandCreateWithoutBrandMediasInput = {
+  id?: string
+  code: string
+  name: string
+  legalName?: string | null
+  description?: string | null
+  logo?: string | null
+  website?: string | null
+  email?: string | null
+  phone?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutBrandsInput
+  products?: Prisma.ProductCreateNestedManyWithoutBrandInput
+}
+
+export type BrandUncheckedCreateWithoutBrandMediasInput = {
+  id?: string
+  tenantId: string
+  code: string
+  name: string
+  legalName?: string | null
+  description?: string | null
+  logo?: string | null
+  website?: string | null
+  email?: string | null
+  phone?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBrandInput
+}
+
+export type BrandCreateOrConnectWithoutBrandMediasInput = {
+  where: Prisma.BrandWhereUniqueInput
+  create: Prisma.XOR<Prisma.BrandCreateWithoutBrandMediasInput, Prisma.BrandUncheckedCreateWithoutBrandMediasInput>
+}
+
+export type BrandUpsertWithoutBrandMediasInput = {
+  update: Prisma.XOR<Prisma.BrandUpdateWithoutBrandMediasInput, Prisma.BrandUncheckedUpdateWithoutBrandMediasInput>
+  create: Prisma.XOR<Prisma.BrandCreateWithoutBrandMediasInput, Prisma.BrandUncheckedCreateWithoutBrandMediasInput>
+  where?: Prisma.BrandWhereInput
+}
+
+export type BrandUpdateToOneWithWhereWithoutBrandMediasInput = {
+  where?: Prisma.BrandWhereInput
+  data: Prisma.XOR<Prisma.BrandUpdateWithoutBrandMediasInput, Prisma.BrandUncheckedUpdateWithoutBrandMediasInput>
+}
+
+export type BrandUpdateWithoutBrandMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutBrandsNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBrandNestedInput
+}
+
+export type BrandUncheckedUpdateWithoutBrandMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBrandNestedInput
 }
 
 export type BrandCreateManyTenantInput = {
@@ -786,6 +906,7 @@ export type BrandUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUpdateManyWithoutBrandNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutBrandNestedInput
 }
 
 export type BrandUncheckedUpdateWithoutTenantInput = {
@@ -803,6 +924,7 @@ export type BrandUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUncheckedUpdateManyWithoutBrandNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutBrandNestedInput
 }
 
 export type BrandUncheckedUpdateManyWithoutTenantInput = {
@@ -828,10 +950,12 @@ export type BrandUncheckedUpdateManyWithoutTenantInput = {
 
 export type BrandCountOutputType = {
   products: number
+  brandMedias: number
 }
 
 export type BrandCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | BrandCountOutputTypeCountProductsArgs
+  brandMedias?: boolean | BrandCountOutputTypeCountBrandMediasArgs
 }
 
 /**
@@ -849,6 +973,13 @@ export type BrandCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
  */
 export type BrandCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProductWhereInput
+}
+
+/**
+ * BrandCountOutputType without action
+ */
+export type BrandCountOutputTypeCountBrandMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BrandMediaWhereInput
 }
 
 
@@ -869,6 +1000,7 @@ export type BrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   deletedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Brand$productsArgs<ExtArgs>
+  brandMedias?: boolean | Prisma.Brand$brandMediasArgs<ExtArgs>
   _count?: boolean | Prisma.BrandCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["brand"]>
 
@@ -929,6 +1061,7 @@ export type BrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
 export type BrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Brand$productsArgs<ExtArgs>
+  brandMedias?: boolean | Prisma.Brand$brandMediasArgs<ExtArgs>
   _count?: boolean | Prisma.BrandCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BrandIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -943,6 +1076,7 @@ export type $BrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
     products: Prisma.$ProductPayload<ExtArgs>[]
+    brandMedias: Prisma.$BrandMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1355,6 +1489,7 @@ export interface Prisma__BrandClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   products<T extends Prisma.Brand$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Brand$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  brandMedias<T extends Prisma.Brand$brandMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Brand$brandMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrandMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1820,6 +1955,30 @@ export type Brand$productsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
+}
+
+/**
+ * Brand.brandMedias
+ */
+export type Brand$brandMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BrandMedia
+   */
+  select?: Prisma.BrandMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BrandMedia
+   */
+  omit?: Prisma.BrandMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BrandMediaInclude<ExtArgs> | null
+  where?: Prisma.BrandMediaWhereInput
+  orderBy?: Prisma.BrandMediaOrderByWithRelationInput | Prisma.BrandMediaOrderByWithRelationInput[]
+  cursor?: Prisma.BrandMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BrandMediaScalarFieldEnum | Prisma.BrandMediaScalarFieldEnum[]
 }
 
 /**

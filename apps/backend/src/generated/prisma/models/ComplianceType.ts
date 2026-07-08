@@ -207,6 +207,7 @@ export type ComplianceTypeWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ComplianceType"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"ComplianceType"> | Date | string | null
   products?: Prisma.ProductComplianceTypeListRelationFilter
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaListRelationFilter
 }
 
 export type ComplianceTypeOrderByWithRelationInput = {
@@ -219,6 +220,7 @@ export type ComplianceTypeOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   products?: Prisma.ProductComplianceTypeOrderByRelationAggregateInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaOrderByRelationAggregateInput
 }
 
 export type ComplianceTypeWhereUniqueInput = Prisma.AtLeast<{
@@ -234,6 +236,7 @@ export type ComplianceTypeWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"ComplianceType"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"ComplianceType"> | Date | string | null
   products?: Prisma.ProductComplianceTypeListRelationFilter
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaListRelationFilter
 }, "id" | "code">
 
 export type ComplianceTypeOrderByWithAggregationInput = {
@@ -274,6 +277,7 @@ export type ComplianceTypeCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductComplianceTypeCreateNestedManyWithoutComplianceTypeInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutComplianceTypeInput
 }
 
 export type ComplianceTypeUncheckedCreateInput = {
@@ -286,6 +290,7 @@ export type ComplianceTypeUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutComplianceTypeInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutComplianceTypeInput
 }
 
 export type ComplianceTypeUpdateInput = {
@@ -298,6 +303,7 @@ export type ComplianceTypeUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductComplianceTypeUpdateManyWithoutComplianceTypeNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutComplianceTypeNestedInput
 }
 
 export type ComplianceTypeUncheckedUpdateInput = {
@@ -310,6 +316,7 @@ export type ComplianceTypeUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutComplianceTypeNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutComplianceTypeNestedInput
 }
 
 export type ComplianceTypeCreateManyInput = {
@@ -397,6 +404,20 @@ export type ComplianceTypeUpdateOneRequiredWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ComplianceTypeUpdateToOneWithWhereWithoutProductsInput, Prisma.ComplianceTypeUpdateWithoutProductsInput>, Prisma.ComplianceTypeUncheckedUpdateWithoutProductsInput>
 }
 
+export type ComplianceTypeCreateNestedOneWithoutComplianceTypeMediasInput = {
+  create?: Prisma.XOR<Prisma.ComplianceTypeCreateWithoutComplianceTypeMediasInput, Prisma.ComplianceTypeUncheckedCreateWithoutComplianceTypeMediasInput>
+  connectOrCreate?: Prisma.ComplianceTypeCreateOrConnectWithoutComplianceTypeMediasInput
+  connect?: Prisma.ComplianceTypeWhereUniqueInput
+}
+
+export type ComplianceTypeUpdateOneRequiredWithoutComplianceTypeMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.ComplianceTypeCreateWithoutComplianceTypeMediasInput, Prisma.ComplianceTypeUncheckedCreateWithoutComplianceTypeMediasInput>
+  connectOrCreate?: Prisma.ComplianceTypeCreateOrConnectWithoutComplianceTypeMediasInput
+  upsert?: Prisma.ComplianceTypeUpsertWithoutComplianceTypeMediasInput
+  connect?: Prisma.ComplianceTypeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ComplianceTypeUpdateToOneWithWhereWithoutComplianceTypeMediasInput, Prisma.ComplianceTypeUpdateWithoutComplianceTypeMediasInput>, Prisma.ComplianceTypeUncheckedUpdateWithoutComplianceTypeMediasInput>
+}
+
 export type ComplianceTypeCreateWithoutProductsInput = {
   id?: string
   code: string
@@ -406,6 +427,7 @@ export type ComplianceTypeCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutComplianceTypeInput
 }
 
 export type ComplianceTypeUncheckedCreateWithoutProductsInput = {
@@ -417,6 +439,7 @@ export type ComplianceTypeUncheckedCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutComplianceTypeInput
 }
 
 export type ComplianceTypeCreateOrConnectWithoutProductsInput = {
@@ -444,6 +467,7 @@ export type ComplianceTypeUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutComplianceTypeNestedInput
 }
 
 export type ComplianceTypeUncheckedUpdateWithoutProductsInput = {
@@ -455,6 +479,71 @@ export type ComplianceTypeUncheckedUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutComplianceTypeNestedInput
+}
+
+export type ComplianceTypeCreateWithoutComplianceTypeMediasInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  products?: Prisma.ProductComplianceTypeCreateNestedManyWithoutComplianceTypeInput
+}
+
+export type ComplianceTypeUncheckedCreateWithoutComplianceTypeMediasInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  products?: Prisma.ProductComplianceTypeUncheckedCreateNestedManyWithoutComplianceTypeInput
+}
+
+export type ComplianceTypeCreateOrConnectWithoutComplianceTypeMediasInput = {
+  where: Prisma.ComplianceTypeWhereUniqueInput
+  create: Prisma.XOR<Prisma.ComplianceTypeCreateWithoutComplianceTypeMediasInput, Prisma.ComplianceTypeUncheckedCreateWithoutComplianceTypeMediasInput>
+}
+
+export type ComplianceTypeUpsertWithoutComplianceTypeMediasInput = {
+  update: Prisma.XOR<Prisma.ComplianceTypeUpdateWithoutComplianceTypeMediasInput, Prisma.ComplianceTypeUncheckedUpdateWithoutComplianceTypeMediasInput>
+  create: Prisma.XOR<Prisma.ComplianceTypeCreateWithoutComplianceTypeMediasInput, Prisma.ComplianceTypeUncheckedCreateWithoutComplianceTypeMediasInput>
+  where?: Prisma.ComplianceTypeWhereInput
+}
+
+export type ComplianceTypeUpdateToOneWithWhereWithoutComplianceTypeMediasInput = {
+  where?: Prisma.ComplianceTypeWhereInput
+  data: Prisma.XOR<Prisma.ComplianceTypeUpdateWithoutComplianceTypeMediasInput, Prisma.ComplianceTypeUncheckedUpdateWithoutComplianceTypeMediasInput>
+}
+
+export type ComplianceTypeUpdateWithoutComplianceTypeMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  products?: Prisma.ProductComplianceTypeUpdateManyWithoutComplianceTypeNestedInput
+}
+
+export type ComplianceTypeUncheckedUpdateWithoutComplianceTypeMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  products?: Prisma.ProductComplianceTypeUncheckedUpdateManyWithoutComplianceTypeNestedInput
 }
 
 
@@ -464,10 +553,12 @@ export type ComplianceTypeUncheckedUpdateWithoutProductsInput = {
 
 export type ComplianceTypeCountOutputType = {
   products: number
+  complianceTypeMedias: number
 }
 
 export type ComplianceTypeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | ComplianceTypeCountOutputTypeCountProductsArgs
+  complianceTypeMedias?: boolean | ComplianceTypeCountOutputTypeCountComplianceTypeMediasArgs
 }
 
 /**
@@ -487,6 +578,13 @@ export type ComplianceTypeCountOutputTypeCountProductsArgs<ExtArgs extends runti
   where?: Prisma.ProductComplianceTypeWhereInput
 }
 
+/**
+ * ComplianceTypeCountOutputType without action
+ */
+export type ComplianceTypeCountOutputTypeCountComplianceTypeMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComplianceTypeMediaWhereInput
+}
+
 
 export type ComplianceTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -498,6 +596,7 @@ export type ComplianceTypeSelect<ExtArgs extends runtime.Types.Extensions.Intern
   updatedAt?: boolean
   deletedAt?: boolean
   products?: boolean | Prisma.ComplianceType$productsArgs<ExtArgs>
+  complianceTypeMedias?: boolean | Prisma.ComplianceType$complianceTypeMediasArgs<ExtArgs>
   _count?: boolean | Prisma.ComplianceTypeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["complianceType"]>
 
@@ -537,6 +636,7 @@ export type ComplianceTypeSelectScalar = {
 export type ComplianceTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["complianceType"]>
 export type ComplianceTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.ComplianceType$productsArgs<ExtArgs>
+  complianceTypeMedias?: boolean | Prisma.ComplianceType$complianceTypeMediasArgs<ExtArgs>
   _count?: boolean | Prisma.ComplianceTypeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ComplianceTypeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -546,6 +646,7 @@ export type $ComplianceTypePayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "ComplianceType"
   objects: {
     products: Prisma.$ProductComplianceTypePayload<ExtArgs>[]
+    complianceTypeMedias: Prisma.$ComplianceTypeMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -951,6 +1052,7 @@ readonly fields: ComplianceTypeFieldRefs;
 export interface Prisma__ComplianceTypeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   products<T extends Prisma.ComplianceType$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ComplianceType$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductComplianceTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complianceTypeMedias<T extends Prisma.ComplianceType$complianceTypeMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ComplianceType$complianceTypeMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplianceTypeMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1402,6 +1504,30 @@ export type ComplianceType$productsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.ProductComplianceTypeScalarFieldEnum | Prisma.ProductComplianceTypeScalarFieldEnum[]
+}
+
+/**
+ * ComplianceType.complianceTypeMedias
+ */
+export type ComplianceType$complianceTypeMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ComplianceTypeMedia
+   */
+  select?: Prisma.ComplianceTypeMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ComplianceTypeMedia
+   */
+  omit?: Prisma.ComplianceTypeMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ComplianceTypeMediaInclude<ExtArgs> | null
+  where?: Prisma.ComplianceTypeMediaWhereInput
+  orderBy?: Prisma.ComplianceTypeMediaOrderByWithRelationInput | Prisma.ComplianceTypeMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ComplianceTypeMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ComplianceTypeMediaScalarFieldEnum | Prisma.ComplianceTypeMediaScalarFieldEnum[]
 }
 
 /**

@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { Card, CardBody, CardHeader } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import { fetchApi } from '../../../lib/api';
+import { MediaGallery } from '../../../components/ui/MediaGallery';
 
 interface Product {
   id: string;
@@ -175,6 +176,9 @@ export default function ProductDetailsPage() {
                 </div>
               </div>
             )}
+            
+            {/* Media Gallery */}
+            <MediaGallery entityType="product" entityId={product.id} />
             
             <div style={{ marginTop: '2rem' }}>
               <Button style={{ width: '100%' }} onClick={() => router.push(`/products/${product.id}/edit`)}>Edit Details</Button>

@@ -223,6 +223,12 @@ export type CategoryWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Category"> | Date | string | null
   status?: Prisma.StringFilter<"Category"> | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  productMedia?: Prisma.ProductMediaListRelationFilter
+  brandMedia?: Prisma.BrandMediaListRelationFilter
+  supplierMedia?: Prisma.SupplierMediaListRelationFilter
+  manufacturerMedia?: Prisma.ManufacturerMediaListRelationFilter
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaListRelationFilter
+  channelMedia?: Prisma.ChannelMediaListRelationFilter
   domain?: Prisma.XOR<Prisma.DomainScalarRelationFilter, Prisma.DomainWhereInput>
   parent?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   children?: Prisma.CategoryListRelationFilter
@@ -241,6 +247,12 @@ export type CategoryOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
+  productMedia?: Prisma.ProductMediaOrderByRelationAggregateInput
+  brandMedia?: Prisma.BrandMediaOrderByRelationAggregateInput
+  supplierMedia?: Prisma.SupplierMediaOrderByRelationAggregateInput
+  manufacturerMedia?: Prisma.ManufacturerMediaOrderByRelationAggregateInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaOrderByRelationAggregateInput
+  channelMedia?: Prisma.ChannelMediaOrderByRelationAggregateInput
   domain?: Prisma.DomainOrderByWithRelationInput
   parent?: Prisma.CategoryOrderByWithRelationInput
   children?: Prisma.CategoryOrderByRelationAggregateInput
@@ -263,6 +275,12 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Category"> | Date | string | null
   status?: Prisma.StringFilter<"Category"> | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  productMedia?: Prisma.ProductMediaListRelationFilter
+  brandMedia?: Prisma.BrandMediaListRelationFilter
+  supplierMedia?: Prisma.SupplierMediaListRelationFilter
+  manufacturerMedia?: Prisma.ManufacturerMediaListRelationFilter
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaListRelationFilter
+  channelMedia?: Prisma.ChannelMediaListRelationFilter
   domain?: Prisma.XOR<Prisma.DomainScalarRelationFilter, Prisma.DomainWhereInput>
   parent?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   children?: Prisma.CategoryListRelationFilter
@@ -310,6 +328,12 @@ export type CategoryCreateInput = {
   deletedAt?: Date | string | null
   status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
   domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
@@ -327,6 +351,12 @@ export type CategoryUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -340,6 +370,12 @@ export type CategoryUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
   domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
@@ -357,6 +393,12 @@ export type CategoryUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -618,6 +660,102 @@ export type CategoryUpdateOneRequiredWithoutProductFamiliesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutProductFamiliesInput, Prisma.CategoryUpdateWithoutProductFamiliesInput>, Prisma.CategoryUncheckedUpdateWithoutProductFamiliesInput>
 }
 
+export type CategoryCreateNestedOneWithoutProductMediaInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutProductMediaInput, Prisma.CategoryUncheckedCreateWithoutProductMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutProductMediaInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutProductMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutProductMediaInput, Prisma.CategoryUncheckedCreateWithoutProductMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutProductMediaInput
+  upsert?: Prisma.CategoryUpsertWithoutProductMediaInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutProductMediaInput, Prisma.CategoryUpdateWithoutProductMediaInput>, Prisma.CategoryUncheckedUpdateWithoutProductMediaInput>
+}
+
+export type CategoryCreateNestedOneWithoutBrandMediaInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutBrandMediaInput, Prisma.CategoryUncheckedCreateWithoutBrandMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutBrandMediaInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutBrandMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutBrandMediaInput, Prisma.CategoryUncheckedCreateWithoutBrandMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutBrandMediaInput
+  upsert?: Prisma.CategoryUpsertWithoutBrandMediaInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutBrandMediaInput, Prisma.CategoryUpdateWithoutBrandMediaInput>, Prisma.CategoryUncheckedUpdateWithoutBrandMediaInput>
+}
+
+export type CategoryCreateNestedOneWithoutSupplierMediaInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutSupplierMediaInput, Prisma.CategoryUncheckedCreateWithoutSupplierMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutSupplierMediaInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutSupplierMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutSupplierMediaInput, Prisma.CategoryUncheckedCreateWithoutSupplierMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutSupplierMediaInput
+  upsert?: Prisma.CategoryUpsertWithoutSupplierMediaInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutSupplierMediaInput, Prisma.CategoryUpdateWithoutSupplierMediaInput>, Prisma.CategoryUncheckedUpdateWithoutSupplierMediaInput>
+}
+
+export type CategoryCreateNestedOneWithoutManufacturerMediaInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutManufacturerMediaInput, Prisma.CategoryUncheckedCreateWithoutManufacturerMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutManufacturerMediaInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutManufacturerMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutManufacturerMediaInput, Prisma.CategoryUncheckedCreateWithoutManufacturerMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutManufacturerMediaInput
+  upsert?: Prisma.CategoryUpsertWithoutManufacturerMediaInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutManufacturerMediaInput, Prisma.CategoryUpdateWithoutManufacturerMediaInput>, Prisma.CategoryUncheckedUpdateWithoutManufacturerMediaInput>
+}
+
+export type CategoryCreateNestedOneWithoutComplianceTypeMediaInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutComplianceTypeMediaInput, Prisma.CategoryUncheckedCreateWithoutComplianceTypeMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutComplianceTypeMediaInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutComplianceTypeMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutComplianceTypeMediaInput, Prisma.CategoryUncheckedCreateWithoutComplianceTypeMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutComplianceTypeMediaInput
+  upsert?: Prisma.CategoryUpsertWithoutComplianceTypeMediaInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutComplianceTypeMediaInput, Prisma.CategoryUpdateWithoutComplianceTypeMediaInput>, Prisma.CategoryUncheckedUpdateWithoutComplianceTypeMediaInput>
+}
+
+export type CategoryCreateNestedOneWithoutChannelMediaInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutChannelMediaInput, Prisma.CategoryUncheckedCreateWithoutChannelMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutChannelMediaInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutChannelMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutChannelMediaInput, Prisma.CategoryUncheckedCreateWithoutChannelMediaInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutChannelMediaInput
+  upsert?: Prisma.CategoryUpsertWithoutChannelMediaInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutChannelMediaInput, Prisma.CategoryUpdateWithoutChannelMediaInput>, Prisma.CategoryUncheckedUpdateWithoutChannelMediaInput>
+}
+
 export type CategoryCreateWithoutTenantInput = {
   id?: string
   name: string
@@ -626,6 +764,12 @@ export type CategoryCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   status?: string
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
   domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
@@ -642,6 +786,12 @@ export type CategoryUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -697,6 +847,12 @@ export type CategoryCreateWithoutDomainInput = {
   deletedAt?: Date | string | null
   status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
@@ -712,6 +868,12 @@ export type CategoryUncheckedCreateWithoutDomainInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -751,6 +913,12 @@ export type CategoryCreateWithoutChildrenInput = {
   deletedAt?: Date | string | null
   status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
   domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
@@ -767,6 +935,12 @@ export type CategoryUncheckedCreateWithoutChildrenInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
   productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -784,6 +958,12 @@ export type CategoryCreateWithoutParentInput = {
   deletedAt?: Date | string | null
   status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
   domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
@@ -799,6 +979,12 @@ export type CategoryUncheckedCreateWithoutParentInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -833,6 +1019,12 @@ export type CategoryUpdateWithoutChildrenInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
   domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
@@ -849,6 +1041,12 @@ export type CategoryUncheckedUpdateWithoutChildrenInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
   productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -877,6 +1075,12 @@ export type CategoryCreateWithoutProductFamiliesInput = {
   deletedAt?: Date | string | null
   status?: string
   tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
   domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
@@ -893,6 +1097,12 @@ export type CategoryUncheckedCreateWithoutProductFamiliesInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
 }
 
@@ -921,6 +1131,12 @@ export type CategoryUpdateWithoutProductFamiliesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
   domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
@@ -937,7 +1153,589 @@ export type CategoryUncheckedUpdateWithoutProductFamiliesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+}
+
+export type CategoryCreateWithoutProductMediaInput = {
+  id?: string
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
+  domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutProductMediaInput = {
+  id?: string
+  tenantId: string
+  domainId: string
+  parentId?: string | null
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutProductMediaInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutProductMediaInput, Prisma.CategoryUncheckedCreateWithoutProductMediaInput>
+}
+
+export type CategoryUpsertWithoutProductMediaInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutProductMediaInput, Prisma.CategoryUncheckedUpdateWithoutProductMediaInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutProductMediaInput, Prisma.CategoryUncheckedCreateWithoutProductMediaInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutProductMediaInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutProductMediaInput, Prisma.CategoryUncheckedUpdateWithoutProductMediaInput>
+}
+
+export type CategoryUpdateWithoutProductMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
+  domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutProductMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  domainId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutBrandMediaInput = {
+  id?: string
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
+  domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutBrandMediaInput = {
+  id?: string
+  tenantId: string
+  domainId: string
+  parentId?: string | null
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutBrandMediaInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutBrandMediaInput, Prisma.CategoryUncheckedCreateWithoutBrandMediaInput>
+}
+
+export type CategoryUpsertWithoutBrandMediaInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutBrandMediaInput, Prisma.CategoryUncheckedUpdateWithoutBrandMediaInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutBrandMediaInput, Prisma.CategoryUncheckedCreateWithoutBrandMediaInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutBrandMediaInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutBrandMediaInput, Prisma.CategoryUncheckedUpdateWithoutBrandMediaInput>
+}
+
+export type CategoryUpdateWithoutBrandMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
+  domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutBrandMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  domainId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutSupplierMediaInput = {
+  id?: string
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
+  domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutSupplierMediaInput = {
+  id?: string
+  tenantId: string
+  domainId: string
+  parentId?: string | null
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutSupplierMediaInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutSupplierMediaInput, Prisma.CategoryUncheckedCreateWithoutSupplierMediaInput>
+}
+
+export type CategoryUpsertWithoutSupplierMediaInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutSupplierMediaInput, Prisma.CategoryUncheckedUpdateWithoutSupplierMediaInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutSupplierMediaInput, Prisma.CategoryUncheckedCreateWithoutSupplierMediaInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutSupplierMediaInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutSupplierMediaInput, Prisma.CategoryUncheckedUpdateWithoutSupplierMediaInput>
+}
+
+export type CategoryUpdateWithoutSupplierMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
+  domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutSupplierMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  domainId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutManufacturerMediaInput = {
+  id?: string
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
+  domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutManufacturerMediaInput = {
+  id?: string
+  tenantId: string
+  domainId: string
+  parentId?: string | null
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutManufacturerMediaInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutManufacturerMediaInput, Prisma.CategoryUncheckedCreateWithoutManufacturerMediaInput>
+}
+
+export type CategoryUpsertWithoutManufacturerMediaInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutManufacturerMediaInput, Prisma.CategoryUncheckedUpdateWithoutManufacturerMediaInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutManufacturerMediaInput, Prisma.CategoryUncheckedCreateWithoutManufacturerMediaInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutManufacturerMediaInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutManufacturerMediaInput, Prisma.CategoryUncheckedUpdateWithoutManufacturerMediaInput>
+}
+
+export type CategoryUpdateWithoutManufacturerMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
+  domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutManufacturerMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  domainId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutComplianceTypeMediaInput = {
+  id?: string
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaCreateNestedManyWithoutCategoryInput
+  domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutComplianceTypeMediaInput = {
+  id?: string
+  tenantId: string
+  domainId: string
+  parentId?: string | null
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  channelMedia?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutCategoryInput
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutComplianceTypeMediaInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutComplianceTypeMediaInput, Prisma.CategoryUncheckedCreateWithoutComplianceTypeMediaInput>
+}
+
+export type CategoryUpsertWithoutComplianceTypeMediaInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutComplianceTypeMediaInput, Prisma.CategoryUncheckedUpdateWithoutComplianceTypeMediaInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutComplianceTypeMediaInput, Prisma.CategoryUncheckedCreateWithoutComplianceTypeMediaInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutComplianceTypeMediaInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutComplianceTypeMediaInput, Prisma.CategoryUncheckedUpdateWithoutComplianceTypeMediaInput>
+}
+
+export type CategoryUpdateWithoutComplianceTypeMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
+  domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutComplianceTypeMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  domainId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutChannelMediaInput = {
+  id?: string
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  tenant: Prisma.TenantCreateNestedOneWithoutCategoriesInput
+  productMedia?: Prisma.ProductMediaCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutCategoryInput
+  domain: Prisma.DomainCreateNestedOneWithoutCategoriesInput
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutChannelMediaInput = {
+  id?: string
+  tenantId: string
+  domainId: string
+  parentId?: string | null
+  name: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  status?: string
+  productMedia?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutCategoryInput
+  brandMedia?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutCategoryInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutCategoryInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutCategoryInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutCategoryInput
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutChannelMediaInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutChannelMediaInput, Prisma.CategoryUncheckedCreateWithoutChannelMediaInput>
+}
+
+export type CategoryUpsertWithoutChannelMediaInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutChannelMediaInput, Prisma.CategoryUncheckedUpdateWithoutChannelMediaInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutChannelMediaInput, Prisma.CategoryUncheckedCreateWithoutChannelMediaInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutChannelMediaInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutChannelMediaInput, Prisma.CategoryUncheckedUpdateWithoutChannelMediaInput>
+}
+
+export type CategoryUpdateWithoutChannelMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutChannelMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  domainId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyTenantInput = {
@@ -960,6 +1758,12 @@ export type CategoryUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
   domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
@@ -976,6 +1780,12 @@ export type CategoryUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -1013,6 +1823,12 @@ export type CategoryUpdateWithoutDomainInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
@@ -1028,6 +1844,12 @@ export type CategoryUncheckedUpdateWithoutDomainInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -1065,6 +1887,12 @@ export type CategoryUpdateWithoutParentInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutCategoriesNestedInput
+  productMedia?: Prisma.ProductMediaUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUpdateManyWithoutCategoryNestedInput
   domain?: Prisma.DomainUpdateOneRequiredWithoutCategoriesNestedInput
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   productFamilies?: Prisma.ProductFamilyUpdateManyWithoutCategoryNestedInput
@@ -1080,6 +1908,12 @@ export type CategoryUncheckedUpdateWithoutParentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  productMedia?: Prisma.ProductMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  brandMedia?: Prisma.BrandMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  supplierMedia?: Prisma.SupplierMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  manufacturerMedia?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  complianceTypeMedia?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutCategoryNestedInput
+  channelMedia?: Prisma.ChannelMediaUncheckedUpdateManyWithoutCategoryNestedInput
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -1102,11 +1936,23 @@ export type CategoryUncheckedUpdateManyWithoutParentInput = {
  */
 
 export type CategoryCountOutputType = {
+  productMedia: number
+  brandMedia: number
+  supplierMedia: number
+  manufacturerMedia: number
+  complianceTypeMedia: number
+  channelMedia: number
   children: number
   productFamilies: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productMedia?: boolean | CategoryCountOutputTypeCountProductMediaArgs
+  brandMedia?: boolean | CategoryCountOutputTypeCountBrandMediaArgs
+  supplierMedia?: boolean | CategoryCountOutputTypeCountSupplierMediaArgs
+  manufacturerMedia?: boolean | CategoryCountOutputTypeCountManufacturerMediaArgs
+  complianceTypeMedia?: boolean | CategoryCountOutputTypeCountComplianceTypeMediaArgs
+  channelMedia?: boolean | CategoryCountOutputTypeCountChannelMediaArgs
   children?: boolean | CategoryCountOutputTypeCountChildrenArgs
   productFamilies?: boolean | CategoryCountOutputTypeCountProductFamiliesArgs
 }
@@ -1119,6 +1965,48 @@ export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the CategoryCountOutputType
    */
   select?: Prisma.CategoryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountProductMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductMediaWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountBrandMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BrandMediaWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountSupplierMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierMediaWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountManufacturerMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ManufacturerMediaWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountComplianceTypeMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComplianceTypeMediaWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountChannelMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChannelMediaWhereInput
 }
 
 /**
@@ -1148,6 +2036,12 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deletedAt?: boolean
   status?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  productMedia?: boolean | Prisma.Category$productMediaArgs<ExtArgs>
+  brandMedia?: boolean | Prisma.Category$brandMediaArgs<ExtArgs>
+  supplierMedia?: boolean | Prisma.Category$supplierMediaArgs<ExtArgs>
+  manufacturerMedia?: boolean | Prisma.Category$manufacturerMediaArgs<ExtArgs>
+  complianceTypeMedia?: boolean | Prisma.Category$complianceTypeMediaArgs<ExtArgs>
+  channelMedia?: boolean | Prisma.Category$channelMediaArgs<ExtArgs>
   domain?: boolean | Prisma.DomainDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Category$parentArgs<ExtArgs>
   children?: boolean | Prisma.Category$childrenArgs<ExtArgs>
@@ -1203,6 +2097,12 @@ export type CategorySelectScalar = {
 export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "domainId" | "parentId" | "name" | "description" | "createdAt" | "updatedAt" | "deletedAt" | "status", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  productMedia?: boolean | Prisma.Category$productMediaArgs<ExtArgs>
+  brandMedia?: boolean | Prisma.Category$brandMediaArgs<ExtArgs>
+  supplierMedia?: boolean | Prisma.Category$supplierMediaArgs<ExtArgs>
+  manufacturerMedia?: boolean | Prisma.Category$manufacturerMediaArgs<ExtArgs>
+  complianceTypeMedia?: boolean | Prisma.Category$complianceTypeMediaArgs<ExtArgs>
+  channelMedia?: boolean | Prisma.Category$channelMediaArgs<ExtArgs>
   domain?: boolean | Prisma.DomainDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Category$parentArgs<ExtArgs>
   children?: boolean | Prisma.Category$childrenArgs<ExtArgs>
@@ -1224,6 +2124,12 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Category"
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
+    productMedia: Prisma.$ProductMediaPayload<ExtArgs>[]
+    brandMedia: Prisma.$BrandMediaPayload<ExtArgs>[]
+    supplierMedia: Prisma.$SupplierMediaPayload<ExtArgs>[]
+    manufacturerMedia: Prisma.$ManufacturerMediaPayload<ExtArgs>[]
+    complianceTypeMedia: Prisma.$ComplianceTypeMediaPayload<ExtArgs>[]
+    channelMedia: Prisma.$ChannelMediaPayload<ExtArgs>[]
     domain: Prisma.$DomainPayload<ExtArgs>
     parent: Prisma.$CategoryPayload<ExtArgs> | null
     children: Prisma.$CategoryPayload<ExtArgs>[]
@@ -1635,6 +2541,12 @@ readonly fields: CategoryFieldRefs;
 export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  productMedia<T extends Prisma.Category$productMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$productMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  brandMedia<T extends Prisma.Category$brandMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$brandMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrandMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplierMedia<T extends Prisma.Category$supplierMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$supplierMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  manufacturerMedia<T extends Prisma.Category$manufacturerMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$manufacturerMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManufacturerMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complianceTypeMedia<T extends Prisma.Category$complianceTypeMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$complianceTypeMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplianceTypeMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  channelMedia<T extends Prisma.Category$channelMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$channelMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   domain<T extends Prisma.DomainDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DomainDefaultArgs<ExtArgs>>): Prisma.Prisma__DomainClient<runtime.Types.Result.GetResult<Prisma.$DomainPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   parent<T extends Prisma.Category$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$parentArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   children<T extends Prisma.Category$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2076,6 +2988,150 @@ export type CategoryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Categories to delete.
    */
   limit?: number
+}
+
+/**
+ * Category.productMedia
+ */
+export type Category$productMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductMedia
+   */
+  select?: Prisma.ProductMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductMedia
+   */
+  omit?: Prisma.ProductMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductMediaInclude<ExtArgs> | null
+  where?: Prisma.ProductMediaWhereInput
+  orderBy?: Prisma.ProductMediaOrderByWithRelationInput | Prisma.ProductMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ProductMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductMediaScalarFieldEnum | Prisma.ProductMediaScalarFieldEnum[]
+}
+
+/**
+ * Category.brandMedia
+ */
+export type Category$brandMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BrandMedia
+   */
+  select?: Prisma.BrandMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BrandMedia
+   */
+  omit?: Prisma.BrandMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BrandMediaInclude<ExtArgs> | null
+  where?: Prisma.BrandMediaWhereInput
+  orderBy?: Prisma.BrandMediaOrderByWithRelationInput | Prisma.BrandMediaOrderByWithRelationInput[]
+  cursor?: Prisma.BrandMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BrandMediaScalarFieldEnum | Prisma.BrandMediaScalarFieldEnum[]
+}
+
+/**
+ * Category.supplierMedia
+ */
+export type Category$supplierMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierMedia
+   */
+  select?: Prisma.SupplierMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierMedia
+   */
+  omit?: Prisma.SupplierMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierMediaInclude<ExtArgs> | null
+  where?: Prisma.SupplierMediaWhereInput
+  orderBy?: Prisma.SupplierMediaOrderByWithRelationInput | Prisma.SupplierMediaOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierMediaScalarFieldEnum | Prisma.SupplierMediaScalarFieldEnum[]
+}
+
+/**
+ * Category.manufacturerMedia
+ */
+export type Category$manufacturerMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ManufacturerMedia
+   */
+  select?: Prisma.ManufacturerMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ManufacturerMedia
+   */
+  omit?: Prisma.ManufacturerMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ManufacturerMediaInclude<ExtArgs> | null
+  where?: Prisma.ManufacturerMediaWhereInput
+  orderBy?: Prisma.ManufacturerMediaOrderByWithRelationInput | Prisma.ManufacturerMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ManufacturerMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ManufacturerMediaScalarFieldEnum | Prisma.ManufacturerMediaScalarFieldEnum[]
+}
+
+/**
+ * Category.complianceTypeMedia
+ */
+export type Category$complianceTypeMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ComplianceTypeMedia
+   */
+  select?: Prisma.ComplianceTypeMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ComplianceTypeMedia
+   */
+  omit?: Prisma.ComplianceTypeMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ComplianceTypeMediaInclude<ExtArgs> | null
+  where?: Prisma.ComplianceTypeMediaWhereInput
+  orderBy?: Prisma.ComplianceTypeMediaOrderByWithRelationInput | Prisma.ComplianceTypeMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ComplianceTypeMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ComplianceTypeMediaScalarFieldEnum | Prisma.ComplianceTypeMediaScalarFieldEnum[]
+}
+
+/**
+ * Category.channelMedia
+ */
+export type Category$channelMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChannelMedia
+   */
+  select?: Prisma.ChannelMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChannelMedia
+   */
+  omit?: Prisma.ChannelMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChannelMediaInclude<ExtArgs> | null
+  where?: Prisma.ChannelMediaWhereInput
+  orderBy?: Prisma.ChannelMediaOrderByWithRelationInput | Prisma.ChannelMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ChannelMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChannelMediaScalarFieldEnum | Prisma.ChannelMediaScalarFieldEnum[]
 }
 
 /**

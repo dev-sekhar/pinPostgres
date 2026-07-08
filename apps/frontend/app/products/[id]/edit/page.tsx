@@ -32,7 +32,8 @@ export default function EditProductPage() {
     sku: '',
     name: '',
     description: '',
-    price: ''
+    price: '',
+    status: 'ACTIVE'
   });
   
   const [attributeDefs, setAttributeDefs] = useState<AttributeDefinition[]>([]);
@@ -99,7 +100,8 @@ export default function EditProductPage() {
           sku: productData.sku,
           name: productData.name,
           description: productData.description || '',
-          price: productData.price
+          price: productData.price || '',
+          status: productData.status || 'ACTIVE'
         });
         
         setParentId(productData.parentId || null);

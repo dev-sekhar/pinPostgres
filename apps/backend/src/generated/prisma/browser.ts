@@ -142,3 +142,28 @@ export type ProductChannel = Prisma.ProductChannelModel
  * 
  */
 export type Asset = Prisma.AssetModel
+/**
+ * Model BrandMedia
+ * 
+ */
+export type BrandMedia = Prisma.BrandMediaModel
+/**
+ * Model SupplierMedia
+ * 
+ */
+export type SupplierMedia = Prisma.SupplierMediaModel
+/**
+ * Model ManufacturerMedia
+ * 
+ */
+export type ManufacturerMedia = Prisma.ManufacturerMediaModel
+/**
+ * Model ComplianceTypeMedia
+ * 
+ */
+export type ComplianceTypeMedia = Prisma.ComplianceTypeMediaModel
+/**
+ * Model ChannelMedia
+ * 
+ */
+export type ChannelMedia = Prisma.ChannelMediaModel

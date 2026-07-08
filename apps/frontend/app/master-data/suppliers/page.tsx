@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardBody, CardHeader } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
+import { MediaGallery } from '../../../components/ui/MediaGallery';
 import { fetchApi } from '../../../lib/api';
 import { useForm } from 'react-hook-form';
 
@@ -138,7 +139,7 @@ export default function SuppliersPage() {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           zIndex: 9999
         }}>
-          <Card style={{ width: '100%', maxWidth: '500px', margin: '0 1rem', background: 'var(--bg-panel)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
+          <Card style={{ width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', margin: '0 1rem', background: 'var(--bg-panel)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
             <CardHeader style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem', marginBottom: '1rem' }}>
               <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--text-primary)' }}>
                 {editingItem ? 'Edit Supplier' : 'New Supplier'}
@@ -178,6 +179,11 @@ export default function SuppliersPage() {
                   <Button type="submit">Save</Button>
                 </div>
               </form>
+              {editingItem && (
+                <div style={{ marginTop: '2rem' }}>
+                  <MediaGallery entityType="supplier" entityId={editingItem.id} />
+                </div>
+              )}
             </CardBody>
           </Card>
         </div>

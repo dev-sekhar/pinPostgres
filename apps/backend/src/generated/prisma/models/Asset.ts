@@ -269,6 +269,12 @@ export type AssetWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Asset"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Asset"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  productMedias?: Prisma.ProductMediaListRelationFilter
+  brandMedias?: Prisma.BrandMediaListRelationFilter
+  supplierMedias?: Prisma.SupplierMediaListRelationFilter
+  manufacturerMedias?: Prisma.ManufacturerMediaListRelationFilter
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaListRelationFilter
+  channelMedias?: Prisma.ChannelMediaListRelationFilter
 }
 
 export type AssetOrderByWithRelationInput = {
@@ -285,6 +291,12 @@ export type AssetOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
+  productMedias?: Prisma.ProductMediaOrderByRelationAggregateInput
+  brandMedias?: Prisma.BrandMediaOrderByRelationAggregateInput
+  supplierMedias?: Prisma.SupplierMediaOrderByRelationAggregateInput
+  manufacturerMedias?: Prisma.ManufacturerMediaOrderByRelationAggregateInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaOrderByRelationAggregateInput
+  channelMedias?: Prisma.ChannelMediaOrderByRelationAggregateInput
 }
 
 export type AssetWhereUniqueInput = Prisma.AtLeast<{
@@ -305,6 +317,12 @@ export type AssetWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Asset"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Asset"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  productMedias?: Prisma.ProductMediaListRelationFilter
+  brandMedias?: Prisma.BrandMediaListRelationFilter
+  supplierMedias?: Prisma.SupplierMediaListRelationFilter
+  manufacturerMedias?: Prisma.ManufacturerMediaListRelationFilter
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaListRelationFilter
+  channelMedias?: Prisma.ChannelMediaListRelationFilter
 }, "id" | "tenantId_checksum">
 
 export type AssetOrderByWithAggregationInput = {
@@ -358,6 +376,12 @@ export type AssetCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutAssetsInput
+  productMedias?: Prisma.ProductMediaCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUncheckedCreateInput = {
@@ -373,6 +397,12 @@ export type AssetUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUpdateInput = {
@@ -388,6 +418,12 @@ export type AssetUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutAssetsNestedInput
+  productMedias?: Prisma.ProductMediaUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateInput = {
@@ -403,6 +439,12 @@ export type AssetUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetCreateManyInput = {
@@ -457,6 +499,11 @@ export type AssetListRelationFilter = {
 
 export type AssetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type AssetNullableScalarRelationFilter = {
+  is?: Prisma.AssetWhereInput | null
+  isNot?: Prisma.AssetWhereInput | null
 }
 
 export type AssetTenantIdChecksumCompoundUniqueInput = {
@@ -557,12 +604,108 @@ export type AssetUncheckedUpdateManyWithoutTenantNestedInput = {
   deleteMany?: Prisma.AssetScalarWhereInput | Prisma.AssetScalarWhereInput[]
 }
 
+export type AssetCreateNestedOneWithoutProductMediasInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutProductMediasInput, Prisma.AssetUncheckedCreateWithoutProductMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutProductMediasInput
+  connect?: Prisma.AssetWhereUniqueInput
+}
+
+export type AssetUpdateOneWithoutProductMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutProductMediasInput, Prisma.AssetUncheckedCreateWithoutProductMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutProductMediasInput
+  upsert?: Prisma.AssetUpsertWithoutProductMediasInput
+  disconnect?: Prisma.AssetWhereInput | boolean
+  delete?: Prisma.AssetWhereInput | boolean
+  connect?: Prisma.AssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutProductMediasInput, Prisma.AssetUpdateWithoutProductMediasInput>, Prisma.AssetUncheckedUpdateWithoutProductMediasInput>
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type AssetCreateNestedOneWithoutBrandMediasInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutBrandMediasInput, Prisma.AssetUncheckedCreateWithoutBrandMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutBrandMediasInput
+  connect?: Prisma.AssetWhereUniqueInput
+}
+
+export type AssetUpdateOneWithoutBrandMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutBrandMediasInput, Prisma.AssetUncheckedCreateWithoutBrandMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutBrandMediasInput
+  upsert?: Prisma.AssetUpsertWithoutBrandMediasInput
+  disconnect?: Prisma.AssetWhereInput | boolean
+  delete?: Prisma.AssetWhereInput | boolean
+  connect?: Prisma.AssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutBrandMediasInput, Prisma.AssetUpdateWithoutBrandMediasInput>, Prisma.AssetUncheckedUpdateWithoutBrandMediasInput>
+}
+
+export type AssetCreateNestedOneWithoutSupplierMediasInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutSupplierMediasInput, Prisma.AssetUncheckedCreateWithoutSupplierMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutSupplierMediasInput
+  connect?: Prisma.AssetWhereUniqueInput
+}
+
+export type AssetUpdateOneWithoutSupplierMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutSupplierMediasInput, Prisma.AssetUncheckedCreateWithoutSupplierMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutSupplierMediasInput
+  upsert?: Prisma.AssetUpsertWithoutSupplierMediasInput
+  disconnect?: Prisma.AssetWhereInput | boolean
+  delete?: Prisma.AssetWhereInput | boolean
+  connect?: Prisma.AssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutSupplierMediasInput, Prisma.AssetUpdateWithoutSupplierMediasInput>, Prisma.AssetUncheckedUpdateWithoutSupplierMediasInput>
+}
+
+export type AssetCreateNestedOneWithoutManufacturerMediasInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutManufacturerMediasInput, Prisma.AssetUncheckedCreateWithoutManufacturerMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutManufacturerMediasInput
+  connect?: Prisma.AssetWhereUniqueInput
+}
+
+export type AssetUpdateOneWithoutManufacturerMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutManufacturerMediasInput, Prisma.AssetUncheckedCreateWithoutManufacturerMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutManufacturerMediasInput
+  upsert?: Prisma.AssetUpsertWithoutManufacturerMediasInput
+  disconnect?: Prisma.AssetWhereInput | boolean
+  delete?: Prisma.AssetWhereInput | boolean
+  connect?: Prisma.AssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutManufacturerMediasInput, Prisma.AssetUpdateWithoutManufacturerMediasInput>, Prisma.AssetUncheckedUpdateWithoutManufacturerMediasInput>
+}
+
+export type AssetCreateNestedOneWithoutComplianceTypeMediasInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutComplianceTypeMediasInput, Prisma.AssetUncheckedCreateWithoutComplianceTypeMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutComplianceTypeMediasInput
+  connect?: Prisma.AssetWhereUniqueInput
+}
+
+export type AssetUpdateOneWithoutComplianceTypeMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutComplianceTypeMediasInput, Prisma.AssetUncheckedCreateWithoutComplianceTypeMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutComplianceTypeMediasInput
+  upsert?: Prisma.AssetUpsertWithoutComplianceTypeMediasInput
+  disconnect?: Prisma.AssetWhereInput | boolean
+  delete?: Prisma.AssetWhereInput | boolean
+  connect?: Prisma.AssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutComplianceTypeMediasInput, Prisma.AssetUpdateWithoutComplianceTypeMediasInput>, Prisma.AssetUncheckedUpdateWithoutComplianceTypeMediasInput>
+}
+
+export type AssetCreateNestedOneWithoutChannelMediasInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutChannelMediasInput, Prisma.AssetUncheckedCreateWithoutChannelMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutChannelMediasInput
+  connect?: Prisma.AssetWhereUniqueInput
+}
+
+export type AssetUpdateOneWithoutChannelMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutChannelMediasInput, Prisma.AssetUncheckedCreateWithoutChannelMediasInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutChannelMediasInput
+  upsert?: Prisma.AssetUpsertWithoutChannelMediasInput
+  disconnect?: Prisma.AssetWhereInput | boolean
+  delete?: Prisma.AssetWhereInput | boolean
+  connect?: Prisma.AssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutChannelMediasInput, Prisma.AssetUpdateWithoutChannelMediasInput>, Prisma.AssetUncheckedUpdateWithoutChannelMediasInput>
 }
 
 export type AssetCreateWithoutTenantInput = {
@@ -577,6 +720,12 @@ export type AssetCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUncheckedCreateWithoutTenantInput = {
@@ -591,6 +740,12 @@ export type AssetUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutAssetInput
 }
 
 export type AssetCreateOrConnectWithoutTenantInput = {
@@ -637,6 +792,582 @@ export type AssetScalarWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Asset"> | Date | string | null
 }
 
+export type AssetCreateWithoutProductMediasInput = {
+  id?: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutAssetsInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutAssetInput
+}
+
+export type AssetUncheckedCreateWithoutProductMediasInput = {
+  id?: string
+  tenantId: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutAssetInput
+}
+
+export type AssetCreateOrConnectWithoutProductMediasInput = {
+  where: Prisma.AssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssetCreateWithoutProductMediasInput, Prisma.AssetUncheckedCreateWithoutProductMediasInput>
+}
+
+export type AssetUpsertWithoutProductMediasInput = {
+  update: Prisma.XOR<Prisma.AssetUpdateWithoutProductMediasInput, Prisma.AssetUncheckedUpdateWithoutProductMediasInput>
+  create: Prisma.XOR<Prisma.AssetCreateWithoutProductMediasInput, Prisma.AssetUncheckedCreateWithoutProductMediasInput>
+  where?: Prisma.AssetWhereInput
+}
+
+export type AssetUpdateToOneWithWhereWithoutProductMediasInput = {
+  where?: Prisma.AssetWhereInput
+  data: Prisma.XOR<Prisma.AssetUpdateWithoutProductMediasInput, Prisma.AssetUncheckedUpdateWithoutProductMediasInput>
+}
+
+export type AssetUpdateWithoutProductMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutAssetsNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetUncheckedUpdateWithoutProductMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetCreateWithoutBrandMediasInput = {
+  id?: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutAssetsInput
+  productMedias?: Prisma.ProductMediaCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutAssetInput
+}
+
+export type AssetUncheckedCreateWithoutBrandMediasInput = {
+  id?: string
+  tenantId: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutAssetInput
+}
+
+export type AssetCreateOrConnectWithoutBrandMediasInput = {
+  where: Prisma.AssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssetCreateWithoutBrandMediasInput, Prisma.AssetUncheckedCreateWithoutBrandMediasInput>
+}
+
+export type AssetUpsertWithoutBrandMediasInput = {
+  update: Prisma.XOR<Prisma.AssetUpdateWithoutBrandMediasInput, Prisma.AssetUncheckedUpdateWithoutBrandMediasInput>
+  create: Prisma.XOR<Prisma.AssetCreateWithoutBrandMediasInput, Prisma.AssetUncheckedCreateWithoutBrandMediasInput>
+  where?: Prisma.AssetWhereInput
+}
+
+export type AssetUpdateToOneWithWhereWithoutBrandMediasInput = {
+  where?: Prisma.AssetWhereInput
+  data: Prisma.XOR<Prisma.AssetUpdateWithoutBrandMediasInput, Prisma.AssetUncheckedUpdateWithoutBrandMediasInput>
+}
+
+export type AssetUpdateWithoutBrandMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutAssetsNestedInput
+  productMedias?: Prisma.ProductMediaUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetUncheckedUpdateWithoutBrandMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetCreateWithoutSupplierMediasInput = {
+  id?: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutAssetsInput
+  productMedias?: Prisma.ProductMediaCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutAssetInput
+}
+
+export type AssetUncheckedCreateWithoutSupplierMediasInput = {
+  id?: string
+  tenantId: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutAssetInput
+}
+
+export type AssetCreateOrConnectWithoutSupplierMediasInput = {
+  where: Prisma.AssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssetCreateWithoutSupplierMediasInput, Prisma.AssetUncheckedCreateWithoutSupplierMediasInput>
+}
+
+export type AssetUpsertWithoutSupplierMediasInput = {
+  update: Prisma.XOR<Prisma.AssetUpdateWithoutSupplierMediasInput, Prisma.AssetUncheckedUpdateWithoutSupplierMediasInput>
+  create: Prisma.XOR<Prisma.AssetCreateWithoutSupplierMediasInput, Prisma.AssetUncheckedCreateWithoutSupplierMediasInput>
+  where?: Prisma.AssetWhereInput
+}
+
+export type AssetUpdateToOneWithWhereWithoutSupplierMediasInput = {
+  where?: Prisma.AssetWhereInput
+  data: Prisma.XOR<Prisma.AssetUpdateWithoutSupplierMediasInput, Prisma.AssetUncheckedUpdateWithoutSupplierMediasInput>
+}
+
+export type AssetUpdateWithoutSupplierMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutAssetsNestedInput
+  productMedias?: Prisma.ProductMediaUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetUncheckedUpdateWithoutSupplierMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetCreateWithoutManufacturerMediasInput = {
+  id?: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutAssetsInput
+  productMedias?: Prisma.ProductMediaCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutAssetInput
+}
+
+export type AssetUncheckedCreateWithoutManufacturerMediasInput = {
+  id?: string
+  tenantId: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutAssetInput
+}
+
+export type AssetCreateOrConnectWithoutManufacturerMediasInput = {
+  where: Prisma.AssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssetCreateWithoutManufacturerMediasInput, Prisma.AssetUncheckedCreateWithoutManufacturerMediasInput>
+}
+
+export type AssetUpsertWithoutManufacturerMediasInput = {
+  update: Prisma.XOR<Prisma.AssetUpdateWithoutManufacturerMediasInput, Prisma.AssetUncheckedUpdateWithoutManufacturerMediasInput>
+  create: Prisma.XOR<Prisma.AssetCreateWithoutManufacturerMediasInput, Prisma.AssetUncheckedCreateWithoutManufacturerMediasInput>
+  where?: Prisma.AssetWhereInput
+}
+
+export type AssetUpdateToOneWithWhereWithoutManufacturerMediasInput = {
+  where?: Prisma.AssetWhereInput
+  data: Prisma.XOR<Prisma.AssetUpdateWithoutManufacturerMediasInput, Prisma.AssetUncheckedUpdateWithoutManufacturerMediasInput>
+}
+
+export type AssetUpdateWithoutManufacturerMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutAssetsNestedInput
+  productMedias?: Prisma.ProductMediaUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetUncheckedUpdateWithoutManufacturerMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetCreateWithoutComplianceTypeMediasInput = {
+  id?: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutAssetsInput
+  productMedias?: Prisma.ProductMediaCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaCreateNestedManyWithoutAssetInput
+}
+
+export type AssetUncheckedCreateWithoutComplianceTypeMediasInput = {
+  id?: string
+  tenantId: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutAssetInput
+  channelMedias?: Prisma.ChannelMediaUncheckedCreateNestedManyWithoutAssetInput
+}
+
+export type AssetCreateOrConnectWithoutComplianceTypeMediasInput = {
+  where: Prisma.AssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssetCreateWithoutComplianceTypeMediasInput, Prisma.AssetUncheckedCreateWithoutComplianceTypeMediasInput>
+}
+
+export type AssetUpsertWithoutComplianceTypeMediasInput = {
+  update: Prisma.XOR<Prisma.AssetUpdateWithoutComplianceTypeMediasInput, Prisma.AssetUncheckedUpdateWithoutComplianceTypeMediasInput>
+  create: Prisma.XOR<Prisma.AssetCreateWithoutComplianceTypeMediasInput, Prisma.AssetUncheckedCreateWithoutComplianceTypeMediasInput>
+  where?: Prisma.AssetWhereInput
+}
+
+export type AssetUpdateToOneWithWhereWithoutComplianceTypeMediasInput = {
+  where?: Prisma.AssetWhereInput
+  data: Prisma.XOR<Prisma.AssetUpdateWithoutComplianceTypeMediasInput, Prisma.AssetUncheckedUpdateWithoutComplianceTypeMediasInput>
+}
+
+export type AssetUpdateWithoutComplianceTypeMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutAssetsNestedInput
+  productMedias?: Prisma.ProductMediaUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetUncheckedUpdateWithoutComplianceTypeMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetCreateWithoutChannelMediasInput = {
+  id?: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutAssetsInput
+  productMedias?: Prisma.ProductMediaCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaCreateNestedManyWithoutAssetInput
+}
+
+export type AssetUncheckedCreateWithoutChannelMediasInput = {
+  id?: string
+  tenantId: string
+  name: string
+  url: string
+  checksum: string
+  mimeType?: string | null
+  sizeBytes?: number | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedCreateNestedManyWithoutAssetInput
+  brandMedias?: Prisma.BrandMediaUncheckedCreateNestedManyWithoutAssetInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutAssetInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedCreateNestedManyWithoutAssetInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedCreateNestedManyWithoutAssetInput
+}
+
+export type AssetCreateOrConnectWithoutChannelMediasInput = {
+  where: Prisma.AssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssetCreateWithoutChannelMediasInput, Prisma.AssetUncheckedCreateWithoutChannelMediasInput>
+}
+
+export type AssetUpsertWithoutChannelMediasInput = {
+  update: Prisma.XOR<Prisma.AssetUpdateWithoutChannelMediasInput, Prisma.AssetUncheckedUpdateWithoutChannelMediasInput>
+  create: Prisma.XOR<Prisma.AssetCreateWithoutChannelMediasInput, Prisma.AssetUncheckedCreateWithoutChannelMediasInput>
+  where?: Prisma.AssetWhereInput
+}
+
+export type AssetUpdateToOneWithWhereWithoutChannelMediasInput = {
+  where?: Prisma.AssetWhereInput
+  data: Prisma.XOR<Prisma.AssetUpdateWithoutChannelMediasInput, Prisma.AssetUncheckedUpdateWithoutChannelMediasInput>
+}
+
+export type AssetUpdateWithoutChannelMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutAssetsNestedInput
+  productMedias?: Prisma.ProductMediaUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetUncheckedUpdateWithoutChannelMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  checksum?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutAssetNestedInput
+}
+
 export type AssetCreateManyTenantInput = {
   id?: string
   name: string
@@ -663,6 +1394,12 @@ export type AssetUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateWithoutTenantInput = {
@@ -677,6 +1414,12 @@ export type AssetUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productMedias?: Prisma.ProductMediaUncheckedUpdateManyWithoutAssetNestedInput
+  brandMedias?: Prisma.BrandMediaUncheckedUpdateManyWithoutAssetNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutAssetNestedInput
+  manufacturerMedias?: Prisma.ManufacturerMediaUncheckedUpdateManyWithoutAssetNestedInput
+  complianceTypeMedias?: Prisma.ComplianceTypeMediaUncheckedUpdateManyWithoutAssetNestedInput
+  channelMedias?: Prisma.ChannelMediaUncheckedUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateManyWithoutTenantInput = {
@@ -694,6 +1437,80 @@ export type AssetUncheckedUpdateManyWithoutTenantInput = {
 }
 
 
+/**
+ * Count Type AssetCountOutputType
+ */
+
+export type AssetCountOutputType = {
+  productMedias: number
+  brandMedias: number
+  supplierMedias: number
+  manufacturerMedias: number
+  complianceTypeMedias: number
+  channelMedias: number
+}
+
+export type AssetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productMedias?: boolean | AssetCountOutputTypeCountProductMediasArgs
+  brandMedias?: boolean | AssetCountOutputTypeCountBrandMediasArgs
+  supplierMedias?: boolean | AssetCountOutputTypeCountSupplierMediasArgs
+  manufacturerMedias?: boolean | AssetCountOutputTypeCountManufacturerMediasArgs
+  complianceTypeMedias?: boolean | AssetCountOutputTypeCountComplianceTypeMediasArgs
+  channelMedias?: boolean | AssetCountOutputTypeCountChannelMediasArgs
+}
+
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssetCountOutputType
+   */
+  select?: Prisma.AssetCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeCountProductMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductMediaWhereInput
+}
+
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeCountBrandMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BrandMediaWhereInput
+}
+
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeCountSupplierMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierMediaWhereInput
+}
+
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeCountManufacturerMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ManufacturerMediaWhereInput
+}
+
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeCountComplianceTypeMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComplianceTypeMediaWhereInput
+}
+
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeCountChannelMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChannelMediaWhereInput
+}
+
 
 export type AssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -709,6 +1526,13 @@ export type AssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedAt?: boolean
   deletedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  productMedias?: boolean | Prisma.Asset$productMediasArgs<ExtArgs>
+  brandMedias?: boolean | Prisma.Asset$brandMediasArgs<ExtArgs>
+  supplierMedias?: boolean | Prisma.Asset$supplierMediasArgs<ExtArgs>
+  manufacturerMedias?: boolean | Prisma.Asset$manufacturerMediasArgs<ExtArgs>
+  complianceTypeMedias?: boolean | Prisma.Asset$complianceTypeMediasArgs<ExtArgs>
+  channelMedias?: boolean | Prisma.Asset$channelMediasArgs<ExtArgs>
+  _count?: boolean | Prisma.AssetCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["asset"]>
 
 export type AssetSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -761,6 +1585,13 @@ export type AssetSelectScalar = {
 export type AssetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "name" | "url" | "checksum" | "mimeType" | "sizeBytes" | "status" | "metadata" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["asset"]>
 export type AssetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  productMedias?: boolean | Prisma.Asset$productMediasArgs<ExtArgs>
+  brandMedias?: boolean | Prisma.Asset$brandMediasArgs<ExtArgs>
+  supplierMedias?: boolean | Prisma.Asset$supplierMediasArgs<ExtArgs>
+  manufacturerMedias?: boolean | Prisma.Asset$manufacturerMediasArgs<ExtArgs>
+  complianceTypeMedias?: boolean | Prisma.Asset$complianceTypeMediasArgs<ExtArgs>
+  channelMedias?: boolean | Prisma.Asset$channelMediasArgs<ExtArgs>
+  _count?: boolean | Prisma.AssetCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AssetIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -773,6 +1604,12 @@ export type $AssetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Asset"
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
+    productMedias: Prisma.$ProductMediaPayload<ExtArgs>[]
+    brandMedias: Prisma.$BrandMediaPayload<ExtArgs>[]
+    supplierMedias: Prisma.$SupplierMediaPayload<ExtArgs>[]
+    manufacturerMedias: Prisma.$ManufacturerMediaPayload<ExtArgs>[]
+    complianceTypeMedias: Prisma.$ComplianceTypeMediaPayload<ExtArgs>[]
+    channelMedias: Prisma.$ChannelMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1182,6 +2019,12 @@ readonly fields: AssetFieldRefs;
 export interface Prisma__AssetClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  productMedias<T extends Prisma.Asset$productMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$productMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  brandMedias<T extends Prisma.Asset$brandMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$brandMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrandMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplierMedias<T extends Prisma.Asset$supplierMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$supplierMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  manufacturerMedias<T extends Prisma.Asset$manufacturerMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$manufacturerMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManufacturerMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complianceTypeMedias<T extends Prisma.Asset$complianceTypeMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$complianceTypeMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplianceTypeMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  channelMedias<T extends Prisma.Asset$channelMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$channelMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1621,6 +2464,150 @@ export type AssetDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Assets to delete.
    */
   limit?: number
+}
+
+/**
+ * Asset.productMedias
+ */
+export type Asset$productMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductMedia
+   */
+  select?: Prisma.ProductMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductMedia
+   */
+  omit?: Prisma.ProductMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductMediaInclude<ExtArgs> | null
+  where?: Prisma.ProductMediaWhereInput
+  orderBy?: Prisma.ProductMediaOrderByWithRelationInput | Prisma.ProductMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ProductMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductMediaScalarFieldEnum | Prisma.ProductMediaScalarFieldEnum[]
+}
+
+/**
+ * Asset.brandMedias
+ */
+export type Asset$brandMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BrandMedia
+   */
+  select?: Prisma.BrandMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BrandMedia
+   */
+  omit?: Prisma.BrandMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BrandMediaInclude<ExtArgs> | null
+  where?: Prisma.BrandMediaWhereInput
+  orderBy?: Prisma.BrandMediaOrderByWithRelationInput | Prisma.BrandMediaOrderByWithRelationInput[]
+  cursor?: Prisma.BrandMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BrandMediaScalarFieldEnum | Prisma.BrandMediaScalarFieldEnum[]
+}
+
+/**
+ * Asset.supplierMedias
+ */
+export type Asset$supplierMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierMedia
+   */
+  select?: Prisma.SupplierMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierMedia
+   */
+  omit?: Prisma.SupplierMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierMediaInclude<ExtArgs> | null
+  where?: Prisma.SupplierMediaWhereInput
+  orderBy?: Prisma.SupplierMediaOrderByWithRelationInput | Prisma.SupplierMediaOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierMediaScalarFieldEnum | Prisma.SupplierMediaScalarFieldEnum[]
+}
+
+/**
+ * Asset.manufacturerMedias
+ */
+export type Asset$manufacturerMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ManufacturerMedia
+   */
+  select?: Prisma.ManufacturerMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ManufacturerMedia
+   */
+  omit?: Prisma.ManufacturerMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ManufacturerMediaInclude<ExtArgs> | null
+  where?: Prisma.ManufacturerMediaWhereInput
+  orderBy?: Prisma.ManufacturerMediaOrderByWithRelationInput | Prisma.ManufacturerMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ManufacturerMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ManufacturerMediaScalarFieldEnum | Prisma.ManufacturerMediaScalarFieldEnum[]
+}
+
+/**
+ * Asset.complianceTypeMedias
+ */
+export type Asset$complianceTypeMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ComplianceTypeMedia
+   */
+  select?: Prisma.ComplianceTypeMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ComplianceTypeMedia
+   */
+  omit?: Prisma.ComplianceTypeMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ComplianceTypeMediaInclude<ExtArgs> | null
+  where?: Prisma.ComplianceTypeMediaWhereInput
+  orderBy?: Prisma.ComplianceTypeMediaOrderByWithRelationInput | Prisma.ComplianceTypeMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ComplianceTypeMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ComplianceTypeMediaScalarFieldEnum | Prisma.ComplianceTypeMediaScalarFieldEnum[]
+}
+
+/**
+ * Asset.channelMedias
+ */
+export type Asset$channelMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChannelMedia
+   */
+  select?: Prisma.ChannelMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChannelMedia
+   */
+  omit?: Prisma.ChannelMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChannelMediaInclude<ExtArgs> | null
+  where?: Prisma.ChannelMediaWhereInput
+  orderBy?: Prisma.ChannelMediaOrderByWithRelationInput | Prisma.ChannelMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ChannelMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChannelMediaScalarFieldEnum | Prisma.ChannelMediaScalarFieldEnum[]
 }
 
 /**

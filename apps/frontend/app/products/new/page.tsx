@@ -31,7 +31,8 @@ function ProductForm() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    price: ''
+    price: '',
+    status: 'ACTIVE'
   });
   
   // Master list of available definitions

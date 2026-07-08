@@ -75,7 +75,12 @@ export const ModelName = {
   ComplianceType: 'ComplianceType',
   ProductComplianceType: 'ProductComplianceType',
   ProductChannel: 'ProductChannel',
-  Asset: 'Asset'
+  Asset: 'Asset',
+  BrandMedia: 'BrandMedia',
+  SupplierMedia: 'SupplierMedia',
+  ManufacturerMedia: 'ManufacturerMedia',
+  ComplianceTypeMedia: 'ComplianceTypeMedia',
+  ChannelMedia: 'ChannelMedia'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -212,11 +217,13 @@ export const ProductMediaScalarFieldEnum = {
   url: 'url',
   altText: 'altText',
   sortOrder: 'sortOrder',
+  assetId: 'assetId',
   productId: 'productId',
   tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  categoryId: 'categoryId'
 } as const
 
 export type ProductMediaScalarFieldEnum = (typeof ProductMediaScalarFieldEnum)[keyof typeof ProductMediaScalarFieldEnum]
@@ -448,6 +455,89 @@ export const AssetScalarFieldEnum = {
 } as const
 
 export type AssetScalarFieldEnum = (typeof AssetScalarFieldEnum)[keyof typeof AssetScalarFieldEnum]
+
+
+export const BrandMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  altText: 'altText',
+  sortOrder: 'sortOrder',
+  brandId: 'brandId',
+  assetId: 'assetId',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type BrandMediaScalarFieldEnum = (typeof BrandMediaScalarFieldEnum)[keyof typeof BrandMediaScalarFieldEnum]
+
+
+export const SupplierMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  altText: 'altText',
+  sortOrder: 'sortOrder',
+  supplierId: 'supplierId',
+  assetId: 'assetId',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type SupplierMediaScalarFieldEnum = (typeof SupplierMediaScalarFieldEnum)[keyof typeof SupplierMediaScalarFieldEnum]
+
+
+export const ManufacturerMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  altText: 'altText',
+  sortOrder: 'sortOrder',
+  manufacturerId: 'manufacturerId',
+  assetId: 'assetId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type ManufacturerMediaScalarFieldEnum = (typeof ManufacturerMediaScalarFieldEnum)[keyof typeof ManufacturerMediaScalarFieldEnum]
+
+
+export const ComplianceTypeMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  altText: 'altText',
+  sortOrder: 'sortOrder',
+  complianceTypeId: 'complianceTypeId',
+  assetId: 'assetId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type ComplianceTypeMediaScalarFieldEnum = (typeof ComplianceTypeMediaScalarFieldEnum)[keyof typeof ComplianceTypeMediaScalarFieldEnum]
+
+
+export const ChannelMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  altText: 'altText',
+  sortOrder: 'sortOrder',
+  channelId: 'channelId',
+  assetId: 'assetId',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type ChannelMediaScalarFieldEnum = (typeof ChannelMediaScalarFieldEnum)[keyof typeof ChannelMediaScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -220,6 +220,7 @@ export type SupplierWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   products?: Prisma.ProductListRelationFilter
+  supplierMedias?: Prisma.SupplierMediaListRelationFilter
 }
 
 export type SupplierOrderByWithRelationInput = {
@@ -235,6 +236,7 @@ export type SupplierOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   products?: Prisma.ProductOrderByRelationAggregateInput
+  supplierMedias?: Prisma.SupplierMediaOrderByRelationAggregateInput
 }
 
 export type SupplierWhereUniqueInput = Prisma.AtLeast<{
@@ -254,6 +256,7 @@ export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   products?: Prisma.ProductListRelationFilter
+  supplierMedias?: Prisma.SupplierMediaListRelationFilter
 }, "id" | "tenantId_code">
 
 export type SupplierOrderByWithAggregationInput = {
@@ -300,6 +303,7 @@ export type SupplierCreateInput = {
   deletedAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutSuppliersInput
   products?: Prisma.ProductCreateNestedManyWithoutSupplierInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUncheckedCreateInput = {
@@ -314,6 +318,7 @@ export type SupplierUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSupplierInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUpdateInput = {
@@ -328,6 +333,7 @@ export type SupplierUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutSuppliersNestedInput
   products?: Prisma.ProductUpdateManyWithoutSupplierNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateInput = {
@@ -342,6 +348,7 @@ export type SupplierUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUncheckedUpdateManyWithoutSupplierNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierCreateManyInput = {
@@ -439,6 +446,11 @@ export type SupplierMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
 }
 
+export type SupplierScalarRelationFilter = {
+  is?: Prisma.SupplierWhereInput
+  isNot?: Prisma.SupplierWhereInput
+}
+
 export type SupplierCreateNestedManyWithoutTenantInput = {
   create?: Prisma.XOR<Prisma.SupplierCreateWithoutTenantInput, Prisma.SupplierUncheckedCreateWithoutTenantInput> | Prisma.SupplierCreateWithoutTenantInput[] | Prisma.SupplierUncheckedCreateWithoutTenantInput[]
   connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutTenantInput | Prisma.SupplierCreateOrConnectWithoutTenantInput[]
@@ -497,6 +509,20 @@ export type SupplierUpdateOneWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutProductsInput, Prisma.SupplierUpdateWithoutProductsInput>, Prisma.SupplierUncheckedUpdateWithoutProductsInput>
 }
 
+export type SupplierCreateNestedOneWithoutSupplierMediasInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierMediasInput, Prisma.SupplierUncheckedCreateWithoutSupplierMediasInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutSupplierMediasInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutSupplierMediasNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierMediasInput, Prisma.SupplierUncheckedCreateWithoutSupplierMediasInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutSupplierMediasInput
+  upsert?: Prisma.SupplierUpsertWithoutSupplierMediasInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutSupplierMediasInput, Prisma.SupplierUpdateWithoutSupplierMediasInput>, Prisma.SupplierUncheckedUpdateWithoutSupplierMediasInput>
+}
+
 export type SupplierCreateWithoutTenantInput = {
   id?: string
   code: string
@@ -508,6 +534,7 @@ export type SupplierCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductCreateNestedManyWithoutSupplierInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUncheckedCreateWithoutTenantInput = {
@@ -521,6 +548,7 @@ export type SupplierUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSupplierInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierCreateOrConnectWithoutTenantInput = {
@@ -576,6 +604,7 @@ export type SupplierCreateWithoutProductsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutSuppliersInput
+  supplierMedias?: Prisma.SupplierMediaCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUncheckedCreateWithoutProductsInput = {
@@ -589,6 +618,7 @@ export type SupplierUncheckedCreateWithoutProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  supplierMedias?: Prisma.SupplierMediaUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierCreateOrConnectWithoutProductsInput = {
@@ -618,6 +648,7 @@ export type SupplierUpdateWithoutProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutSuppliersNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateWithoutProductsInput = {
@@ -631,6 +662,79 @@ export type SupplierUncheckedUpdateWithoutProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierCreateWithoutSupplierMediasInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  tenant: Prisma.TenantCreateNestedOneWithoutSuppliersInput
+  products?: Prisma.ProductCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutSupplierMediasInput = {
+  id?: string
+  tenantId: string
+  code: string
+  name: string
+  description?: string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutSupplierMediasInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierMediasInput, Prisma.SupplierUncheckedCreateWithoutSupplierMediasInput>
+}
+
+export type SupplierUpsertWithoutSupplierMediasInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutSupplierMediasInput, Prisma.SupplierUncheckedUpdateWithoutSupplierMediasInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierMediasInput, Prisma.SupplierUncheckedCreateWithoutSupplierMediasInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutSupplierMediasInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutSupplierMediasInput, Prisma.SupplierUncheckedUpdateWithoutSupplierMediasInput>
+}
+
+export type SupplierUpdateWithoutSupplierMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutSuppliersNestedInput
+  products?: Prisma.ProductUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutSupplierMediasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  products?: Prisma.ProductUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierCreateManyTenantInput = {
@@ -656,6 +760,7 @@ export type SupplierUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUpdateManyWithoutSupplierNestedInput
+  supplierMedias?: Prisma.SupplierMediaUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateWithoutTenantInput = {
@@ -669,6 +774,7 @@ export type SupplierUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   products?: Prisma.ProductUncheckedUpdateManyWithoutSupplierNestedInput
+  supplierMedias?: Prisma.SupplierMediaUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateManyWithoutTenantInput = {
@@ -690,10 +796,12 @@ export type SupplierUncheckedUpdateManyWithoutTenantInput = {
 
 export type SupplierCountOutputType = {
   products: number
+  supplierMedias: number
 }
 
 export type SupplierCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | SupplierCountOutputTypeCountProductsArgs
+  supplierMedias?: boolean | SupplierCountOutputTypeCountSupplierMediasArgs
 }
 
 /**
@@ -713,6 +821,13 @@ export type SupplierCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ProductWhereInput
 }
 
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeCountSupplierMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierMediaWhereInput
+}
+
 
 export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -727,6 +842,7 @@ export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deletedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Supplier$productsArgs<ExtArgs>
+  supplierMedias?: boolean | Prisma.Supplier$supplierMediasArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["supplier"]>
 
@@ -775,6 +891,7 @@ export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type SupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Supplier$productsArgs<ExtArgs>
+  supplierMedias?: boolean | Prisma.Supplier$supplierMediasArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SupplierIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -789,6 +906,7 @@ export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
     products: Prisma.$ProductPayload<ExtArgs>[]
+    supplierMedias: Prisma.$SupplierMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1197,6 +1315,7 @@ export interface Prisma__SupplierClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   products<T extends Prisma.Supplier$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplierMedias<T extends Prisma.Supplier$supplierMediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$supplierMediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1658,6 +1777,30 @@ export type Supplier$productsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
+}
+
+/**
+ * Supplier.supplierMedias
+ */
+export type Supplier$supplierMediasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierMedia
+   */
+  select?: Prisma.SupplierMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierMedia
+   */
+  omit?: Prisma.SupplierMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierMediaInclude<ExtArgs> | null
+  where?: Prisma.SupplierMediaWhereInput
+  orderBy?: Prisma.SupplierMediaOrderByWithRelationInput | Prisma.SupplierMediaOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierMediaScalarFieldEnum | Prisma.SupplierMediaScalarFieldEnum[]
 }
 
 /**
