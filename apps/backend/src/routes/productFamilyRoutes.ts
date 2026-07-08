@@ -1,0 +1,150 @@
+import { Router } from "express";
+import { prisma, withTenantTransaction } from "../prismaClient.js";
+import { requireAuth, AuthRequest } from "../middleware/authMiddleware.js";
+import { requirePermission } from "../middleware/rbacMiddleware.js";
+import { auditService } from "../services/auditService.js";
+
+const router = Router();
+router.use(requireAuth as any);
+
+// GET /api/product-families
+router.get("/", async (req: AuthRequest, res) => {
+    const productFamilies = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.productFamily.findMany({
+                    where: { deletedAt: null },
+                    orderBy: { name: "asc" }
+                });
+            });
+    res.json(productFamilies);
+});
+
+// GET /api/product-families/:id
+router.get("/:id", async (req: AuthRequest, res) => {
+    const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                return tx.productFamily.findUnique({
+                    where: { id: req.params.id, deletedAt: null },
+                    include: { 
+                        attributeDefinitions: { where: { deletedAt: null } },
+                        products: { where: { deletedAt: null, parentId: null } }
+                    }
+                });
+            });
+    if (!productFamily) return res.status(404).json({ error: "Product family not found" });
+    res.json(productFamily);
+});
+
+// POST /api/product-families
+router.post("/", requirePermission("productFamily.create") as any, async (req: AuthRequest, res) => {
+    const { name, description, categoryId } = req.body;
+    if (!name || !categoryId) return res.status(400).json({ error: "Name and categoryId are required" });
+    const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                const newFamily = await tx.productFamily.create({
+                    data: { name: name.trim(), description, categoryId, tenantId: req.user!.tenantId }
+                });
+                await auditService.logEvent(tx, {
+                    tenantId: req.user!.tenantId,
+                    userId: req.user!.userId,
+                    entityType: 'ProductFamily',
+                    entityId: newFamily.id,
+                    operation: 'CREATE',
+                    afterState: newFamily,
+                    auditMeta: (req as any).auditMeta
+                });
+                return newFamily;
+            });
+    res.status(201).json(productFamily);
+});
+
+// PUT /api/product-families/:id
+router.put("/:id", requirePermission("productFamily.update") as any, async (req: AuthRequest, res) => {
+    delete req.body.status; // Prevent status update via generic endpoint
+    const { name, description } = req.body;
+    if (!name) return res.status(400).json({ error: "Name is required" });
+    const productFamily = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                const existing = await tx.productFamily.findUnique({ where: { id: req.params.id, deletedAt: null } });
+                if (!existing) throw new Error("Product family not found");
+
+                const updated = await tx.productFamily.update({
+                    where: { id: req.params.id },
+                    data: { name: name.trim(), description }
+                });
+
+                await auditService.logEvent(tx, {
+                    tenantId: req.user!.tenantId,
+                    userId: req.user!.userId,
+                    entityType: 'ProductFamily',
+                    entityId: updated.id,
+                    operation: 'UPDATE',
+                    beforeState: existing,
+                    afterState: updated,
+                    auditMeta: (req as any).auditMeta
+                });
+                return updated;
+            });
+    res.json(productFamily);
+});
+
+// DELETE /api/product-families/:id
+router.delete("/:id", requirePermission("productFamily.delete") as any, async (req: AuthRequest, res) => {
+    await withTenantTransaction(req.user!.tenantId, async (tx) => {
+                const existing = await tx.productFamily.findUnique({ where: { id: req.params.id, deletedAt: null } });
+                if (!existing) throw new Error("Product family not found");
+
+                const deleted = await tx.productFamily.update({
+                    where: { id: req.params.id },
+                    data: { deletedAt: new Date() }
+                });
+
+                await auditService.logEvent(tx, {
+                    tenantId: req.user!.tenantId,
+                    userId: req.user!.userId,
+                    entityType: 'ProductFamily',
+                    entityId: deleted.id,
+                    operation: 'DELETE',
+                    beforeState: existing,
+                    afterState: deleted,
+                    auditMeta: (req as any).auditMeta
+                });
+                return deleted;
+            });
+    res.json({ message: "Product family deleted successfully" });
+});
+
+
+// PATCH /api/productFamilys/:id/status
+router.patch("/:id/status", requirePermission("productFamily.status.update") as any, async (req: AuthRequest, res) => {
+    const { status } = req.body;
+    if (!status) return res.status(400).json({ error: "Status is required" });
+
+    try {
+        const updated = await withTenantTransaction(req.user!.tenantId, async (tx) => {
+            const existing = await (tx as any).productFamily.findUnique({ where: { id: req.params.id } });
+            if (!existing) return null;
+            
+            const result = await (tx as any).productFamily.update({
+                where: { id: req.params.id },
+                data: { status }
+            });
+
+            await auditService.logEvent(tx, {
+                tenantId: req.user!.tenantId,
+                userId: req.user!.userId,
+                action: "PRODUCTFAMILY_STATUS_UPDATED",
+                entityId: req.params.id,
+                entityType: "PRODUCTFAMILY",
+                changes: { oldStatus: existing.status, newStatus: status },
+                ipAddress: (req as any).auditMeta?.ipAddress,
+                userAgent: (req as any).auditMeta?.userAgent
+            });
+
+            return result;
+        });
+        if (!updated) return res.status(404).json({ error: "productFamily not found" });
+        res.json(updated);
+    } catch (error: any) {
+        console.error("Error updating productFamily status:", error);
+        res.status(500).json({ error: "Failed to update productFamily status" });
+    }
+});
+
+export default router;

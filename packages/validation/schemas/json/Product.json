@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0
+    },
+    "productFamilyId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "brandId": {
+      "type": "string",
+      "format": "uuid",
+      "nullable": true
+    },
+    "supplierId": {
+      "type": "string",
+      "format": "uuid",
+      "nullable": true
+    },
+    "manufacturerId": {
+      "type": "string",
+      "format": "uuid",
+      "nullable": true
+    },
+    "parentId": {
+      "type": "string",
+      "format": "uuid",
+      "nullable": true
+    },
+    "attributes": {
+      "type": "object"
+    },
+    "complianceTypeIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "channelIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "DRAFT",
+        "ARCHIVED"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "price",
+    "productFamilyId"
+  ],
+  "additionalProperties": false
+}

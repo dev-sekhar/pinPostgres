@@ -43,27 +43,19 @@ export default function BrandsPage() {
   const handleOpenModal = (item?: any) => {
     if (item) {
       setEditingItem(item);
-      setFormData({ 
-        code: item.code, 
-        name: item.name, 
-        description: item.description || '', 
-        legalName: item.legalName || '', 
-        status: item.status 
-      });
-    } else {
+      reset(item) else {
       setEditingItem(null);
-      setFormData({ code: '', name: '', description: '', legalName: '', status: 'ACTIVE' });
+      reset({ code: '', name: '', status: 'ACTIVE' });
     }
     setModalOpen(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: any) => {
     try {
       if (editingItem) {
         await fetchApi(`/api/brands/${editingItem.id}`, {
           method: 'PUT',
-          body: JSON.stringify(formData)
+          body: JSON.stringify(data)
         });
         if (editingItem.status !== formData.status) {
             await fetchApi(`/api/brands/${editingItem.id}/status`, {
@@ -74,7 +66,7 @@ export default function BrandsPage() {
       } else {
         await fetchApi('/api/brands', {
           method: 'POST',
-          body: JSON.stringify(formData)
+          body: JSON.stringify(data)
         });
       }
       setModalOpen(false);
@@ -151,44 +143,31 @@ export default function BrandsPage() {
               </h3>
             </CardHeader>
             <CardBody>
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <form onSubmit={hookFormSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Code</label>
-                  <Input 
-                    required 
-                    value={formData.code} 
-                    onChange={e => setFormData({...formData, code: e.target.value})} 
-                  />
+                  <Input {...register('code')} />
+                  {errors.code && <span style={{color: 'red', fontSize: '0.8rem'}}>{errors.code.message as string}</span>}
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Name</label>
-                  <Input 
-                    required 
-                    value={formData.name} 
-                    onChange={e => setFormData({...formData, name: e.target.value})} 
-                  />
+                  <Input {...register('name')} />
+                  {errors.name && <span style={{color: 'red', fontSize: '0.8rem'}}>{errors.name.message as string}</span>}
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Legal Name</label>
-                  <Input 
-                    value={formData.legalName} 
-                    onChange={e => setFormData({...formData, legalName: e.target.value})} 
-                  />
+                  <Input {...register('legalName')} />
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Description</label>
-                  <Input 
-                    value={formData.description} 
-                    onChange={e => setFormData({...formData, description: e.target.value})} 
-                  />
+                  <Input {...register('description')} />
                 </div>
                 
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Status</label>
                   <select 
                     style={{ width: '100%', padding: '0.5rem', borderRadius: 'var(--radius-md)', background: 'var(--bg-panel)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
-                    value={formData.status || 'ACTIVE'} 
-                    onChange={e => setFormData({...formData, status: e.target.value})}
+                    {...register('status')}
                   >
                     <option value="ACTIVE">ACTIVE</option>
                     <option value="INACTIVE">INACTIVE</option>

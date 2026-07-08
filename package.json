@@ -2,10 +2,11 @@
     "name": "pim-postgres-monorepo",
     "private": true,
     "workspaces": [
-        "apps/*"
+        "apps/*",
+        "packages/*"
     ],
     "scripts": {
-        "dev": "concurrently -n BACKEND,FRONTEND \"yarn workspace backend dev\" \"yarn workspace frontend dev\""
+        "dev": "yarn workspace @pim/validation generate && concurrently -n BACKEND,FRONTEND \"yarn workspace backend dev\" \"yarn workspace frontend dev\""
     },
     "devDependencies": {
         "concurrently": "^10.0.3"
