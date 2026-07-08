@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import { fetchApi } from '../../../lib/api';
+import { useForm } from 'react-hook-form';
 
 export default function ChannelsPage() {
   const router = useRouter();
@@ -16,11 +17,13 @@ export default function ChannelsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   
-  const [formData, setFormData] = useState({
-    code: '',
-    name: '',
-    description: '',
-    status: 'ACTIVE'
+  const { register, handleSubmit: hookFormSubmit, reset, formState: { errors } } = useForm<any>({
+    defaultValues: {
+      code: '',
+      name: '',
+      description: '',
+      status: 'ACTIVE'
+    }
   });
 
   useEffect(() => {
@@ -43,6 +46,12 @@ export default function ChannelsPage() {
     if (item) {
       setEditingItem(item);
       reset(item);
+    } else {
+      setEditingItem(null);
+      reset({ code: '', name: '', status: 'ACTIVE' });
+    }
+    setModalOpen(true);
+  };
 
   const onSubmit = async (data: any) => {
     try {
@@ -51,10 +60,10 @@ export default function ChannelsPage() {
           method: 'PUT',
           body: JSON.stringify(data)
         });
-        if (editingItem.status !== formData.status) {
+        if (editingItem.status !== data.status) {
             await fetchApi(`/api/channels/${editingItem.id}/status`, {
                 method: 'PATCH',
-                body: JSON.stringify({ status: formData.status })
+                body: JSON.stringify({ status: data.status })
             });
         }
       } else {

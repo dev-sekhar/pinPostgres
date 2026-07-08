@@ -10,5 +10,9 @@ INSERT INTO "Permission" ("id", "code", "name", "module", "description", "create
 (gen_random_uuid(), 'productFamily.read', 'Read Product Family', 'Product', 'Allows reading product family', NOW(), NOW()),
 (gen_random_uuid(), 'productFamily.create', 'Create Product Family', 'Product', 'Allows creating product family', NOW(), NOW()),
 (gen_random_uuid(), 'productFamily.update', 'Update Product Family', 'Product', 'Allows updating product family', NOW(), NOW()),
-(gen_random_uuid(), 'productFamily.delete', 'Delete Product Family', 'Product', 'Allows deleting product family', NOW(), NOW())
+(gen_random_uuid(), 'productFamily.delete', 'Delete Product Family', 'Product', 'Allows deleting product family', NOW(), NOW()),
+(gen_random_uuid(), 'asset.read', 'Read Asset', 'System', 'Allows reading digital assets', NOW(), NOW()),
+(gen_random_uuid(), 'asset.create', 'Create Asset', 'System', 'Allows uploading digital assets', NOW(), NOW()),
+(gen_random_uuid(), 'asset.update', 'Update Asset', 'System', 'Allows updating digital assets', NOW(), NOW()),
+(gen_random_uuid(), 'asset.delete', 'Delete Asset', 'System', 'Allows deleting digital assets', NOW(), NOW())
 ON CONFLICT ("code") DO NOTHING;

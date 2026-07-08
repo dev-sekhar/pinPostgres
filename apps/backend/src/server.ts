@@ -24,11 +24,21 @@ import supplierRoutes from "./routes/supplierRoutes.js";
 import manufacturerRoutes from "./routes/manufacturerRoutes.js";
 import complianceTypeRoutes from "./routes/complianceTypeRoutes.js";
 import channelRoutes from "./routes/channelRoutes.js";
+import assetRoutes from "./routes/assetRoutes.js";
 
 import { auditMiddleware } from "./middleware/auditMiddleware.js";
 import { errorHandler } from "./middleware/errorMiddleware.js";
 
 const app = express();
+
+const softTimeout = parseInt(process.env.SESSION_SOFT_TIMEOUT_MINUTES || "30", 10);
+const hardTimeout = parseInt(process.env.SESSION_HARD_TIMEOUT_MINUTES || "480", 10);
+
+if (hardTimeout <= softTimeout) {
+    console.error(`[FATAL] SESSION_HARD_TIMEOUT_MINUTES (${hardTimeout}) must be greater than SESSION_SOFT_TIMEOUT_MINUTES (${softTimeout}).`);
+    process.exit(1);
+}
+
 const port = Number(process.env.PORT ?? 4000);
 
 app.use(cors());
@@ -59,6 +69,7 @@ app.use("/api/suppliers", supplierRoutes);
 app.use("/api/manufacturers", manufacturerRoutes);
 app.use("/api/compliance-types", complianceTypeRoutes);
 app.use("/api/channels", channelRoutes);
+app.use("/api/assets", assetRoutes);
 app.use("/api/settings", settingsRoutes);
 
 // Global Error Handler

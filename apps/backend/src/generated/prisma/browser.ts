@@ -137,3 +137,8 @@ export type ProductComplianceType = Prisma.ProductComplianceTypeModel
  * 
  */
 export type ProductChannel = Prisma.ProductChannelModel
+/**
+ * Model Asset
+ * 
+ */
+export type Asset = Prisma.AssetModel

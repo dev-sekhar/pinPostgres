@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import { fetchApi } from '../../../lib/api';
+import { useForm } from 'react-hook-form';
 
 export default function ComplianceTypesPage() {
   const router = useRouter();
@@ -16,11 +17,13 @@ export default function ComplianceTypesPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   
-  const [formData, setFormData] = useState({
-    code: '',
-    name: '',
-    description: '',
-    status: 'ACTIVE'
+  const { register, handleSubmit: hookFormSubmit, reset, formState: { errors } } = useForm<any>({
+    defaultValues: {
+      code: '',
+      name: '',
+      description: '',
+      status: 'ACTIVE'
+    }
   });
 
   useEffect(() => {
@@ -43,6 +46,12 @@ export default function ComplianceTypesPage() {
     if (item) {
       setEditingItem(item);
       reset(item);
+    } else {
+      setEditingItem(null);
+      reset({ code: '', name: '', status: 'ACTIVE' });
+    }
+    setModalOpen(true);
+  };
 
   const onSubmit = async (data: any) => {
     try {

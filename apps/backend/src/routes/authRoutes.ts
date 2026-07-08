@@ -103,12 +103,11 @@ router.post("/login", async (req, res) => {
     if (!email || !password) {
                 return res.status(400).json({ error: "Missing email or password" });
             }
-    const [_, users] = await prisma.$transaction([
-                prisma.$executeRaw`SELECT set_config('app.bypass_rls', 'on', true)`,
-                prisma.user.findMany({
-                    where: { email, deletedAt: null }
-                })
-            ]);
+    const users = await prisma.$transaction(async (tx) => {
+        await tx.$executeRaw`SELECT set_config('app.bypass_rls', 'on', true)`;
+        const rows = await tx.$queryRaw<any[]>`SELECT * FROM "User" WHERE "email" = ${email} AND "deletedAt" IS NULL`;
+        return rows;
+    });
     console.log("Login lookup for", email, "found:", users);
     const user = users[0];
     if (!user) {
@@ -118,11 +117,13 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
                 return res.status(401).json({ error: "Invalid credentials" });
             }
+    const hardTimeout = parseInt(process.env.SESSION_HARD_TIMEOUT_MINUTES || "480", 10);
+    const softTimeout = parseInt(process.env.SESSION_SOFT_TIMEOUT_MINUTES || "30", 10);
     const token = jwt.sign(
-                { userId: user.id, tenantId: user.tenantId, role: user.role },
-                JWT_SECRET,
-                { expiresIn: "1d" }
-            );
+        { userId: user.id, tenantId: user.tenantId, role: user.role },
+        JWT_SECRET,
+        { expiresIn: `${hardTimeout}m` }
+    );
     const { password: _pw, ...userWithoutPassword } = user;
     await withTenantTransaction(user.tenantId, async (tx) => {
                 await auditService.logEvent(tx, {
@@ -138,7 +139,11 @@ router.post("/login", async (req, res) => {
     res.status(200).json({
                 message: "Login successful",
                 token,
-                user: userWithoutPassword
+                user: userWithoutPassword,
+                session: {
+                    softTimeoutMinutes: softTimeout,
+                    hardTimeoutMinutes: hardTimeout
+                }
             });
 });
 
@@ -170,6 +175,22 @@ router.get("/me", requireAuth as any, async (req: AuthRequest, res) => {
             }
     const { password, ...userWithoutPassword } = userWithTenant;
     res.json({ user: userWithoutPassword, tenant: userWithTenant.tenant });
+});
+
+
+
+// Extend session
+router.post("/refresh", requireAuth as any, async (req: AuthRequest, res) => {
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+
+    const hardTimeout = parseInt(process.env.SESSION_HARD_TIMEOUT_MINUTES || "480", 10);
+    const token = jwt.sign(
+        { userId: req.user.userId, tenantId: req.user.tenantId, role: req.user.role },
+        JWT_SECRET,
+        { expiresIn: `${hardTimeout}m` }
+    );
+
+    res.json({ token, message: "Session extended" });
 });
 
 export default router;

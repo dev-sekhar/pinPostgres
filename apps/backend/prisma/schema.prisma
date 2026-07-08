@@ -60,6 +60,7 @@ model Tenant {
     suppliers            Supplier[]
     channels             Channel[]
     tenantSettings       TenantSettings?
+    assets                Asset[]
 }
 
 model Domain {
@@ -480,4 +481,24 @@ model ProductChannel {
     @@id([productId, channelId])
     @@index([productId])
     @@index([channelId])
+}
+model Asset {
+    id          String   @id @default(uuid())
+    tenantId    String
+    name        String
+    url         String
+    checksum    String
+    mimeType    String?
+    sizeBytes   Int?
+    status      String   @default("ACTIVE")
+    metadata    Json?
+    
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+
+    tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+    @@unique([tenantId, checksum])
+    @@index([tenantId])
 }

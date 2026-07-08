@@ -15,6 +15,8 @@ interface Product {
   createdAt: string;
 }
 
+import { GridList } from '../../components/ui/GridList';
+
 export default function ProductsListPage() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
@@ -39,9 +41,20 @@ export default function ProductsListPage() {
     return <div className="center-screen text-gradient">Loading products...</div>;
   }
 
+  const gridItems = products.map(product => ({
+    id: product.id,
+    title: product.name,
+    subtitle: `SKU: ${product.sku} • $${Number(product.price).toFixed(2)}`,
+    actions: (
+      <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push(`/products/${product.id}`)}>
+        View Details
+      </Button>
+    )
+  }));
+
   return (
     <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem' }}>
         <div>
           <Button variant="outline" size="sm" onClick={() => router.push('/')} style={{ marginBottom: '1rem' }}>
             &larr; Back to Dashboard
@@ -68,22 +81,9 @@ export default function ProductsListPage() {
         </Card>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-        {products.map((product) => (
-          <Card key={product.id}>
-            <CardHeader>
-              <h3 style={{ fontSize: '1.125rem', marginBottom: '0.25rem' }}>{product.name}</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>SKU: {product.sku}</p>
-            </CardHeader>
-            <CardBody>
-              <div style={{ fontSize: '1.5rem', fontWeight: '600', color: 'var(--accent-primary)', marginBottom: '1.5rem' }}>
-                ${Number(product.price).toFixed(2)}
-              </div>
-              <Button variant="secondary" style={{ width: '100%' }} onClick={() => router.push(`/products/${product.id}`)}>View Details</Button>
-            </CardBody>
-          </Card>
-        ))}
-      </div>
+      {!error && products.length > 0 && (
+        <GridList items={gridItems} hidePreview={true} />
+      )}
     </div>
   );
 }

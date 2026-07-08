@@ -22,7 +22,13 @@ export default function LoginPage() {
     if (typeof window !== 'undefined' && window.location.search.includes('registered=true')) {
       setSuccessMsg('Account created! Please log in.');
     }
-  }, []);
+    
+    // Redirect to home if already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+        router.push('/');
+    }
+  }, [router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
@@ -41,7 +47,15 @@ export default function LoginPage() {
       });
       // Save token
       if (data.token) {
-        sessionStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('loginTime', Date.now().toString());
+        localStorage.setItem('lastActive', Date.now().toString());
+        if (data.session) {
+            localStorage.setItem('sessionConfig', JSON.stringify({
+                soft: data.session.softTimeoutMinutes,
+                hard: data.session.hardTimeoutMinutes
+            }));
+        }
         router.push('/');
       } else {
         throw new Error('No token received');

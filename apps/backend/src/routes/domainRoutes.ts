@@ -126,12 +126,11 @@ router.patch("/:id/status", requirePermission("domain.status.update") as any, as
             await auditService.logEvent(tx, {
                 tenantId: req.user!.tenantId,
                 userId: req.user!.userId,
-                action: "DOMAIN_STATUS_UPDATED",
+                operation: "UPDATE", remarks: "DOMAIN_STATUS_UPDATED",
                 entityId: req.params.id,
                 entityType: "DOMAIN",
-                changes: { oldStatus: existing.status, newStatus: status },
-                ipAddress: (req as any).auditMeta?.ipAddress,
-                userAgent: (req as any).auditMeta?.userAgent
+                beforeState: { status: existing.status }, afterState: { status },
+                auditMeta: (req as any).auditMeta
             });
 
             return result;

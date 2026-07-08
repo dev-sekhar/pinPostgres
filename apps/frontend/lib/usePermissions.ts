@@ -6,7 +6,7 @@ let fetchPromise: Promise<string[]> | null = null;
 let cachedToken: string | null = null;
 
 export function usePermissions() {
-    const token = typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     
     // Check if token changed before initializing state
     if (token !== cachedToken) {
@@ -17,7 +17,7 @@ export function usePermissions() {
     const [loading, setLoading] = useState<boolean>(cachedPermissions === null);
 
     useEffect(() => {
-        const currentToken = sessionStorage.getItem('token');
+        const currentToken = localStorage.getItem('token');
         
         // Invalidate cache if token changed
         if (cachedToken !== currentToken) {

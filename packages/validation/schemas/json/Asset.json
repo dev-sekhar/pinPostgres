@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pimpostgres.com/schemas/Asset.json",
+  "title": "Asset",
+  "description": "JSON Schema for a digital Asset URL upload",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name or title of the asset",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "url": {
+      "type": "string",
+      "description": "Public URL to fetch the digital asset from",
+      "format": "uri"
+    }
+  },
+  "required": ["name", "url"],
+  "additionalProperties": false
+}

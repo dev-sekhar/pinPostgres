@@ -13,7 +13,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     // Basic auth check
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (!token) {
       router.push('/login');
     } else {
@@ -106,6 +106,16 @@ export default function DashboardPage() {
             </CardHeader>
             <CardBody>
               <p style={{ color: 'var(--text-secondary)' }}>Configure tenant-wide settings like SKU generation.</p>
+            </CardBody>
+          </Card>
+        </HasPermission>
+        <HasPermission permission="asset.read">
+          <Card onClick={() => router.push('/assets')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <CardHeader>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#ec4899' }}>Assets</h3>
+            </CardHeader>
+            <CardBody>
+              <p style={{ color: 'var(--text-secondary)' }}>Manage generic digital assets and media.</p>
             </CardBody>
           </Card>
         </HasPermission>

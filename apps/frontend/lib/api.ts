@@ -3,7 +3,7 @@ export const getApiUrl = () => {
 };
 
 export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
-  const token = typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
+  const token = typeof window !== 'undefined' ? (localStorage.getItem('token') || sessionStorage.getItem('token')) : null;
   
   const headers = new Headers(options.headers || {});
   headers.set('Content-Type', 'application/json');
@@ -21,7 +21,7 @@ export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
   if (!response.ok) {
     if (response.status === 401) {
       if (typeof window !== 'undefined') {
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('token');
         if (window.location.pathname !== '/login') {
           window.location.href = '/login';
         }

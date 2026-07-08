@@ -74,7 +74,8 @@ export const ModelName = {
   Manufacturer: 'Manufacturer',
   ComplianceType: 'ComplianceType',
   ProductComplianceType: 'ProductComplianceType',
-  ProductChannel: 'ProductChannel'
+  ProductChannel: 'ProductChannel',
+  Asset: 'Asset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -429,6 +430,24 @@ export const ProductChannelScalarFieldEnum = {
 } as const
 
 export type ProductChannelScalarFieldEnum = (typeof ProductChannelScalarFieldEnum)[keyof typeof ProductChannelScalarFieldEnum]
+
+
+export const AssetScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  url: 'url',
+  checksum: 'checksum',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  status: 'status',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type AssetScalarFieldEnum = (typeof AssetScalarFieldEnum)[keyof typeof AssetScalarFieldEnum]
 
 
 export const SortOrder = {

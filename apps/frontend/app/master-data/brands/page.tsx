@@ -7,6 +7,8 @@ import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import { fetchApi } from '../../../lib/api';
 
+import { useForm } from 'react-hook-form';
+
 export default function BrandsPage() {
   const router = useRouter();
   const [brands, setBrands] = useState<any[]>([]);
@@ -16,12 +18,14 @@ export default function BrandsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   
-  const [formData, setFormData] = useState({
-    code: '',
-    name: '',
-    description: '',
-    legalName: '',
-    status: 'ACTIVE'
+  const { register, handleSubmit: hookFormSubmit, reset, formState: { errors } } = useForm({
+    defaultValues: {
+      code: '',
+      name: '',
+      description: '',
+      legalName: '',
+      status: 'ACTIVE'
+    }
   });
 
   useEffect(() => {
@@ -43,7 +47,8 @@ export default function BrandsPage() {
   const handleOpenModal = (item?: any) => {
     if (item) {
       setEditingItem(item);
-      reset(item) else {
+      reset(item);
+    } else {
       setEditingItem(null);
       reset({ code: '', name: '', status: 'ACTIVE' });
     }
@@ -57,10 +62,10 @@ export default function BrandsPage() {
           method: 'PUT',
           body: JSON.stringify(data)
         });
-        if (editingItem.status !== formData.status) {
+        if (editingItem.status !== data.status) {
             await fetchApi(`/api/brands/${editingItem.id}/status`, {
                 method: 'PATCH',
-                body: JSON.stringify({ status: formData.status })
+                body: JSON.stringify({ status: data.status })
             });
         }
       } else {

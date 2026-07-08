@@ -1,3 +1,4 @@
+export * from './Asset.js';
 export * from './Brand.js';
 export * from './Channel.js';
 export * from './ComplianceType.js';

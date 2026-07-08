@@ -407,7 +407,8 @@ export const ModelName = {
   Manufacturer: 'Manufacturer',
   ComplianceType: 'ComplianceType',
   ProductComplianceType: 'ProductComplianceType',
-  ProductChannel: 'ProductChannel'
+  ProductChannel: 'ProductChannel',
+  Asset: 'Asset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "tenant" | "domain" | "category" | "productFamily" | "user" | "product" | "attributeDefinition" | "productMedia" | "auditLog" | "permission" | "role" | "rolePermission" | "userRole" | "brand" | "currency" | "country" | "unitOfMeasure" | "tenantSettings" | "supplier" | "channel" | "manufacturer" | "complianceType" | "productComplianceType" | "productChannel"
+    modelProps: "tenant" | "domain" | "category" | "productFamily" | "user" | "product" | "attributeDefinition" | "productMedia" | "auditLog" | "permission" | "role" | "rolePermission" | "userRole" | "brand" | "currency" | "country" | "unitOfMeasure" | "tenantSettings" | "supplier" | "channel" | "manufacturer" | "complianceType" | "productComplianceType" | "productChannel" | "asset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2203,6 +2204,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Asset: {
+      payload: Prisma.$AssetPayload<ExtArgs>
+      fields: Prisma.AssetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>
+        }
+        findFirst: {
+          args: Prisma.AssetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>
+        }
+        findMany: {
+          args: Prisma.AssetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>[]
+        }
+        create: {
+          args: Prisma.AssetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>
+        }
+        createMany: {
+          args: Prisma.AssetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>[]
+        }
+        delete: {
+          args: Prisma.AssetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>
+        }
+        update: {
+          args: Prisma.AssetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssetPayload>
+        }
+        aggregate: {
+          args: Prisma.AssetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAsset>
+        }
+        groupBy: {
+          args: Prisma.AssetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssetCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2580,6 +2655,24 @@ export const ProductChannelScalarFieldEnum = {
 export type ProductChannelScalarFieldEnum = (typeof ProductChannelScalarFieldEnum)[keyof typeof ProductChannelScalarFieldEnum]
 
 
+export const AssetScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  url: 'url',
+  checksum: 'checksum',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  status: 'status',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type AssetScalarFieldEnum = (typeof AssetScalarFieldEnum)[keyof typeof AssetScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2914,6 +3007,7 @@ export type GlobalOmitConfig = {
   complianceType?: Prisma.ComplianceTypeOmit
   productComplianceType?: Prisma.ProductComplianceTypeOmit
   productChannel?: Prisma.ProductChannelOmit
+  asset?: Prisma.AssetOmit
 }
 
 /* Types for Logging */
