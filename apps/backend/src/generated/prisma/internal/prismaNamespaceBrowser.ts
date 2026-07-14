@@ -80,7 +80,8 @@ export const ModelName = {
   SupplierMedia: 'SupplierMedia',
   ManufacturerMedia: 'ManufacturerMedia',
   ComplianceTypeMedia: 'ComplianceTypeMedia',
-  ChannelMedia: 'ChannelMedia'
+  ChannelMedia: 'ChannelMedia',
+  Job: 'Job'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -538,6 +539,25 @@ export const ChannelMediaScalarFieldEnum = {
 } as const
 
 export type ChannelMediaScalarFieldEnum = (typeof ChannelMediaScalarFieldEnum)[keyof typeof ChannelMediaScalarFieldEnum]
+
+
+export const JobScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  type: 'type',
+  status: 'status',
+  totalRows: 'totalRows',
+  processedRows: 'processedRows',
+  failedRows: 'failedRows',
+  mappingConfig: 'mappingConfig',
+  errorLog: 'errorLog',
+  fileUrl: 'fileUrl',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
 
 
 export const SortOrder = {

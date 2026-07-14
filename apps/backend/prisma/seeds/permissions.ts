@@ -17,6 +17,7 @@ const entities = [
     { key: "attributeDefinition", name: "Attribute Definition", module: "Product" },
     { key: "user", name: "User", module: "System" },
     { key: "role", name: "Role", module: "System" },
+    { key: "import", name: "Import", module: "Product" },
 ];
 
 for (const entity of entities) {

@@ -195,6 +195,7 @@ export type TenantWhereInput = {
   channels?: Prisma.ChannelListRelationFilter
   tenantSettings?: Prisma.XOR<Prisma.TenantSettingsNullableScalarRelationFilter, Prisma.TenantSettingsWhereInput> | null
   assets?: Prisma.AssetListRelationFilter
+  jobs?: Prisma.JobListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -216,6 +217,7 @@ export type TenantOrderByWithRelationInput = {
   channels?: Prisma.ChannelOrderByRelationAggregateInput
   tenantSettings?: Prisma.TenantSettingsOrderByWithRelationInput
   assets?: Prisma.AssetOrderByRelationAggregateInput
+  jobs?: Prisma.JobOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -240,6 +242,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   channels?: Prisma.ChannelListRelationFilter
   tenantSettings?: Prisma.XOR<Prisma.TenantSettingsNullableScalarRelationFilter, Prisma.TenantSettingsWhereInput> | null
   assets?: Prisma.AssetListRelationFilter
+  jobs?: Prisma.JobListRelationFilter
 }, "id">
 
 export type TenantOrderByWithAggregationInput = {
@@ -283,6 +286,7 @@ export type TenantCreateInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -304,6 +308,7 @@ export type TenantUncheckedCreateInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -325,6 +330,7 @@ export type TenantUpdateInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -346,6 +352,7 @@ export type TenantUncheckedUpdateInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -595,6 +602,20 @@ export type TenantUpdateOneRequiredWithoutAssetsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutAssetsInput, Prisma.TenantUpdateWithoutAssetsInput>, Prisma.TenantUncheckedUpdateWithoutAssetsInput>
 }
 
+export type TenantCreateNestedOneWithoutJobsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutJobsInput, Prisma.TenantUncheckedCreateWithoutJobsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutJobsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutJobsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutJobsInput, Prisma.TenantUncheckedCreateWithoutJobsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutJobsInput
+  upsert?: Prisma.TenantUpsertWithoutJobsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutJobsInput, Prisma.TenantUpdateWithoutJobsInput>, Prisma.TenantUncheckedUpdateWithoutJobsInput>
+}
+
 export type TenantCreateWithoutDomainsInput = {
   id?: string
   name: string
@@ -613,6 +634,7 @@ export type TenantCreateWithoutDomainsInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutDomainsInput = {
@@ -633,6 +655,7 @@ export type TenantUncheckedCreateWithoutDomainsInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutDomainsInput = {
@@ -669,6 +692,7 @@ export type TenantUpdateWithoutDomainsInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutDomainsInput = {
@@ -689,6 +713,7 @@ export type TenantUncheckedUpdateWithoutDomainsInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutCategoriesInput = {
@@ -709,6 +734,7 @@ export type TenantCreateWithoutCategoriesInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCategoriesInput = {
@@ -729,6 +755,7 @@ export type TenantUncheckedCreateWithoutCategoriesInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCategoriesInput = {
@@ -765,6 +792,7 @@ export type TenantUpdateWithoutCategoriesInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCategoriesInput = {
@@ -785,6 +813,7 @@ export type TenantUncheckedUpdateWithoutCategoriesInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutProductFamiliesInput = {
@@ -805,6 +834,7 @@ export type TenantCreateWithoutProductFamiliesInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutProductFamiliesInput = {
@@ -825,6 +855,7 @@ export type TenantUncheckedCreateWithoutProductFamiliesInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutProductFamiliesInput = {
@@ -861,6 +892,7 @@ export type TenantUpdateWithoutProductFamiliesInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutProductFamiliesInput = {
@@ -881,6 +913,7 @@ export type TenantUncheckedUpdateWithoutProductFamiliesInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutUsersInput = {
@@ -901,6 +934,7 @@ export type TenantCreateWithoutUsersInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -921,6 +955,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -957,6 +992,7 @@ export type TenantUpdateWithoutUsersInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -977,6 +1013,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutProductsInput = {
@@ -997,6 +1034,7 @@ export type TenantCreateWithoutProductsInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutProductsInput = {
@@ -1017,6 +1055,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutProductsInput = {
@@ -1053,6 +1092,7 @@ export type TenantUpdateWithoutProductsInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutProductsInput = {
@@ -1073,6 +1113,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutAttributeDefinitionsInput = {
@@ -1093,6 +1134,7 @@ export type TenantCreateWithoutAttributeDefinitionsInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAttributeDefinitionsInput = {
@@ -1113,6 +1155,7 @@ export type TenantUncheckedCreateWithoutAttributeDefinitionsInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAttributeDefinitionsInput = {
@@ -1149,6 +1192,7 @@ export type TenantUpdateWithoutAttributeDefinitionsInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAttributeDefinitionsInput = {
@@ -1169,6 +1213,7 @@ export type TenantUncheckedUpdateWithoutAttributeDefinitionsInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutAuditLogsInput = {
@@ -1189,6 +1234,7 @@ export type TenantCreateWithoutAuditLogsInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAuditLogsInput = {
@@ -1209,6 +1255,7 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -1245,6 +1292,7 @@ export type TenantUpdateWithoutAuditLogsInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAuditLogsInput = {
@@ -1265,6 +1313,7 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRolesInput = {
@@ -1285,6 +1334,7 @@ export type TenantCreateWithoutRolesInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRolesInput = {
@@ -1305,6 +1355,7 @@ export type TenantUncheckedCreateWithoutRolesInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRolesInput = {
@@ -1341,6 +1392,7 @@ export type TenantUpdateWithoutRolesInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRolesInput = {
@@ -1361,6 +1413,7 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutBrandsInput = {
@@ -1381,6 +1434,7 @@ export type TenantCreateWithoutBrandsInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutBrandsInput = {
@@ -1401,6 +1455,7 @@ export type TenantUncheckedCreateWithoutBrandsInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutBrandsInput = {
@@ -1437,6 +1492,7 @@ export type TenantUpdateWithoutBrandsInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutBrandsInput = {
@@ -1457,6 +1513,7 @@ export type TenantUncheckedUpdateWithoutBrandsInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutTenantSettingsInput = {
@@ -1477,6 +1534,7 @@ export type TenantCreateWithoutTenantSettingsInput = {
   suppliers?: Prisma.SupplierCreateNestedManyWithoutTenantInput
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutTenantSettingsInput = {
@@ -1497,6 +1555,7 @@ export type TenantUncheckedCreateWithoutTenantSettingsInput = {
   suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutTenantInput
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutTenantSettingsInput = {
@@ -1533,6 +1592,7 @@ export type TenantUpdateWithoutTenantSettingsInput = {
   suppliers?: Prisma.SupplierUpdateManyWithoutTenantNestedInput
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutTenantSettingsInput = {
@@ -1553,6 +1613,7 @@ export type TenantUncheckedUpdateWithoutTenantSettingsInput = {
   suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutTenantNestedInput
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSuppliersInput = {
@@ -1573,6 +1634,7 @@ export type TenantCreateWithoutSuppliersInput = {
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSuppliersInput = {
@@ -1593,6 +1655,7 @@ export type TenantUncheckedCreateWithoutSuppliersInput = {
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSuppliersInput = {
@@ -1629,6 +1692,7 @@ export type TenantUpdateWithoutSuppliersInput = {
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSuppliersInput = {
@@ -1649,6 +1713,7 @@ export type TenantUncheckedUpdateWithoutSuppliersInput = {
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutChannelsInput = {
@@ -1669,6 +1734,7 @@ export type TenantCreateWithoutChannelsInput = {
   suppliers?: Prisma.SupplierCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutChannelsInput = {
@@ -1689,6 +1755,7 @@ export type TenantUncheckedCreateWithoutChannelsInput = {
   suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutChannelsInput = {
@@ -1725,6 +1792,7 @@ export type TenantUpdateWithoutChannelsInput = {
   suppliers?: Prisma.SupplierUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutChannelsInput = {
@@ -1745,6 +1813,7 @@ export type TenantUncheckedUpdateWithoutChannelsInput = {
   suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutAssetsInput = {
@@ -1765,6 +1834,7 @@ export type TenantCreateWithoutAssetsInput = {
   suppliers?: Prisma.SupplierCreateNestedManyWithoutTenantInput
   channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
+  jobs?: Prisma.JobCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAssetsInput = {
@@ -1785,6 +1855,7 @@ export type TenantUncheckedCreateWithoutAssetsInput = {
   suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutTenantInput
   channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
   tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAssetsInput = {
@@ -1821,6 +1892,7 @@ export type TenantUpdateWithoutAssetsInput = {
   suppliers?: Prisma.SupplierUpdateManyWithoutTenantNestedInput
   channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAssetsInput = {
@@ -1841,6 +1913,107 @@ export type TenantUncheckedUpdateWithoutAssetsInput = {
   suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutTenantNestedInput
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
   tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutJobsInput = {
+  id?: string
+  name: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  domains?: Prisma.DomainCreateNestedManyWithoutTenantInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutTenantInput
+  productFamilies?: Prisma.ProductFamilyCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  attributeDefinitions?: Prisma.AttributeDefinitionCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  brands?: Prisma.BrandCreateNestedManyWithoutTenantInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutTenantInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutTenantInput
+  tenantSettings?: Prisma.TenantSettingsCreateNestedOneWithoutTenantInput
+  assets?: Prisma.AssetCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutJobsInput = {
+  id?: string
+  name: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  domains?: Prisma.DomainUncheckedCreateNestedManyWithoutTenantInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutTenantInput
+  productFamilies?: Prisma.ProductFamilyUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  attributeDefinitions?: Prisma.AttributeDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  brands?: Prisma.BrandUncheckedCreateNestedManyWithoutTenantInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutTenantInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutTenantInput
+  tenantSettings?: Prisma.TenantSettingsUncheckedCreateNestedOneWithoutTenantInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutJobsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutJobsInput, Prisma.TenantUncheckedCreateWithoutJobsInput>
+}
+
+export type TenantUpsertWithoutJobsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutJobsInput, Prisma.TenantUncheckedUpdateWithoutJobsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutJobsInput, Prisma.TenantUncheckedCreateWithoutJobsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutJobsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutJobsInput, Prisma.TenantUncheckedUpdateWithoutJobsInput>
+}
+
+export type TenantUpdateWithoutJobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  domains?: Prisma.DomainUpdateManyWithoutTenantNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutTenantNestedInput
+  productFamilies?: Prisma.ProductFamilyUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  attributeDefinitions?: Prisma.AttributeDefinitionUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  brands?: Prisma.BrandUpdateManyWithoutTenantNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutTenantNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutTenantNestedInput
+  tenantSettings?: Prisma.TenantSettingsUpdateOneWithoutTenantNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutJobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  domains?: Prisma.DomainUncheckedUpdateManyWithoutTenantNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutTenantNestedInput
+  productFamilies?: Prisma.ProductFamilyUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  attributeDefinitions?: Prisma.AttributeDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  brands?: Prisma.BrandUncheckedUpdateManyWithoutTenantNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutTenantNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutTenantNestedInput
+  tenantSettings?: Prisma.TenantSettingsUncheckedUpdateOneWithoutTenantNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 
@@ -1861,6 +2034,7 @@ export type TenantCountOutputType = {
   suppliers: number
   channels: number
   assets: number
+  jobs: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1876,6 +2050,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   suppliers?: boolean | TenantCountOutputTypeCountSuppliersArgs
   channels?: boolean | TenantCountOutputTypeCountChannelsArgs
   assets?: boolean | TenantCountOutputTypeCountAssetsArgs
+  jobs?: boolean | TenantCountOutputTypeCountJobsArgs
 }
 
 /**
@@ -1972,6 +2147,13 @@ export type TenantCountOutputTypeCountAssetsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.AssetWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1992,6 +2174,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   channels?: boolean | Prisma.Tenant$channelsArgs<ExtArgs>
   tenantSettings?: boolean | Prisma.Tenant$tenantSettingsArgs<ExtArgs>
   assets?: boolean | Prisma.Tenant$assetsArgs<ExtArgs>
+  jobs?: boolean | Prisma.Tenant$jobsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -2034,6 +2217,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   channels?: boolean | Prisma.Tenant$channelsArgs<ExtArgs>
   tenantSettings?: boolean | Prisma.Tenant$tenantSettingsArgs<ExtArgs>
   assets?: boolean | Prisma.Tenant$assetsArgs<ExtArgs>
+  jobs?: boolean | Prisma.Tenant$jobsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2055,6 +2239,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     channels: Prisma.$ChannelPayload<ExtArgs>[]
     tenantSettings: Prisma.$TenantSettingsPayload<ExtArgs> | null
     assets: Prisma.$AssetPayload<ExtArgs>[]
+    jobs: Prisma.$JobPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2469,6 +2654,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   channels<T extends Prisma.Tenant$channelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$channelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tenantSettings<T extends Prisma.Tenant$tenantSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$tenantSettingsArgs<ExtArgs>>): Prisma.Prisma__TenantSettingsClient<runtime.Types.Result.GetResult<Prisma.$TenantSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   assets<T extends Prisma.Tenant$assetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  jobs<T extends Prisma.Tenant$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3200,6 +3386,30 @@ export type Tenant$assetsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AssetScalarFieldEnum | Prisma.AssetScalarFieldEnum[]
+}
+
+/**
+ * Tenant.jobs
+ */
+export type Tenant$jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Job
+   */
+  select?: Prisma.JobSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Job
+   */
+  omit?: Prisma.JobOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobInclude<ExtArgs> | null
+  where?: Prisma.JobWhereInput
+  orderBy?: Prisma.JobOrderByWithRelationInput | Prisma.JobOrderByWithRelationInput[]
+  cursor?: Prisma.JobWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobScalarFieldEnum | Prisma.JobScalarFieldEnum[]
 }
 
 /**

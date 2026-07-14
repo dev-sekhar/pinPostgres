@@ -191,3 +191,8 @@ export type ComplianceTypeMedia = Prisma.ComplianceTypeMediaModel
  * 
  */
 export type ChannelMedia = Prisma.ChannelMediaModel
+/**
+ * Model Job
+ * 
+ */
+export type Job = Prisma.JobModel

@@ -25,9 +25,12 @@ import manufacturerRoutes from "./routes/manufacturerRoutes.js";
 import complianceTypeRoutes from "./routes/complianceTypeRoutes.js";
 import channelRoutes from "./routes/channelRoutes.js";
 import assetRoutes from "./routes/assetRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
 
 import { auditMiddleware } from "./middleware/auditMiddleware.js";
 import { errorHandler } from "./middleware/errorMiddleware.js";
+import { initBoss } from "./pgBoss.js";
+import { startWorker } from "./worker.js";
 
 const app = express();
 
@@ -71,10 +74,17 @@ app.use("/api/compliance-types", complianceTypeRoutes);
 app.use("/api/channels", channelRoutes);
 app.use("/api/assets", assetRoutes);
 app.use("/api/settings", settingsRoutes);
+app.use("/api/jobs", jobRoutes);
 
 // Global Error Handler
 app.use(errorHandler as any);
 
-app.listen(port, () => {
-    console.log(`Backend listening on http://localhost:${port}`);
+initBoss().then(() => {
+    startWorker();
+    app.listen(port, () => {
+        console.log(`Backend listening on http://localhost:${port}`);
+    });
+}).catch(err => {
+    console.error("Failed to start pg-boss", err);
+    process.exit(1);
 });

@@ -59,6 +59,7 @@ model Tenant {
   channels             Channel[]
   tenantSettings       TenantSettings?
   assets               Asset[]
+  jobs                 Job[]
 }
 
 model Domain {
@@ -637,4 +638,22 @@ model ChannelMedia {
 
   @@index([channelId])
   @@index([tenantId])
+}
+
+model Job {
+  id            String   @id @default(uuid())
+  tenantId      String
+  type          String
+  status        String   @default("PENDING")
+  totalRows     Int      @default(0)
+  processedRows Int      @default(0)
+  failedRows    Int      @default(0)
+  mappingConfig Json?
+  errorLog      Json?
+  fileUrl       String?
+  createdBy     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 }

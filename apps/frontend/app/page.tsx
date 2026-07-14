@@ -99,6 +99,17 @@ export default function DashboardPage() {
           </Card>
         </HasPermission>
 
+        <HasPermission permission="product.manage">
+          <Card onClick={() => router.push('/imports')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <CardHeader>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#a78bfa' }}>Imports & Exports</h3>
+            </CardHeader>
+            <CardBody>
+              <p style={{ color: 'var(--text-secondary)' }}>Bulk import or export products and master data via CSV.</p>
+            </CardBody>
+          </Card>
+        </HasPermission>
+
         <HasPermission permission="settings.read">
           <Card onClick={() => router.push('/settings')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <CardHeader>

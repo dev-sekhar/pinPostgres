@@ -413,7 +413,8 @@ export const ModelName = {
   SupplierMedia: 'SupplierMedia',
   ManufacturerMedia: 'ManufacturerMedia',
   ComplianceTypeMedia: 'ComplianceTypeMedia',
-  ChannelMedia: 'ChannelMedia'
+  ChannelMedia: 'ChannelMedia',
+  Job: 'Job'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -429,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "tenant" | "domain" | "category" | "productFamily" | "user" | "product" | "attributeDefinition" | "productMedia" | "auditLog" | "permission" | "role" | "rolePermission" | "userRole" | "brand" | "currency" | "country" | "unitOfMeasure" | "tenantSettings" | "supplier" | "channel" | "manufacturer" | "complianceType" | "productComplianceType" | "productChannel" | "asset" | "brandMedia" | "supplierMedia" | "manufacturerMedia" | "complianceTypeMedia" | "channelMedia"
+    modelProps: "tenant" | "domain" | "category" | "productFamily" | "user" | "product" | "attributeDefinition" | "productMedia" | "auditLog" | "permission" | "role" | "rolePermission" | "userRole" | "brand" | "currency" | "country" | "unitOfMeasure" | "tenantSettings" | "supplier" | "channel" | "manufacturer" | "complianceType" | "productComplianceType" | "productChannel" | "asset" | "brandMedia" | "supplierMedia" | "manufacturerMedia" | "complianceTypeMedia" | "channelMedia" | "job"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2653,6 +2654,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Job: {
+      payload: Prisma.$JobPayload<ExtArgs>
+      fields: Prisma.JobFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+        }
+        findFirst: {
+          args: Prisma.JobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+        }
+        findMany: {
+          args: Prisma.JobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>[]
+        }
+        create: {
+          args: Prisma.JobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+        }
+        createMany: {
+          args: Prisma.JobCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>[]
+        }
+        delete: {
+          args: Prisma.JobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+        }
+        update: {
+          args: Prisma.JobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+        }
+        deleteMany: {
+          args: Prisma.JobDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JobUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>[]
+        }
+        upsert: {
+          args: Prisma.JobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+        }
+        aggregate: {
+          args: Prisma.JobAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJob>
+        }
+        groupBy: {
+          args: Prisma.JobGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JobCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3133,6 +3208,25 @@ export const ChannelMediaScalarFieldEnum = {
 export type ChannelMediaScalarFieldEnum = (typeof ChannelMediaScalarFieldEnum)[keyof typeof ChannelMediaScalarFieldEnum]
 
 
+export const JobScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  type: 'type',
+  status: 'status',
+  totalRows: 'totalRows',
+  processedRows: 'processedRows',
+  failedRows: 'failedRows',
+  mappingConfig: 'mappingConfig',
+  errorLog: 'errorLog',
+  fileUrl: 'fileUrl',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3473,6 +3567,7 @@ export type GlobalOmitConfig = {
   manufacturerMedia?: Prisma.ManufacturerMediaOmit
   complianceTypeMedia?: Prisma.ComplianceTypeMediaOmit
   channelMedia?: Prisma.ChannelMediaOmit
+  job?: Prisma.JobOmit
 }
 
 /* Types for Logging */
